@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <title>About Me</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #121212;
+            color: #d3d3d3;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 400;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .intro {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 50%;
+        }
+
+        .intro p {
+            margin: 15px;
+            font-size: 3rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(0, 0);
+        }
+
+        .intro p span {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 25px #fff;
+            }
+            50% {
+                text-shadow: 0 0 30px #fff;
+            }
+            100% {
+                text-shadow: 0 0 25px #fff;
+            }
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 50%;
+        }
+
+        .card {
+            margin: 10px;
+            border: 1px solid #d3d3d3;
+            border-radius: 10px;
+            padding: 20px;
+            background: #121212;
+            transition-duration: .25s;
+        }
+
+        .card:hover {
+            transform: scale(1.1);
+        }
+        .link {
+            color: #d3d3d3;
+            text-decoration: none;
+            font-size: 1.5rem;
+            animation: slide-left 0.5s ease-in-out;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+    </style>
+</head>
+
+<body>
+    <a class="link" href="/" style="margin: 15px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+    </a>
+
+    <div class="container">
+        <div class="intro">
+            <p>
+                <span>About Me</span>
+            </p>
+        </div>
+        <div class="content">
+            <div class="card">
+                <p>
+                    Hey there!
+                    <br>
+                    I'm Das_F1sHy312, 14 years old.
+                    <br><br>
+                    I'm a Python developer with some knowlege for web development. I've created some Roblox games using Lua language and made Minecraft Plugins with Java.
+                    <br>
+                    When I'm not at my PC, you can find me at school.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+

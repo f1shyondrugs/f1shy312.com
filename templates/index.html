@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <title>Hello. I'm Das_F1sHy312</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajaxf/libs/font-awesome1/5.15.3/css/shy.css">
+    <link rel="stylesheet" href="/static/i-i.css">
+    <link rel="stylesheet" href="/static/p712s9cjxyc01--123s.css">
+    <link rel="stylesheet" href="/static/p41mvs8n127bnyxc78b19scnxy.css">
+</head>
+
+<body>
+    <script>
+        var trail = document.createElement("div");
+        trail.style.position = "absolute";
+        trail.style.width = "10px";
+        trail.style.height = "10px";
+        trail.style.borderRadius = "50%";
+        trail.style.backgroundColor = "#121212";
+        trail.style.pointerEvents = "none";
+        trail.style.transform = "translatex(-5px)"
+        trail.style.zIndex = "9999";
+        document.body.appendChild(trail);
+
+        function updateTrail(e) {
+            trail.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+            trail.style.top = e.clientY + "px";
+            trail.style.left = e.clientX + "px";
+        }
+        document.addEventListener("mousemove", updateTrail);
+
+
+
+
+function updateSpotifyWidget() {
+    fetch('/now-playing')
+        .then(response => response.json())
+        .then(data => {
+            const spotifyWidget = document.getElementById('spotify-now-playing');
+            const audioVisualizer = document.getElementById('audio-visualizer');
+            
+            switch(data.status) {
+                case 'playing':
+                    spotifyWidget.innerHTML = `
+                        <div class="spotify-track">
+                            <img src="${data.album_art}" alt="Album Art" class="album-art">
+                            <div class="track-info">
+                                <a href="${data.spotify_link}" target="_blank">
+                                    <strong>${data.track_name}</strong>
+                                    <p>${data.artist}</p>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    audioVisualizer.style.display = 'flex';
+                    break;
+                case 'not_playing':
+                    spotifyWidget.innerHTML = '<p>Not listening to anything right now</p>';
+                    audioVisualizer.style.display = 'none';
+                    break;
+                case 'not_authenticated':
+                    spotifyWidget.innerHTML = `
+                        <a href="/spotify-login">Connect Spotify</a>
+                    `;
+                    audioVisualizer.style.display = 'none';
+                    break;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching Spotify data:', error);
+        });
+}
+
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    updateSpotifyWidget();
+    setInterval(updateSpotifyWidget, 10000);
+});
+
+</script>
+    <div class="container">
+        <div class="intro">
+            <p>
+                <span id="demo">Hello. I'm Das_F1sHy312</span><br>
+                <a style="font-size: small;"><span style='color: #f49d2b;'><</span>Developer<span style='color: #f49d2b;'>/></span> & <span style='color: #f4cf2b;'><</span>Content Creator<span style='color: #f4cf2b;'>/></span></a>
+            </p>
+            <div class="" style="display: none;">
+                <div class="orange-point"></div>
+                <div class="yellow-point"></div>
+            </div>
+            
+            <script>
+                var i = 0;
+                var txt = "Hello. I'm Das_F1sHy312";
+                var speed = 40;
+
+                window.onload = typeWriter;
+                document.getElementById("demo").innerHTML = ""
+
+                function typeWriter() {
+                    
+                    if (i < txt.length) {
+                        document.getElementById("demo").innerHTML += txt.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
+            </script>
+        </div>
+        
+
+        <div class="spotify-widget">
+            <div id="spotify-now-playing" class="spotify-content">
+                <!-- this'll be updated through JS -->
+                <div class="lds-ring"><div style="border-color: white; border-bottom-color: transparent;"></div><div style="border-color: white; border-bottom-color: transparent;"></div><div style="border-color: white; border-bottom-color: transparent;"></div><div style="border-color: white; border-bottom-color: transparent;"></div></div>
+                <style>
+                    .lds-ring {
+                        display: inline-block;
+                        position: relative;
+                        width: 64px;
+                        height: 64px;
+                    }
+                    .lds-ring div {
+                        box-sizing: border-box;
+                        display: block;
+                        position: absolute;
+                        width: 51px;
+                        height: 51px;
+                        margin: 6px;
+                        border: 6px solid #fff;
+                        border-radius: 50%;
+                        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                        border-color: #fff transparent transparent transparent;
+                    }
+                    .lds-ring div:nth-child(1) {
+                        animation-delay: -0.45s;
+                    }
+                    .lds-ring div:nth-child(2) {
+                        animation-delay: -0.3s;
+                    }
+                    .lds-ring div:nth-child(3) {
+                        animation-delay: -0.15s;
+                    }
+                    @keyframes lds-ring {
+                        0% {
+                            transform: rotate(0deg);
+                        }
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+                </style>
+            
+            </div>
+            <div id="audio-visualizer" class="audio-bars" style="display: none;">
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+                <div class="bar bar4"></div>
+                <div class="bar bar5"></div>
+            </div>
+        </div>
+
+
+        <div class="card-container">
+            <div onclick="window.location.href = '/aboutme'" class="card one" style="display: flex; flex-direction: row-reverse; align-items: center; margin-bottom: 10px;">
+                <div class="card-content" style="flex: 1;">
+                    <h3>About me</h3>
+                    <p>Learn More About Me</p>
+                </div>
+                <div class="icon-container" style="transform: scale(1.5); margin-right: 15px;"><i class="fas fa-user"></i></div>
+            </div>
+            <div onclick="window.location.href = '/projects'" class="card two" style="display: flex; flex-direction: row-reverse; align-items: center; margin-bottom: 10px;">
+                <div class="card-content" style="flex: 1;">
+                    <h3>Projects</h3>
+                    <p>Check out my projects!</p>
+                </div>
+                <div class="icon-container" style="transform: scale(1.5); margin-right: 15px;"><i class="fab fa-github"></i></div>
+            </div>
+            <div onclick="window.location.href = 'https://www.youtube.com/channel/UCN8CHrW-ZLvP9rTN52NwFXw'" class="card three" style="display: flex; flex-direction: row-reverse; align-items: center; margin-bottom: 10px;">
+                <div class="card-content" style="flex: 1;">
+                    <h3>YouTube</h3>
+                    <p>Subscribe to my YouTube channel!</p>
+                </div>
+                <div class="icon-container" style="transform: scale(1.5); margin-right: 15px;"><i class="fab fa-youtube"></i></div>
+            </div>
+            <div onclick="window.location.href = 'https://twitch.tv/f1shy312'" class="card four" style="display: flex; flex-direction: row-reverse; align-items: center; margin-bottom: 10px;">
+                <div class="card-content" style="flex: 1;">
+                    <h3>Twitch</h3>
+                    <p>Follow me on Twitch!</p>
+                </div>
+                <div class="icon-container" style="transform: scale(1.5); margin-right: 15px;"><i class="fab fa-twitch"></i></div>
+            </div>
+        </div>
+
+        <div class="test-container" onclick="document.querySelector('.test-container').style.opacity = 0; document.querySelector('.content').style.display = 'block'"></div>
+        <div class="content">
+            <p style="text-align: center; color: rgb(80, 80, 80);">Made with <3 by Das_F1sHy312<br>This Website looks best on Desktop</p>
+            
+        </div>
+    
+    </div>
+    
+    
+    
+</body>
+</html>
