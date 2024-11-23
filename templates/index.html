@@ -10,6 +10,141 @@
     <link rel="stylesheet" href="/static/i-i.css">
     <link rel="stylesheet" href="/static/p712s9cjxyc01--123s.css">
     <link rel="stylesheet" href="/static/p41mvs8n127bnyxc78b19scnxy.css">
+    <style>
+        .spotify-widget {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(18, 18, 18, 0.8);
+            border: 1px solid #d3d3d3;
+            border-radius: 10px;
+            padding: 10px;
+            width: fit-content;
+            min-width: 300px;
+            max-width: 400px;
+            transition-duration: 1s;
+            opacity: 1;
+            animation: move-in-top 1s forwards;
+            animation-delay: .75s;
+        }
+
+        @keyframes move-in-top {
+            from {
+                top: -100px;
+            }
+            to {
+                top: 15px;
+            }
+        }
+
+        .spotify-widget:hover {
+            scale: 1.1;
+            left: 50.7%;
+        }
+
+        .spotify-track {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 300px;
+        }
+
+        .spotify-track .album-art {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .track-info {
+            flex: 1;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
+        .track-info a {
+            text-decoration: none;
+            color: #d3d3d3;
+            display: block;
+        }
+
+        .track-info strong {
+            display: block;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-info p {
+            font-size: 0.7rem;
+            color: #888;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .audio-bars {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            height: 20px;
+            padding-left: 10px;
+            border-left: 1px solid rgba(211, 211, 211, 0.2);
+        }
+
+        .bar {
+            width: 3px;
+            background-color: #d3d3d3;
+            animation: visualize 0.8s ease-in-out infinite alternate;
+            border-radius: 1px;
+        }
+
+        .bar1 { animation-delay: 0s; height: 10px; }
+        .bar2 { animation-delay: 0.2s; height: 15px; }
+        .bar3 { animation-delay: 0.4s; height: 20px; }
+        .bar4 { animation-delay: 0.6s; height: 15px; }
+        .bar5 { animation-delay: 0.8s; height: 10px; }
+
+        @keyframes visualize {
+            0% { height: 5px; }
+            100% { height: 20px; }
+        }
+
+        .lds-ring {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+        }
+        .lds-ring div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 51px;
+            height: 51px;
+            margin: 6px;
+            border: 6px solid #fff;
+            border-radius: 50%;
+            animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            border-color: #fff transparent transparent transparent;
+        }
+        .lds-ring div:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+        .lds-ring div:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+        .lds-ring div:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+        @keyframes lds-ring {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 
 <body>
@@ -32,180 +167,168 @@
         }
         document.addEventListener("mousemove", updateTrail);
 
+        function updateSpotifyWidget() {
+            fetch('/now-playing')
+                .then(response => response.json())
+                .then(data => {
+                    const spotifyWidget = document.getElementById('spotify-now-playing');
+                    
+                    switch(data.status) {
+                        case 'playing':
+                            spotifyWidget.innerHTML = `
+                                <div class="spotify-track">
+                                    <img src="${data.album_art}" alt="Album Art" class="album-art">
+                                    <div class="track-info">
+                                        <a href="${data.spotify_link}" target="_blank">
+                                            <strong>${data.track_name}</strong>
+                                            <p>${data.artist}</p>
+                                        </a>
+                                    </div>
+                                    <div id="audio-visualizer" class="audio-bars">
+                                        <div class="bar bar1"></div>
+                                        <div class="bar bar2"></div>
+                                        <div class="bar bar3"></div>
+                                        <div class="bar bar4"></div>
+                                        <div class="bar bar5"></div>
+                                    </div>
+                                </div>
+                            `;
+                            break;
+                        case 'not_playing':
+                            spotifyWidget.innerHTML = '<p>Not listening to anything right now</p>';
+                            break;
+                        case 'not_authenticated':
+                            spotifyWidget.innerHTML = `
+                                <a href="/spotify-login">Connect Spotify</a>
+                            `;
+                            break;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching Spotify data:', error);
+                });
+        }
 
-
-
-function updateSpotifyWidget() {
-    fetch('/now-playing')
-        .then(response => response.json())
-        .then(data => {
-            const spotifyWidget = document.getElementById('spotify-now-playing');
-            const audioVisualizer = document.getElementById('audio-visualizer');
-            
-            switch(data.status) {
-                case 'playing':
-                    spotifyWidget.innerHTML = `
-                        <div class="spotify-track">
-                            <img src="${data.album_art}" alt="Album Art" class="album-art">
-                            <div class="track-info">
-                                <a href="${data.spotify_link}" target="_blank">
-                                    <strong>${data.track_name}</strong>
-                                    <p>${data.artist}</p>
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    audioVisualizer.style.display = 'flex';
-                    break;
-                case 'not_playing':
-                    spotifyWidget.innerHTML = '<p>Not listening to anything right now</p>';
-                    audioVisualizer.style.display = 'none';
-                    break;
-                case 'not_authenticated':
-                    spotifyWidget.innerHTML = `
-                        <a href="/spotify-login">Connect Spotify</a>
-                    `;
-                    audioVisualizer.style.display = 'none';
-                    break;
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching Spotify data:', error);
+        window.addEventListener('DOMContentLoaded', () => {
+            updateSpotifyWidget();
+            setInterval(updateSpotifyWidget, 10000);
         });
-}
-
-
-
-window.addEventListener('DOMContentLoaded', () => {
-    updateSpotifyWidget();
-    setInterval(updateSpotifyWidget, 10000);
-});
-
-</script>
+    </script>
+    
     <div class="container">
         <div class="intro">
             <p>
                 <span id="demo">Hello. I'm Das_F1sHy312</span><br>
                 <a style="font-size: small;"><span style='color: #f49d2b;'><</span>Developer<span style='color: #f49d2b;'>/></span> & <span style='color: #f4cf2b;'><</span>Content Creator<span style='color: #f4cf2b;'>/></span></a>
             </p>
-            <div class="" style="display: none;">
-                <div class="orange-point"></div>
-                <div class="yellow-point"></div>
-            </div>
-            
-            <script>
-                var i = 0;
-                var txt = "Hello. I'm Das_F1sHy312";
-                var speed = 40;
-
-                window.onload = typeWriter;
-                document.getElementById("demo").innerHTML = ""
-
-                function typeWriter() {
-                    
-                    if (i < txt.length) {
-                        document.getElementById("demo").innerHTML += txt.charAt(i);
-                        i++;
-                        setTimeout(typeWriter, speed);
-                    }
-                }
-            </script>
         </div>
         
-
         <div class="spotify-widget">
             <div id="spotify-now-playing" class="spotify-content">
-                <!-- this'll be updated through JS -->
-                <div class="lds-ring"><div style="border-color: white; border-bottom-color: transparent;"></div><div style="border-color: white; border-bottom-color: transparent;"></div><div style="border-color: white; border-bottom-color: transparent;"></div><div style="border-color: white; border-bottom-color: transparent;"></div></div>
-                <style>
-                    .lds-ring {
-                        display: inline-block;
-                        position: relative;
-                        width: 64px;
-                        height: 64px;
-                    }
-                    .lds-ring div {
-                        box-sizing: border-box;
-                        display: block;
-                        position: absolute;
-                        width: 51px;
-                        height: 51px;
-                        margin: 6px;
-                        border: 6px solid #fff;
-                        border-radius: 50%;
-                        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-                        border-color: #fff transparent transparent transparent;
-                    }
-                    .lds-ring div:nth-child(1) {
-                        animation-delay: -0.45s;
-                    }
-                    .lds-ring div:nth-child(2) {
-                        animation-delay: -0.3s;
-                    }
-                    .lds-ring div:nth-child(3) {
-                        animation-delay: -0.15s;
-                    }
-                    @keyframes lds-ring {
-                        0% {
-                            transform: rotate(0deg);
-                        }
-                        100% {
-                            transform: rotate(360deg);
-                        }
-                    }
-                </style>
-            
-            </div>
-            <div id="audio-visualizer" class="audio-bars" style="display: none;">
-                <div class="bar bar1"></div>
-                <div class="bar bar2"></div>
-                <div class="bar bar3"></div>
-                <div class="bar bar4"></div>
-                <div class="bar bar5"></div>
+                <div class="lds-ring">
+                    <div style="border-color: white; border-bottom-color: transparent;"></div>
+                    <div style="border-color: white; border-bottom-color: transparent;"></div>
+                    <div style="border-color: white; border-bottom-color: transparent;"></div>
+                    <div style="border-color: white; border-bottom-color: transparent;"></div>
+                </div>
             </div>
         </div>
 
-
         <div class="card-container">
-            <div onclick="window.location.href = '/aboutme'" class="card one" style="display: flex; flex-direction: row-reverse; align-items: center; margin-bottom: 10px;">
-                <div class="card-content" style="flex: 1;">
+            <div onclick="window.location.href = '/aboutme'" class="card one">
+                <div class="card-content">
                     <h3>About me</h3>
                     <p>Learn More About Me</p>
                 </div>
-                <div class="icon-container" style="transform: scale(1.5); margin-right: 15px;"><i class="fas fa-user"></i></div>
+                <div class="icon-container"><i class="fas fa-user"></i></div>
             </div>
-            <div onclick="window.location.href = '/projects'" class="card two" style="display: flex; flex-direction: row-reverse; align-items: center; margin-bottom: 10px;">
-                <div class="card-content" style="flex: 1;">
+            <div onclick="window.location.href = '/projects'" class="card two">
+                <div class="card-content">
                     <h3>Projects</h3>
                     <p>Check out my projects!</p>
                 </div>
-                <div class="icon-container" style="transform: scale(1.5); margin-right: 15px;"><i class="fab fa-github"></i></div>
+                <div class="icon-container"><i class="fab fa-github"></i></div>
             </div>
-            <div onclick="window.location.href = 'https://www.youtube.com/channel/UCN8CHrW-ZLvP9rTN52NwFXw'" class="card three" style="display: flex; flex-direction: row-reverse; align-items: center; margin-bottom: 10px;">
-                <div class="card-content" style="flex: 1;">
+            <div onclick="window.location.href = 'https://www.youtube.com/channel/UCN8CHrW-ZLvP9rTN52NwFXw'" class="card three">
+                <div class="card-content">
                     <h3>YouTube</h3>
                     <p>Subscribe to my YouTube channel!</p>
                 </div>
-                <div class="icon-container" style="transform: scale(1.5); margin-right: 15px;"><i class="fab fa-youtube"></i></div>
+                <div class="icon-container"><i class="fab fa-youtube"></i></div>
             </div>
-            <div onclick="window.location.href = 'https://twitch.tv/f1shy312'" class="card four" style="display: flex; flex-direction: row-reverse; align-items: center; margin-bottom: 10px;">
-                <div class="card-content" style="flex: 1;">
+            <div onclick="window.location.href = 'https://twitch.tv/f1shy312'" class="card four">
+                <div class="card-content">
                     <h3>Twitch</h3>
                     <p>Follow me on Twitch!</p>
                 </div>
-                <div class="icon-container" style="transform: scale(1.5); margin-right: 15px;"><i class="fab fa-twitch"></i></div>
+                <div class="icon-container"><i class="fab fa-twitch"></i></div>
             </div>
         </div>
 
-        <div class="test-container" onclick="document.querySelector('.test-container').style.opacity = 0; document.querySelector('.content').style.display = 'block'"></div>
+        <div class="test-container" onclick="document.querySelector('.test-container').style.display = 'none'; document.querySelector('.content').style.display = 'block'"></div>
         <div class="content">
-            <p style="text-align: center; color: rgb(80, 80, 80);">Made with <3 by Das_F1sHy312<br>This Website looks best on Desktop</p>
-            
+            <p style="text-align: center; color: rgb(80, 80, 80);">Made with <3 by Das_F1sHy312<br>This Website looks best on Desktop<br><br></p>
+
+            <script>
+                function emailevent() {
+                    const originalText = "Hello. I'm Das_F1sHy312   ";
+                    const targetText = "Email copied to clipboard!";
+                    const textElement = document.getElementById("demo");
+                    const copylabel = document.getElementById("copylabel");
+                    let currentText = textElement.innerHTML;
+                    let currentIndex = 0;
+                    let isReverting = false;
+                    const animationSpeed = 50;
+
+                    navigator.clipboard.writeText('info@f1shy312.com')
+                        .then(() => {
+                            animateText();
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy email: ', err);
+                        });
+
+                    function animateText() {
+                        if (!isReverting) {
+                            copylabel.innerHTML = " [Copied!] ";
+                            if (currentIndex < targetText.length) {
+                                let newText = currentText.split('');
+                                newText[currentIndex] = targetText[currentIndex];
+                                currentText = newText.join('');
+                                textElement.innerHTML = currentText;
+                                currentIndex++;
+                                setTimeout(animateText, animationSpeed);
+                            } else {
+                                setTimeout(() => {
+                                    isReverting = true;
+                                    currentIndex = 0;
+                                    animateText();
+                                }, 2000);
+                            }
+                        } else {
+                            if (currentIndex < originalText.length) {
+                                let newText = currentText.split('');
+                                newText[currentIndex] = originalText[currentIndex];
+                                currentText = newText.join('');
+                                textElement.innerHTML = currentText;
+                                currentIndex++;
+                                setTimeout(animateText, animationSpeed);
+                            }
+                            copylabel.innerHTML = " [Copy] ";
+                        }
+                    }
+
+                    
+                }
+            </script>
+            <p style="text-align: center; color: rgb(80, 80, 80); text-decoration: none;">
+                <a style="color: rgb(80, 80, 80);" href="#" onclick="navigator.clipboard.writeText('info@f1shy312.com'); emailevent(); return false;">
+                    info@f1shy312.com<span style="font-size: small; user-select: auto;" id="copylabel"> [Copy] </span>
+                </a>
+            </p>
         </div>
     
     </div>
-    
-    
     
 </body>
 </html>

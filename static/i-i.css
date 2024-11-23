@@ -1,4 +1,13 @@
 @import "https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap";
+@keyframes fadeIn{
+	from{
+		opacity:0
+	}
+	to{
+		opacity:1
+	}
+}
+
 *{
 	box-sizing:border-box;
 	margin:0;
@@ -88,6 +97,9 @@ body{
 	background:#121212;
 	transition-duration:.25s
 }
+.card-content {
+    display: none;
+}
 .one{
 	position:absolute;
 	top:0;
@@ -98,8 +110,23 @@ body{
 	padding:20px;
 	background:#121212;
 	transition-duration:.25s;
+
 	animation:shake 5s ease-in-out infinite alternate;
-	animation-delay:.75s
+	animation-delay: 2s;
+	
+	animation:move-in-top-left 1.2s forwards;
+	animation-delay: .75s;
+
+	transform:translate(-300px,-200px)
+}
+
+@keyframes move-in-top-left{
+	from{
+		transform:translate(-300px,-200px)
+	}
+	to{
+		transform:translate(0,0)
+	}
 }
 .two{
 	position:absolute;
@@ -112,7 +139,20 @@ body{
 	background:#121212;
 	transition-duration:.25s;
 	animation:shake 5s ease-in-out infinite alternate;
-	animation-delay:.25s
+	animation-delay:.25s;	
+
+	animation:move-in-top-right 1.2s forwards;
+	animation-delay: .87s;
+
+	transform:translate(300px,-200px)
+}
+@keyframes move-in-top-right{
+	from{
+		transform:translate(300px,-200px)
+	}
+	to{
+		transform:translate(0,0)
+	}
 }
 .three{
 	position:absolute;
@@ -125,7 +165,21 @@ body{
 	background:#121212;
 	transition-duration:.25s;
 	animation:shake 5s ease-in-out infinite alternate;
-	animation-delay:.55s
+	animation-delay:.55s;
+
+	animation:move-in-bottom-left 1.2s forwards;
+	animation-delay: .9s;
+
+	transform:translate(-300px,200px)
+}
+
+@keyframes move-in-bottom-left{
+	from{
+		transform:translate(-300px,200px)
+	}
+	to{
+		transform:translate(0,0)
+	}
 }
 .four{
 	position:absolute;
@@ -137,7 +191,21 @@ body{
 	padding:20px;
 	background:#121212;
 	transition-duration:.25s;
-	animation:shake 5s ease-in-out infinite alternate
+	animation:shake 5s ease-in-out infinite alternate;
+
+	animation:move-in-bottom-right 1.2s forwards;
+	animation-delay: .8s;
+
+	transform:translate(300px,200px)
+}
+
+@keyframes move-in-bottom-right{
+	from{
+		transform:translate(300px,200px)
+	}
+	to{
+		transform:translate(0,0)
+	}
 }
 @keyframes shake{
 	0%{
@@ -176,6 +244,34 @@ body{
 }
 .card:hover{
 	scale:1.1
+}
+@media only screen and (min-width: 1034px) {
+    .card-content {
+        display: block;
+        flex: 1;
+        margin-left: 15px;
+    }
+    
+    .card {
+        display: flex !important;
+        flex-direction: row-reverse !important;
+        align-items: center;
+        margin-bottom: 10px;
+        border: 1px solid #d3d3d3;
+        border-radius: 10px;
+        padding: 20px;
+        background: #121212;
+        transition-duration: .25s;
+    }
+
+    .card .icon-container {
+        transform: scale(1.5);
+    }
+
+    .card-content h3,
+    .card-content p {
+        color: #d3d3d3;
+    }
 }
 @media only screen and (max-width: 767px){
 	.orange-point,.yellow-point{
@@ -230,8 +326,14 @@ body{
 	.test-container{
 		transform:translateY(-25px);
 		scale:1.5;
-		position:relative
+		position:relative;
+		opacity: 0;
+		animation:fadeIn 1.2s forwards;
+		animation-delay: .9s;
+
 	}
+	
+	
 	.test-container:after{
 		content:'';
 		position:absolute;
@@ -429,7 +531,7 @@ body{
 
 .spotify-widget {
     position: fixed;
-    top: 15px;
+    top: -100px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -440,8 +542,19 @@ body{
     width: fit-content;
     min-width: 300px;
     max-width: 400px;
+    transition-duration: 1s;
+    opacity: 1;
+    animation: move-in-top 1s forwards;
+	animation-delay: .75s;
+}
 
-	transition-duration: 1s;
+@keyframes move-in-top {
+    from {
+        top: -100px;
+    }
+    to {
+        top: 15px;
+    }
 }
 
 .spotify-widget:hover {
