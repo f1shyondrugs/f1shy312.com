@@ -245,6 +245,7 @@ body{
 .card:hover{
 	scale:1.1
 }
+
 @media only screen and (min-width: 1034px) {
     .card-content {
         display: block;
@@ -397,6 +398,8 @@ body{
 .card:hover{
 	scale:1.1
 }
+
+
 @media only screen and (max-width: 1034px){
 	.orange-point,.yellow-point{
 		display:none!important
@@ -472,6 +475,9 @@ body{
 		scale:1.25
 	}
 }
+
+
+
 .intro{
 	display:flex;
 	justify-content:center;
@@ -536,7 +542,6 @@ body{
     transform: translateX(-50%);
     z-index: 1000;
     background: rgba(18, 18, 18, 0.8);
-    border: 1px solid #d3d3d3;
     border-radius: 10px;
     padding: 10px;
     width: fit-content;
@@ -550,7 +555,7 @@ body{
 
 @keyframes move-in-top {
     from {
-        top: -100px;
+        top: -500px;
     }
     to {
         top: 15px;
