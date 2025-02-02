@@ -4,145 +4,875 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Projects</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
-    <link rel="stylesheet" href="/static/p-p.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #121212;
+            color: #d3d3d3;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        header {
+            padding: 1rem;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: #d3d3d3;
+            font-size: 1.1rem;
+        }
+
+        .portfolio-container {
+            height: 340px; /* Height of project cards + padding + scrollbar */
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            padding: 20px;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+
+        /* Styling the scrollbar */
+        .portfolio-container::-webkit-scrollbar {
+            height: 8px;
+            background: #222222;
+            border-radius: 4px;
+        }
+
+        .portfolio-container::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 4px;
+        }
+
+        .portfolio-container::-webkit-scrollbar-thumb:hover {
+            background: #404040;
+        }
+
+        /* Firefox scrollbar */
+        .portfolio-container {
+            scrollbar-width: thin;
+            scrollbar-color: #333333 #222222;
+        }
+
+        .project-row {
+            display: flex;
+            gap: 20px;
+            height: 300px;
+            flex-wrap: nowrap;
+            width: max-content;
+        }
+
+        .project-card {
+            position: relative;
+            width: 400px;
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #1e1e1e;
+            flex-shrink: 0;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-date {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #d3d3d3;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            backdrop-filter: blur(4px);
+        }
+
+        .project-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .project-description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(18, 18, 18, 0.95);
+            color: #d3d3d3;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            font-size: 0.95em;
+            line-height: 1.5;
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+        }
+
+        .project-card:hover .project-description {
+            opacity: 1;
+        }
+
+        .fa-github, .fa-up-right-from-square {
+            transition-duration: .3s;
+        }
+
+        .fa-github:hover, .fa-up-right-from-square:hover {
+            scale: 1.1;
+            transform: rotate(10deg);
+        }
+
+        .githublogo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #d3d3d3;
+            font-size: 2em;
+        }
+
+        .popoutlogo {
+            position: absolute;
+            top: 10px;
+            left: 60px;  /* Position it to the right of GitHub icon */
+            color: #d3d3d3;
+            font-size: 2em;
+        }
+
+        .featured-container {
+            padding: 20px;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            background-size: 200% 200%;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid #333;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: gradientFlow 15s ease infinite;
+        }
+
+        .featured-card {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #1e1e1e;
+            display: flex;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .featured-card:hover {
+            transform: scale(1.02);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            background: rgba(30, 30, 30, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .featured-card:hover .featured-image {
+            filter: blur(3px);
+            transform: scale(1.05);
+        }
+
+        .featured-card:hover .featured-content {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .featured-image {
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .featured-content {
+            width: 50%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .featured-card {
+                flex-direction: column;
+                height: auto;
+                min-height: 600px;
+            }
+
+            .featured-image {
+                width: 100%;
+                height: 250px;
+            }
+
+            .featured-content {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .featured-title {
+                font-size: 2em;
+            }
+
+            .featured-description {
+                font-size: 1em;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .featured-card {
+                min-height: 550px;
+            }
+
+            .featured-image {
+                height: 200px;
+            }
+
+            .featured-content {
+                padding: 15px;
+            }
+
+            .featured-title {
+                font-size: 1.8em;
+            }
+
+            .featured-badge {
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+        }
+
+        .featured-badge {
+            background: linear-gradient(45deg, #1a1a1a, #ffffff, #1a1a1a);
+            background-size: 200% 200%;
+            color: #1a1a1a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: gradientFlow 3s ease infinite;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .featured-title {
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+            font-size: 2.5em;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .featured-description {
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+            color: #d3d3d3;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .featured-links {
+            animation: fadeIn 0.8s ease-out 0.6s backwards;
+            display: flex;
+            gap: 15px;
+        }
+
+        .featured-links a {
+            font-size: 1.5em;
+            color: #d3d3d3;
+            transition: all 0.3s ease;
+        }
+
+        .featured-links a:hover {
+            color: white;
+            transform: translateY(-2px);
+            animation: pulse 1s ease infinite;
+        }
+
+        /* Footer Styles */
+        .footer {
+            margin-top: 60px;
+            padding: 40px 20px;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            border-top: 1px solid #333;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-section {
+            min-width: 150px;
+        }
+
+        .footer h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .footer p {
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #666;
+        }
+
+        .footer-bottom a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Java Projects Section Styles */
+        .java-container {
+            background: linear-gradient(45deg, #1a1a1a, #2d1e12) !important;
+        }
+
+        .network-intro {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .network-image {
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .network-image:hover {
+            transform: scale(1.02);
+        }
+
+        .network-title {
+            color: #ff8c00;
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+
+        .network-description {
+            color: #d3d3d3;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .network-description strong {
+            color: #ff8c00;
+        }
+
+        .network-link {
+            color: #ff8c00;
+            text-decoration: none;
+            border-bottom: 1px dotted #ff8c00;
+            transition: all 0.3s ease;
+        }
+
+        .network-link:hover {
+            color: #ffa500;
+            border-bottom-color: #ffa500;
+        }
+
+        .java-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .java-card {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .java-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .java-card-title {
+            color: #ff8c00;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .java-card-description {
+            color: #d3d3d3;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .java-badge {
+            background: #2d1e12;
+            color: #ff8c00;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            display: inline-block;
+        }
+
+        .java-links {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .java-links a {
+            color: #ff8c00;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .java-links a:hover {
+            color: #ffa500;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .network-image {
+                max-width: 300px;
+            }
+
+            .java-grid {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
+
+            .network-description {
+                padding: 0 20px;
+                font-size: 0.95em;
+            }
+
+            .java-card {
+                min-height: 180px;
+            }
+
+            .java-card-title {
+                font-size: 1.2em;
+            }
+
+            .java-card-description {
+                font-size: 0.9em;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .network-image {
+                max-width: 250px;
+            }
+
+            .java-grid {
+                gap: 15px;
+            }
+
+            .network-description {
+                padding: 0 15px;
+                font-size: 0.9em;
+            }
+
+            .java-card {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="portfolio-grid">
-        <div class="project animate-fade" style="background-image: url('/static/screenshots/PROJECTS.png'); background-size: 100%;">
-        </div>
-        <div class="project animate-right" style="background-image: url('/static/screenshots/mp3player1.png');">
-            <div class="project-image">
-                <div class="project-title">Python MP3 Player</div>
-                <div class="project-description">
-                    MP3 Player with Playlists, Volume Control, etc... made with libraries customTkinter, PyGame and more.
-                    <p class="event-date">/11/2023</p>
+    <div class="container">
+        <header>
+            <h1>My Projects</h1>
+            <p>A collection of my recent work</p>
+        </header>
+        
+        <div class="featured-container">
+            <div class="featured-card">
+                <img class="featured-image" src="/static/screenshots/pointer.f1shy312.com.png" alt="Pointer - AI Code Editor">
+                <div class="featured-content">
+                    <span class="featured-badge">🚀 Under Development</span>
+                    <h2 class="featured-title">Pointer</h2>
+                    <p class="featured-description">
+                        Revolutionizing code editing with AI that runs entirely on your machine. Pointer brings lightning-fast, privacy-focused AI assistance right to your editor. Built with local LLMs for zero latency responses and complete privacy - your code never leaves your machine. Features smart suggestions, context-aware completions, and intelligent refactoring.
+                    </p>
+                    <div class="featured-links">
+                        <a href="https://github.com/f1shyondrugs/pointer" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://pointer.f1shy312.com" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-up-right-from-square"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="project animate-left" style="background-image: url('/static/screenshots/tvbot1.png');">
-            <div class="project-image">
-                <div class="project-title">Twitch ChatBot</div>
-                <div class="project-description">
-                    This Chatbot is a very advanced one with a Point system and a whole Economy. The GitHub version isn't up to date. The Chat can control your Game, play Sound Effects, Gamble with their points and much much more!
-                    <p class="event-date">/12/2023</p>
+
+        <br><h1>Python Projects</h1><br>
+        <div class="portfolio-container">
+            
+            <div class="project-row">
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/mp3player1.png" alt="MP3 Player">
+                    <div class="project-date">11/2023</div>
+                    <div class="project-title">Python MP3 Player</div>
+                    <div class="project-description">
+                        MP3 Player with Playlists, Volume Control, etc... made with libraries customTkinter, PyGame and more.
+                        <a href="https://github.com/f1shyondrugs/python-mp3-player-gui" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/tvbot1.png" alt="Twitch ChatBot">
+                    <div class="project-date">12/2023</div>
+                    <div class="project-title">Twitch ChatBot</div>
+                    <div class="project-description">
+                        This Chatbot is a very advanced one with a Point system and a whole Economy. The GitHub version isn't up to date. The Chat can control your Game, play Sound Effects, Gamble with their points and much much more!
+                        <a href="https://github.com/f1shyondrugs/advanced-twitch-bot" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/reddit1.png" alt="Reddit Automatic Replier">
+                    <div class="project-date">01/2024</div>
+                    <div class="project-title">Reddit Automatic Replier</div>
+                    <div class="project-description">
+                        Give the Program a Reddit Community and it will reply to all new posts using the OpenAI API to generate Comments and the Reddit API to send the comments.
+                        <a href="https://github.com/f1shyondrugs/Reddit-Automatic-replier" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/reverseshell1.png" alt="Python Reverse Shell">
+                    <div class="project-date">02/2024</div>
+                    <div class="project-title">Python Reverse Shell</div>
+                    <div class="project-description">
+                        Uses Python Websockets to connect to a remote server. The server has a web UI to send and receive commands. It's a remote shell.
+                        <a href="https://github.com/f1shyondrugs/reverse-shell-python" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/papertrader1.png" alt="PaperTrading Program">
+                    <div class="project-date">03/2024</div>
+                    <div class="project-title">PaperTrading Program</div>
+                    <div class="project-description">
+                        This Program lets you Paper Trade with the Binance API to get the data. It shows every second, how much Percentage you've gained or lost, by buying multiple coins.
+                        <a onclick="alert('This project is not on GitHub yet')" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/analyzer1.png" alt="Market Analyzer">
+                    <div class="project-date">03/2024 - 05/2024</div>
+                    <div class="project-title">Market Analyzer</div>
+                    <div class="project-description">
+                        This Market Analyzer gets data of every coin in the market and calculates certain things to get a basic overview.
+                        <a onclick="alert('This project is not on GitHub yet')" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="project animate-bottom" style="background-image: url('/static/screenshots/reddit1.png');">
-            <div class="project-image">
-                <div class="project-title">Reddit Automatic Replier</div>
-                <div class="project-description">
-                    Give the Program a Reddit Community and it will reply to all new posts using the OpenAI API to generate Comments and the Reddit API to send the comments.
-                    <p class="event-date">/01/2024</p>
+
+
+        <br><br><br><h1>Web Projects</h1><br>
+        <div class="portfolio-container">
+            
+            <div class="project-row">
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/ubuntu.f1shy312.com.png" alt="Portfolio">
+                    <div class="project-title">Ubuntufolio</div>
+                    <div class="project-description">
+                        A portfolio website styled after Ubuntu Desktop (i got depressed while doing this)
+                        <a href="https://github.com/f1shyondrugs/ubuntufolio" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://ubuntu.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/404.f1shy312.com.png" alt="404">
+                    <div class="project-title">404</div>
+                    <div class="project-description">
+                        A fallback 404 Page
+                        <a href="https://github.com/f1shyondrugs/404.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://404.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/anime.f1shy312.com.png" alt="Anime List">
+                    <div class="project-title">Anime List</div>
+                    <div class="project-description">
+                        Just a list of Animes I've watched
+                        <a onclick="alert('This project is not on GitHub yet')" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://anime.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/blockyplayz.f1shy312.com.png" alt="BlockyPlayz">
+                    <div class="project-title">BlockyPlayz</div>
+                    <div class="project-description">
+                        Webpage for a Minecraft Server named BlockyPlayz
+                        <a href="https://github.com/f1shyondrugs/blockyplayz-website" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://blockyplayz.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/casino.f1shy312.com.png" alt="Casino">
+                    <div class="project-title">Casino</div>
+                    <div class="project-description">
+                        Casino Website with games like Plinko, Towers, Mines and more.
+                        <a href="https://github.com/f1shyondrugs/casino.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://casino.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/crazyfolio.f1shy312.com.png" alt="CrazyFolio">
+                    <div class="project-date">11/2024</div>
+                    <div class="project-title">CrazyFolio</div>
+                    <div class="project-description">
+                        A crazy styled portfolio website
+                        <a href="https://github.com/f1shyondrugs/crazyfolio" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://crazyfolio.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-date">12/2024</div>
+                    <div class="project-title">MonkeyType</div>
+                    <div class="project-description">
+                        MonkeyType off of Wish or something
+                        <a href="https://github.com/f1shyondrugs/monkeytype.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://monkeytype.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/scanner.f1shy312.com.png" alt="Scanner">
+                    <div class="project-title">Minecraft Server Scanner</div>
+                    <div class="project-description">
+                        A minecraft server scanner tool scanning for open ports
+                        <a href="https://github.com/f1shyondrugs/scanner.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://scanner.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/termfolio.f1shy312.com.png" alt="Termfolio">
+                    <div class="project-title">Termfolio</div>
+                    <div class="project-description">
+                        Terminal styled Portfolio
+                        <a href="https://github.com/f1shyondrugs/termfolio.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://termfolio.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/urlshortener.f1shy312.com.png" alt="URL Shortener">
+                    <div class="project-title">URL Shortener</div>
+                    <div class="project-description">
+                        A simple URL shortening service
+                        <a href="https://github.com/f1shyondrugs/urlshortener.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://urlshortener.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img class="project-image" src="/static/screenshots/weather.f1shy312.com.png" alt="Weather">
+                    <div class="project-title">Weather App</div>
+                    <div class="project-description">
+                        A weather forecast application
+                        <a href="https://github.com/f1shyondrugs/weather.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github githublogo"></i></a>
+                        <a href="https://weather.f1shy312.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-up-right-from-square popoutlogo"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="project animate-top" style="background-image: url('/static/screenshots/reverseshell1.png'); background-position: 45%;">
-            <div class="project-image">
-                <div class="project-title">Python Reverse Shell</div>
-                <div class="project-description">
-                    Uses Python Websockets to connect to a remote server. The server has a web UI to send and receive commands. It's a remote shell.
-                    <p class="event-date">/02/2024</p>
-                </div>
+
+        <br><br><br><h1>Java Projects</h1><br>
+        <div class="featured-container java-container">
+            <div class="network-intro">
+                <img src="/static/fishynetwork.png" alt="FishyNetwork" class="network-image" style="box-shadow: none;">
+                <br><br><p class="network-description"></p>
+                    I'm currently building my own Minecraft server network called <strong>FishyNetwork</strong>. 
+                    All plugins below are part of this network, and there are many more plugins available on my 
+                    <a href="https://github.com/f1shyondrugs" target="_blank" class="network-link">GitHub profile</a>. 
+                    Each plugin is designed to enhance the player experience and create a unique gaming environment.
+                </p>
             </div>
-        </div>
-        <div class="project animate-right" style="background-image: url('/static/screenshots/papertrader1.png');">
-            <div class="project-image">
-                <div class="project-title">PaperTrading Program</div>
-                <div class="project-description">
-                    This Program lets you Paper Trade with the Binance API to get the data. It shows every second, how much Percentage you've gained or lost, by buying multiple coins. (Not on GitHub)
-                    <p class="event-date">/03/2024</p>
+            <div class="java-grid">
+                <div class="java-card">
+                    <h3 class="java-card-title">CustomCombat</h3>
+                    <p class="java-card-description">
+                        This plugin has custom-made mobs & bosses aswell as items with Custom Abilities, stages and everything.
+                    </p>
+                    <div class="java-links">
+                        <a onclick="alert('This project is not on GitHub.')" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <span class="java-badge">Coming Soon</span>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="project animate-left" style="background-image: url('/static/screenshots/analyzer1.png'); background-position-x: 3.3%; background-size: 170%;">
-            <div class="project-image">
-                <div class="project-title">Market Analyzer</div>
-                <div class="project-description">
-                    This Market Analyzer gets data of every coin in the market and calculates certain things to get a basic overview. (Not on GitHub)
-                    <p class="event-date">/03/2024 - /05/2024</p>
+
+                <div class="java-card">
+                    <h3 class="java-card-title">CaseOpening</h3>
+                    <p class="java-card-description">
+                        A Minecraft Plugin with a cs2-like case opening system.<br>You can customize nearly <strong>everything</strong>.
+                    </p>
+                    <div class="java-links">
+                        <a href="https://github.com/f1shyondrugs/CaseOpening" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <span class="java-badge">01/2025</span>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="project animate-bottom" style="background-image: url('/static/screenshots/kucointrader1.png'); background-position-y: 60%;">
-            <div class="project-image">
-                <div class="project-title">KuCoin Trader</div>
-                <div class="project-description">
-                    This Trade Program Makes it easy for you to place Orders by automatically sending them to the KuCoin API and setting Take Profit and Stop Losses. (Not on GitHub)
-                    <p class="event-date">/04/2024 - /05/2024</p>
+
+                <div class="java-card">
+                    <h3 class="java-card-title">SellWand</h3>
+                    <p class="java-card-description">
+                        A Minecraft Plugin with a sellwand system. Includes customizable wand types, prices, and permissions. Features a GUI menu for easy configuration and usage statistics tracking.
+                    </p>
+                    <div class="java-links">
+                        <a href="https://github.com/f1shyondrugs/SellWand" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <span class="java-badge">01/2025</span>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="project animate-fade" style="background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));">
-            <div class="project-image">
-                <div class="project-title">...</div>
-                <div class="project-description">
-                    <span style="color: green;">&lt;!-- I'll add more projects later, too lazy --&gt; </span>
-                    <p class="event-date">Das_F1sHy312</p>
+
+                <div class="java-card">
+                    <h3 class="java-card-title">LobbyUltimate</h3>
+                    <p class="java-card-description">
+                        A Minecraft Plugin initializing a proxy lobby system. gives you different items into the inventories and a /lobby command on subservers.
+                    </p>
+                    <div class="java-links">
+                        <a href="https://github.com/f1shyondrugs/LobbyUltimate" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <span class="java-badge">01/2025</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2025 Das_F1sHy312. Made with ❤️ (and AI) | <a href="https://github.com/f1shyondrugs" target="_blank">GitHub</a></p>
+        </div>
+    </footer>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
