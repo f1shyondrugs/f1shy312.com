@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Check if we're on mobile - don't create extra characters
     if (window.innerWidth > 768) {
-        createFeaturedProjectCharacter();
-        createAboutSectionCharacter();
-        createSkillsSectionCharacter();
+    createFeaturedProjectCharacter();
+    createAboutSectionCharacter();
+    createSkillsSectionCharacter();
     }
     
     // Initialize custom cursor
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (charactersInSection.length > 0) {
                 // Pick a random character from the current section
                 const randomChar = charactersInSection[Math.floor(Math.random() * charactersInSection.length)];
-                changeCharacter(randomChar);
-                resetInactivityTimer();
+            changeCharacter(randomChar);
+            resetInactivityTimer();
             }
         }
     });
@@ -82,9 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
         createDefaultCharacters();
         
         if (wasDesktop) {
-            createFeaturedProjectCharacter();
-            createAboutSectionCharacter();
-            createSkillsSectionCharacter();
+        createFeaturedProjectCharacter();
+        createAboutSectionCharacter();
+        createSkillsSectionCharacter();
         }
     }, 300), { passive: true });
 });
@@ -203,8 +203,8 @@ function animatePageLoad() {
     // Staggered animation with fewer timeouts
     setTimeout(() => {
         elements.forEach((el, index) => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
             // Stagger through CSS instead of multiple timeouts
             el.style.transitionDelay = `${index * 0.15}s`;
         });
@@ -223,24 +223,24 @@ function initLazyAnimations() {
     
     // Prepare sections - set initial state
     sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'opacity 1s ease, transform 1s ease';
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 1s ease, transform 1s ease';
     });
-    
+                
     // Create a single observer for all sections
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
                 // Reveal the section
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
                 // Stop watching once animation is triggered
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
     // Start observing all sections
     sections.forEach(section => observer.observe(section));
 }
@@ -1195,27 +1195,522 @@ function initKeyboardSecret() {
     const secretTimeout = 1500; // Clear buffer after 1.5 seconds of inactivity
     let secretTimer;
     
+    // Define the secret code sequence
+    const konamiCode = "ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba";
+    const fishyCode = "fishy";
+    
     // Add event listener for keyboard input
     document.addEventListener('keydown', (e) => {
         // Reset the inactivity timer since keyboard is interaction
         resetInactivityTimer();
         
-        // Only process if the key is a valid character we can display
-        const key = e.key.toUpperCase();
-        if (isValidSecretKey(key)) {
-            // Flash the screen subtly to indicate secret activation
+        // First, handle the special key sequence
+        const key = e.key;
+        
+        // Append the key to the buffer
+        secretBuffer += key;
+        
+        // Check if buffer contains the secret sequence
+        if (secretBuffer.includes(konamiCode)) {
+            // Activate the konami code secret
+            activateKonamiSecret();
+            // Reset the buffer after successful activation
+            secretBuffer = '';
+        } else if (secretBuffer.includes(fishyCode)) {
+            // Activate the fishy secret
+            activateFishySecret();
+            // Reset the buffer after successful activation
+            secretBuffer = '';
+        }
+        
+        // Also handle the regular single key interaction for dot characters
+        if (isValidSecretKey(key.toUpperCase())) {
+            // Flash the screen subtly to indicate key press
             flashSecretActivation();
             
             // Change all dot characters to the pressed key
-            changeAllCharactersTo(key);
+            changeAllCharactersTo(key.toUpperCase());
+        }
             
             // Reset the secret buffer timer
             clearTimeout(secretTimer);
             secretTimer = setTimeout(() => {
                 secretBuffer = '';
             }, secretTimeout);
-        }
     });
+}
+
+// Activate the Konami Code secret effect
+function activateKonamiSecret() {
+    // Skip the confirmation overlay and activate trip mode immediately
+    activatePsychedelicMode();
+}
+
+// Activate the power mode that transforms the site with psychedelic effects
+function activatePsychedelicMode() {
+    // Set a flag to indicate power mode is active
+    window.powerModeActive = true;
+    
+    // Add power mode class to body for CSS hooks
+    document.body.classList.add('power-mode');
+    
+    // Create style for animation with more intense effects
+    const style = document.createElement('style');
+    style.id = 'power-mode-styles';
+    style.textContent = `
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* Psychedelic page warping effect - MUCH more intense */
+        @keyframes warpEffect {
+            0% { transform: scale(1) skew(0deg); filter: hue-rotate(0deg) contrast(1.2); }
+            25% { transform: scale(1.05) skew(1deg); filter: hue-rotate(90deg) contrast(1.3) saturate(1.3); }
+            50% { transform: scale(0.97) skew(-1deg); filter: hue-rotate(180deg) contrast(1.4) saturate(1.5); }
+            75% { transform: scale(1.05) skew(0.8deg); filter: hue-rotate(270deg) contrast(1.3) saturate(1.3); }
+            100% { transform: scale(1) skew(0deg); filter: hue-rotate(360deg) contrast(1.2); }
+        }
+        
+        /* Intense breathing animation for all elements */
+        @keyframes breathing {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Extreme glowing text animation */
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 5px currentColor; }
+            50% { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+            100% { text-shadow: 0 0 5px currentColor; }
+        }
+        
+        body.power-mode {
+            animation: warpEffect 15s infinite alternate;
+            transition: filter 0.5s ease;
+        }
+        
+        .power-mode section, .power-mode header, .power-mode footer {
+            animation: breathing 6s infinite ease-in-out;
+            transition: all 0.2s ease !important;
+            filter: saturate(1.5);
+        }
+        
+        .power-mode h1, .power-mode h2, .power-mode h3, .power-mode p {
+            animation: breathing 4s infinite ease-in-out, textGlow 3s infinite ease-in-out;
+            transition: text-shadow 0.2s ease, color 0.2s ease !important;
+        }
+        
+        .power-mode .dot-character {
+            transition: transform 0.05s cubic-bezier(0.19, 1, 0.22, 1) !important;
+            animation: breathing 2s infinite ease-in-out !important;
+            filter: contrast(1.2) saturate(1.5);
+        }
+        
+        .power-mode img, .power-mode .project-card {
+            animation: breathing 5s infinite ease-in-out;
+            filter: saturate(1.8) contrast(1.2) !important;
+            transition: all 0.2s ease !important;
+            transform-origin: center center;
+        }
+        
+        .power-mode .dot {
+            transition: transform 0.05s ease, opacity 0.05s ease, box-shadow 0.05s ease !important;
+        }
+        
+        .power-mode .active-dot {
+            box-shadow: 0 0 25px var(--accent-color) !important;
+        }
+        
+        .power-mode-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.9;
+            animation: fade-out 2s forwards;
+        }
+        
+        @keyframes fade-out {
+            0% { transform: scale(1.5); opacity: 0.9; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+        
+        /* Override the cursor:none setting to allow normal cursor */
+        .power-mode * {
+            cursor: auto !important;
+        }
+        
+        .power-mode a, .power-mode button, .power-mode .cta {
+            cursor: pointer !important;
+            text-shadow: 0 0 12px currentColor !important;
+            transition: all 0.2s ease !important;
+            filter: brightness(1.3);
+        }
+        
+        .power-mode .project-card:hover {
+            transform: scale(1.08) rotate(2deg) !important;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.6) !important;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Hide the original cursor element
+    const originalCursor = document.querySelector('.cursor-dot');
+    if (originalCursor) {
+        originalCursor.style.display = 'none';
+    }
+    
+    const cursorOutline = document.querySelector('.cursor-outline');
+    if (cursorOutline) {
+        cursorOutline.style.display = 'none';
+    }
+    
+    // Add color cycling to all text elements with more intense colors
+    const textElements = document.querySelectorAll('h1, h2, h3, h4, p, span, a');
+    startColorCycling(textElements);
+    
+    // Add trail effect to cursor
+    document.addEventListener('mousemove', createCursorTrail);
+    
+    // Add warp effect to the page
+    addWarpEffect();
+    
+    // Start permanently changing characters much faster
+    startCharacterCycling();
+    
+    // Enhance dot interaction
+    const originalHandleMouseMove = handleMouseMove;
+    window.handleMouseMove = function(e) {
+        if (window.powerModeActive) {
+            // Call with boosted effects
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            
+            // Get characters in viewport
+            const charContainers = document.querySelectorAll('.dot-character');
+            const viewportHeight = window.innerHeight;
+            
+            charContainers.forEach(container => {
+                const containerRect = container.getBoundingClientRect();
+                
+                // Skip elements not in viewport
+                if (containerRect.bottom < 0 || containerRect.top > viewportHeight) {
+                    return;
+                }
+                
+                // Calculate distance from mouse to container
+                const centerX = containerRect.left + containerRect.width / 2;
+                const centerY = containerRect.top + containerRect.height / 2;
+                const distance = Math.sqrt(
+                    Math.pow(mouseX - centerX, 2) + 
+                    Math.pow(mouseY - centerY, 2)
+                );
+                
+                // Enhanced rotation and effects for power mode with increased radius
+                const maxRadius = Math.max(containerRect.width, containerRect.height) * 5; // Greatly increased radius
+                if (distance < maxRadius) {
+                    // More dramatic rotation with sin/cos oscillation
+                    const time = Date.now() / 1000;
+                    const rotateX = (mouseY - centerY) / 5 + Math.sin(time) * 10; // Stronger rotation
+                    const rotateY = (mouseX - centerX) / -5 + Math.cos(time) * 10; // Stronger rotation
+                    
+                    // Add scale effect based on proximity with oscillation
+                    const proximityScale = 1 + Math.max(0, (1 - distance / maxRadius)) * 0.5; // More scaling
+                    const oscillation = Math.sin(time * 5) * 0.08; // Faster, stronger oscillation
+                    
+                    container.style.transform = `perspective(300px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${proximityScale + oscillation})`;
+                    
+                    // Enhanced dot effects with more range
+                    const dots = container.querySelectorAll('.dot');
+                    const maxDistance = 500; // Much larger range
+                    
+                    dots.forEach(dot => {
+                        const dotRect = dot.getBoundingClientRect();
+                        const dotCenterX = dotRect.left + dotRect.width / 2;
+                        const dotCenterY = dotRect.top + dotRect.height / 2;
+                        
+                        const distanceToDot = Math.sqrt(
+                            Math.pow(mouseX - dotCenterX, 2) + 
+                            Math.pow(mouseY - dotCenterY, 2)
+                        );
+                        
+                        if (distanceToDot < maxDistance) {
+                            const isActive = dot.dataset.isActive === 'true';
+                            const intensity = 1 - distanceToDot / maxDistance;
+                            // Add sin wave oscillation to the push effect
+                            const push = 50 * intensity * (1 + Math.sin(time * 6) * 0.4); // Much stronger push
+                            
+                            // Calculate direction with swirling
+                            const swirl = Math.sin(time * 3) * Math.PI / 3; // More intense swirling
+                            const angleRadians = Math.atan2(dotCenterY - mouseY, dotCenterX - mouseX) + swirl * intensity;
+                            const pushX = Math.cos(angleRadians) * push;
+                            const pushY = Math.sin(angleRadians) * push;
+                            
+                            // Apply enhanced styles
+                            if (isActive) {
+                                // More dramatic effect with rotation and oscillation
+                                const randomRotate = (Math.random() - 0.5) * 90 * intensity + Math.sin(time * 4 + parseFloat(dot.dataset.x || 0)) * 45;
+                                const scaleOsc = 1 + intensity * 2 + Math.sin(time * 7 + parseFloat(dot.dataset.y || 0)) * 0.5;
+                                dot.style.transform = `translate3d(${pushX}px, ${pushY}px, 0) scale(${scaleOsc}) rotate(${randomRotate}deg)`;
+                                
+                                // More vibrant rainbow color effect with cycling
+                                const hue = (time * 150 + distanceToDot + parseFloat(dot.dataset.x || 0) * 10) % 360;
+                                dot.style.backgroundColor = `hsl(${hue}, 100%, 70%)`;
+                                dot.style.boxShadow = `0 0 ${30 + intensity * 40 + Math.sin(time * 8) * 15}px hsl(${hue}, 100%, 60%)`;
+                            } else {
+                                // More visible inactive dots
+                                const smallRotate = (Math.random() - 0.5) * 50 * intensity;
+                                dot.style.transform = `translate3d(${pushX}px, ${pushY}px, 0) rotate(${smallRotate}deg)`;
+                                
+                                // More colorful inactive dots
+                                const hue = (time * 80 + parseFloat(dot.dataset.y || 0) * 30) % 360;
+                                dot.style.backgroundColor = `hsla(${hue}, 100%, 70%, ${Math.min(0.9, 0.2 + intensity * 0.8)})`;
+                                dot.style.opacity = Math.min(0.9, 0.2 + intensity * 0.8);
+                            }
+                        } else {
+                            // Reset style when out of range with subtle animation
+                            if (dot.dataset.isActive === 'false') {
+                                const resetOsc = Math.sin(time * 4 + parseFloat(dot.dataset.x || 0) * 15) * 0.1;
+                                dot.style.transform = `translate3d(0, 0, 0) scale(${1 + resetOsc})`;
+                                dot.style.opacity = Math.max(0.05, 0.2 + resetOsc);
+                            } else {
+                                const hue = (time * 150 + parseFloat(dot.dataset.y || 0) * 30) % 360;
+                                const resetOsc = Math.sin(time * 3 + parseFloat(dot.dataset.y || 0) * 15) * 0.15;
+                                dot.style.transform = `translate3d(0, 0, 0) scale(${1 + resetOsc})`;
+                                dot.style.backgroundColor = `hsl(${hue}, 100%, 70%)`;
+                                dot.style.boxShadow = `0 0 ${10 + Math.sin(time * 5) * 10}px hsl(${hue}, 80%, 60%)`;
+                            }
+                        }
+                    });
+                } else if (container.style.transform) {
+                    // Reset with subtle animation even when far away
+                    const time = Date.now() / 1000;
+                    const resetOsc = Math.sin(time * 3) * 0.08;
+                    container.style.transform = `perspective(800px) scale(${1 + resetOsc})`;
+                    
+                    // Reset dots with subtle animation
+                    const dots = container.querySelectorAll('.dot');
+                    dots.forEach(dot => {
+                        if (dot.dataset.isActive === 'false') {
+                            dot.style.transform = `translate3d(0, 0, 0) scale(${1 + resetOsc * 0.5})`;
+                            dot.style.opacity = '0.05';
+                        } else {
+                            const hue = (time * 150 + parseFloat(dot.dataset.y || 0) * 30) % 360;
+                            dot.style.transform = `translate3d(0, 0, 0) scale(${1 + resetOsc})`;
+                            dot.style.backgroundColor = `hsl(${hue}, 100%, 70%)`;
+                            dot.style.boxShadow = `0 0 ${10 + Math.sin(time * 5) * 10}px hsl(${hue}, 80%, 60%)`;
+                        }
+                    });
+                }
+            });
+        } else {
+            // If power mode is not active, use the original function
+            originalHandleMouseMove(e);
+        }
+    };
+    
+    // Save the original function for reference
+    window.originalHandleMouseMove = originalHandleMouseMove;
+    
+    // Add deactivation button
+    const deactivateBtn = document.createElement('button');
+    deactivateBtn.textContent = 'End Trip';
+    deactivateBtn.style.position = 'fixed';
+    deactivateBtn.style.bottom = '10px';
+    deactivateBtn.style.right = '10px';
+    deactivateBtn.style.background = 'rgba(0,0,0,0.7)';
+    deactivateBtn.style.color = 'white';
+    deactivateBtn.style.border = 'none';
+    deactivateBtn.style.padding = '5px 10px';
+    deactivateBtn.style.borderRadius = '4px';
+    deactivateBtn.style.zIndex = '9999';
+    deactivateBtn.style.cursor = 'pointer';
+    deactivateBtn.style.fontWeight = 'bold';
+    
+    document.body.appendChild(deactivateBtn);
+    
+    deactivateBtn.addEventListener('click', deactivatePowerMode);
+    
+    // Store all cleanup functions
+    const cleanupFunctions = [];
+    
+    function deactivatePowerMode() {
+        // Remove event listeners
+        document.removeEventListener('mousemove', createCursorTrail);
+        document.removeEventListener('dblclick', createRandomCharacter);
+        document.removeEventListener('keydown', createRandomKeyCharacter);
+        
+        // Run all cleanup functions
+        cleanupFunctions.forEach(fn => fn());
+        
+        // Restore original mouse move handler
+        window.handleMouseMove = window.originalHandleMouseMove;
+        
+        // Restore original cursor handler
+        if (window.originalMoveCustomCursor) {
+            window.moveCustomCursor = window.originalMoveCustomCursor;
+        }
+        
+        // Remove power mode elements
+        const indicator = document.querySelector('.power-mode-indicator');
+        if (indicator && document.body.contains(indicator)) {
+            document.body.removeChild(indicator);
+        }
+        
+        if (document.body.contains(deactivateBtn)) {
+            document.body.removeChild(deactivateBtn);
+        }
+        
+        // Remove styles
+        const powerStyles = document.getElementById('power-mode-styles');
+        if (powerStyles && document.head.contains(powerStyles)) {
+            document.head.removeChild(powerStyles);
+        }
+        
+        // Reset cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        if (cursorDot) {
+            cursorDot.classList.remove('power-mode');
+            cursorDot.style.position = '';
+            cursorDot.style.zIndex = '';
+        }
+        
+        const cursorOutline = document.querySelector('.cursor-outline');
+        if (cursorOutline) {
+            cursorOutline.style.position = '';
+            cursorOutline.style.zIndex = '';
+        }
+        
+        // Reset all transforms on elements
+        document.querySelectorAll('section, header, div, h1, h2, h3, p, span, a').forEach(el => {
+            el.style.transform = '';
+            el.style.filter = '';
+            el.style.color = '';
+            el.style.textShadow = '';
+        });
+        
+        // Reset body background
+        document.body.style.backgroundPosition = '';
+        
+        // Remove temp characters
+        document.querySelectorAll('.temp-character').forEach(char => {
+            if (document.body.contains(char)) {
+                document.body.removeChild(char);
+            }
+        });
+        
+        // Remove trails
+        document.querySelectorAll('.power-mode-dot').forEach(dot => {
+            if (document.body.contains(dot)) {
+                document.body.removeChild(dot);
+            }
+        });
+        
+        // Reset all characters to normal
+        document.querySelectorAll('.dot-character').forEach(char => {
+            const currentChar = char.getAttribute('data-character');
+            char.innerHTML = '';
+            createDotMatrix(char, currentChar);
+        });
+        
+        // Reset body class
+        document.body.classList.remove('power-mode');
+        
+        // Reset flag
+        window.powerModeActive = false;
+    }
+}
+
+// Activate the Fishy Secret effect
+function activateFishySecret() {
+    // Create some swimming fish that move across the screen
+    const fishCount = 15;
+    const fishContainer = document.createElement('div');
+    fishContainer.className = 'fish-container';
+    fishContainer.style.position = 'fixed';
+    fishContainer.style.top = '0';
+    fishContainer.style.left = '0';
+    fishContainer.style.width = '100%';
+    fishContainer.style.height = '100%';
+    fishContainer.style.pointerEvents = 'none';
+    fishContainer.style.zIndex = '9999';
+    fishContainer.style.overflow = 'hidden';
+    
+    document.body.appendChild(fishContainer);
+    
+    // Create fish with different colors, sizes, and speeds
+    for (let i = 0; i < fishCount; i++) {
+        createFish(fishContainer, i);
+    }
+    
+    // Remove the fish after 15 seconds
+    setTimeout(() => {
+        fishContainer.style.opacity = '0';
+        fishContainer.style.transition = 'opacity 1s ease';
+        setTimeout(() => {
+            if (document.body.contains(fishContainer)) {
+                document.body.removeChild(fishContainer);
+            }
+        }, 1000);
+    }, 15000);
+}
+
+// Create a single fish element
+function createFish(container, index) {
+    const fish = document.createElement('div');
+    const isMovingRight = Math.random() > 0.5;
+    
+    // Random fish properties
+    const size = 20 + Math.random() * 40;
+    const speed = 5 + Math.random() * 10;
+    const delay = Math.random() * 5;
+    const verticalPos = 10 + Math.random() * 80;
+    const hue = Math.random() * 360;
+    
+    fish.className = 'fish';
+    fish.innerHTML = isMovingRight ? '&gt;&lt;&gt;' : '&lt;&gt;&lt;';
+    fish.style.position = 'absolute';
+    fish.style.top = `${verticalPos}vh`;
+    fish.style.left = isMovingRight ? '-50px' : '100%';
+    fish.style.fontSize = `${size}px`;
+    fish.style.color = `hsl(${hue}, 80%, 60%)`;
+    fish.style.transform = `scale(${isMovingRight ? 1 : -1}, 1)`;
+    fish.style.textShadow = `0 0 5px hsl(${hue}, 80%, 80%)`;
+    fish.style.animationDuration = `${10 - speed}s`;
+    fish.style.animationDelay = `${delay}s`;
+    fish.style.animationName = isMovingRight ? 'swimRight' : 'swimLeft';
+    fish.style.animationTimingFunction = 'linear';
+    fish.style.animationIterationCount = 'infinite';
+    
+    container.appendChild(fish);
+    
+    // Add CSS animation if it doesn't exist
+    if (!document.getElementById('fish-animations')) {
+        const style = document.createElement('style');
+        style.id = 'fish-animations';
+        style.textContent = `
+            @keyframes swimRight {
+                from { left: -50px; }
+                to { left: 100%; }
+            }
+            @keyframes swimLeft {
+                from { left: 100%; }
+                to { left: -50px; }
+            }
+            .fish {
+                will-change: transform, left;
+                animation-duration: 10s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    }
 }
 
 // Check if the key is one we can display as a dot matrix
