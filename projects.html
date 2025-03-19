@@ -16,6 +16,11 @@
     
     <header>
         <div class="logo">Das_F1sHy312</div>
+        <button class="mobile-nav-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
         <nav>
             <ul>
                 <li><a href="index.html" data-text="HOME">HOME</a></li>
@@ -44,10 +49,10 @@
                 <div class="category-section">
                     <h3>PYTHON PROJECTS</h3>
                     <div class="project-grid">
+                        <!-- First 4 Python projects (always visible) -->
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>MP3 PLAYER</h4>
-                                <span class="project-date">11/2023</span>
                             </div>
                             <p>MP3 Player with Playlists, Volume Control, etc... made with libraries customTkinter, PyGame and more.</p>
                             <div class="tech-stack">
@@ -59,7 +64,6 @@
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>TWITCH CHATBOT</h4>
-                                <span class="project-date">12/2023</span>
                             </div>
                             <p>This Chatbot has a Point system and a whole Economy. The Chat can control your Game, play Sound Effects, Gamble with their points and much more!</p>
                             <div class="tech-stack">
@@ -71,7 +75,6 @@
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>REDDIT REPLIER</h4>
-                                <span class="project-date">01/2024</span>
                             </div>
                             <p>Automatically replies to posts in a Reddit Community using OpenAI API to generate comments and Reddit API to send them.</p>
                             <div class="tech-stack">
@@ -83,7 +86,6 @@
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>REVERSE SHELL</h4>
-                                <span class="project-date">02/2024</span>
                             </div>
                             <p>Uses Python Websockets to connect to a remote server. The server has a web UI to send and receive commands.</p>
                             <div class="tech-stack">
@@ -92,27 +94,119 @@
                             </div>
                         </div>
                         
-                        <div class="project-card">
-                            <div class="project-card-header">
-                                <h4>PAPERTRADING PROGRAM</h4>
-                                <span class="project-date">03/2024</span>
-                            </div>
-                            <p>This Program lets you Paper Trade with the Binance API to get the data. It shows every second, how much Percentage you've gained or lost, by buying multiple coins.</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag">PYTHON</span>
-                                <span class="tech-tag">API</span>
-                            </div>
-                        </div>
+                        <!-- Show More Button -->
+                        <button class="show-more-btn" data-target="python-more">...</button>
                         
-                        <div class="project-card">
-                            <div class="project-card-header">
-                                <h4>MARKET ANALYZER</h4>
-                                <span class="project-date">03/2024 - 05/2024</span>
+                        <!-- Hidden Python projects -->
+                        <div id="python-more" class="more-projects">
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>PAPERTRADING PROGRAM</h4>
+                                </div>
+                                <p>This Program lets you Paper Trade with the Binance API to get the data. It shows every second, how much Percentage you've gained or lost, by buying multiple coins.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">API</span>
+                                </div>
                             </div>
-                            <p>This Market Analyzer gets data of every coin in the market and calculates certain things to get a basic overview.</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag">PYTHON</span>
-                                <span class="tech-tag">DATA</span>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>MARKET ANALYZER</h4>
+                                </div>
+                                <p>This Market Analyzer gets data of every coin in the market and calculates certain things to get a basic overview.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">DATA</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>AI VOICE ASSISTANT</h4>
+                                </div>
+                                <p>AI Voice Assistant written in python with natural language processing capabilities.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">AI</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>SPACE DESTROYERS</h4>
+                                </div>
+                                <p>Destroy Meteors with your hands. Works via Hand/Body Tracking in Python/Machine Learning.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">ML</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>PYTHON RANSOMWARE</h4>
+                                </div>
+                                <p>Educational demonstration of file encryption. Currently it only encrypts the testfiles folder (educational purposes only).</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">SECURITY</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>FACE RECOGNITION</h4>
+                                </div>
+                                <p>Live camera face/eye recognition, draws squares around detected eyes/faces in real-time.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">CV</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>WEBSITE SUBFOLDER SCANNER</h4>
+                                </div>
+                                <p>A simple python program that automatically scans for subfiles/subfolders on websites.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">SECURITY</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>HUMAN BENCHMARK BEATER</h4>
+                                </div>
+                                <p>Python Written Human Benchmark Beater for humanbenchmark.com with automated test completion.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">AUTOMATION</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>ENCRYPTER</h4>
+                                </div>
+                                <p>File encryption tool with secure encryption algorithms.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">SECURITY</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>CLASH ROYALE BOT</h4>
+                                </div>
+                                <p>Python Written Clash Royale Playing Bot with automated gameplay capabilities.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PYTHON</span>
+                                    <span class="tech-tag">GAMING</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,6 +216,19 @@
                 <div class="category-section">
                     <h3>WEB PROJECTS</h3>
                     <div class="project-grid">
+                        <!-- First 4 Web projects (always visible) -->
+                        <div class="project-card">
+                            <div class="project-card-header">
+                                <h4>POINTER</h4>
+                                <span class="project-status">IN PROGRESS</span>
+                            </div>
+                            <p>VSCode Clone with local LLM AI Capabilities. A revolutionary code editor with AI that runs entirely on your machine.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">TYPESCRIPT</span>
+                                <span class="tech-tag">AI</span>
+                            </div>
+                        </div>
+                        
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>UBUNTUFOLIO</h4>
@@ -149,7 +256,6 @@
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>CRAZYFOLIO</h4>
-                                <span class="project-date">11/2024</span>
                             </div>
                             <p>A crazy styled portfolio website</p>
                             <div class="tech-stack">
@@ -159,39 +265,101 @@
                             </div>
                         </div>
                         
-                        <div class="project-card">
-                            <div class="project-card-header">
-                                <h4>MONKEYTYPE</h4>
-                                <span class="project-date">12/2024</span>
-                            </div>
-                            <p>MonkeyType off of Wish or something</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag">HTML</span>
-                                <span class="tech-tag">CSS</span>
-                                <span class="tech-tag">JS</span>
-                            </div>
-                        </div>
+                        <!-- Show More Button -->
+                        <button class="show-more-btn" data-target="web-more">...</button>
                         
-                        <div class="project-card">
-                            <div class="project-card-header">
-                                <h4>WEATHER APP</h4>
+                        <!-- Hidden Web projects -->
+                        <div id="web-more" class="more-projects">
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>MONKEYTYPE</h4>
+                                </div>
+                                <p>MonkeyType off of Wish or something</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">HTML</span>
+                                    <span class="tech-tag">CSS</span>
+                                    <span class="tech-tag">JS</span>
+                                </div>
                             </div>
-                            <p>A weather forecast application with clean UI and detailed weather data.</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag">HTML</span>
-                                <span class="tech-tag">CSS</span>
-                                <span class="tech-tag">API</span>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>WEATHER APP</h4>
+                                </div>
+                                <p>A weather forecast application with clean UI and detailed weather data.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">HTML</span>
+                                    <span class="tech-tag">CSS</span>
+                                    <span class="tech-tag">API</span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="project-card">
-                            <div class="project-card-header">
-                                <h4>URL SHORTENER</h4>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>URL SHORTENER</h4>
+                                </div>
+                                <p>A simple URL shortening service</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">NODE</span>
+                                    <span class="tech-tag">API</span>
+                                </div>
                             </div>
-                            <p>A simple URL shortening service</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag">NODE</span>
-                                <span class="tech-tag">API</span>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>404 PAGE</h4>
+                                </div>
+                                <p>A stylish custom 404.f1shy312.com error page</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">HTML</span>
+                                    <span class="tech-tag">CSS</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>BLOCKYPLAYZ</h4>
+                                </div>
+                                <p>Minecraft Server website for blockyplayz.de with server information and features</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">HTML</span>
+                                    <span class="tech-tag">CSS</span>
+                                    <span class="tech-tag">JS</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>TERMFOLIO</h4>
+                                </div>
+                                <p>Terminal styled portfolio website with command-line interface aesthetics</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">HTML</span>
+                                    <span class="tech-tag">CSS</span>
+                                    <span class="tech-tag">JS</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>ANIME LIST</h4>
+                                </div>
+                                <p>A personal collection of watched anime with ratings and comments</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">HTML</span>
+                                    <span class="tech-tag">CSS</span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>MINECRAFT SERVER SCANNER</h4>
+                                </div>
+                                <p>A tool for scanning Minecraft servers for open ports and vulnerabilities</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">JS</span>
+                                    <span class="tech-tag">SECURITY</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -204,10 +372,10 @@
                         <p>I'm currently building my own Minecraft server network called <strong>FishyNetwork</strong>. All plugins below are part of this network.</p>
                     </div>
                     <div class="project-grid">
+                        <!-- First 4 Java projects (always visible) -->
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>CUSTOMCOMBAT</h4>
-                                <span class="project-status">COMING SOON</span>
                             </div>
                             <p>This plugin has custom-made mobs & bosses aswell as items with Custom Abilities, stages and everything.</p>
                             <div class="tech-stack">
@@ -219,7 +387,6 @@
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>CASEOPENING</h4>
-                                <span class="project-date">01/2025</span>
                             </div>
                             <p>A Minecraft Plugin with a cs2-like case opening system. You can customize nearly <strong>everything</strong>.</p>
                             <div class="tech-stack">
@@ -231,7 +398,6 @@
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>SELLWAND</h4>
-                                <span class="project-date">01/2025</span>
                             </div>
                             <p>A Minecraft Plugin with a sellwand system. Includes customizable wand types, prices, and permissions.</p>
                             <div class="tech-stack">
@@ -243,7 +409,6 @@
                         <div class="project-card">
                             <div class="project-card-header">
                                 <h4>LOBBYULTIMATE</h4>
-                                <span class="project-date">01/2025</span>
                             </div>
                             <p>A Minecraft Plugin initializing a proxy lobby system with inventory items and a /lobby command.</p>
                             <div class="tech-stack">
@@ -251,16 +416,28 @@
                                 <span class="tech-tag">BUNGEE</span>
                             </div>
                         </div>
+                        
+                        <!-- Show More Button -->
+                        <button class="show-more-btn" data-target="java-more">...</button>
+                        
+                        <!-- Hidden Java projects -->
+                        <div id="java-more" class="more-projects">
+                            <div class="project-card">
+                                <div class="project-card-header">
+                                    <h4>OPCOMMAND</h4>
+                                </div>
+                                <p>This command will give you 10000$ using LiteEco. A simple economy plugin integration.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">JAVA</span>
+                                    <span class="tech-tag">SPIGOT</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
-    <div class="floating-status">
-        <div class="status-indicator available"></div>
-        <span>AVAILABLE FOR WORK</span>
-    </div>
 
     <footer>
         <div class="footer-left">© 2025 Das_F1sHy312</div>
@@ -282,6 +459,39 @@
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
                 }, 100 + index * 50);
+            });
+            
+            // Show More functionality
+            const showMoreButtons = document.querySelectorAll('.show-more-btn');
+            
+            showMoreButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const targetContent = document.getElementById(targetId);
+                    
+                    // Toggle visibility
+                    targetContent.classList.toggle('visible');
+                    button.classList.toggle('active');
+                    
+                    // Animate the newly visible cards with a delay
+                    if (targetContent.classList.contains('visible')) {
+                        const hiddenCards = targetContent.querySelectorAll('.project-card');
+                        hiddenCards.forEach((card, index) => {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(30px)';
+                            
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100 + index * 50);
+                        });
+                        
+                        // Scroll to make sure content is visible
+                        setTimeout(() => {
+                            button.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 300);
+                    }
+                });
             });
         });
     </script>

@@ -18,7 +18,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none;
+    cursor: none !important;
 }
 
 body {
@@ -121,6 +121,7 @@ h1 {
 .cta:hover {
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    cursor: none;
 }
 
 .cta:hover::before {
@@ -151,6 +152,7 @@ h1 {
     transform: translate(-50%, -50%);
     transition: width 0.3s, height 0.3s, background-color 0.3s;
     mix-blend-mode: difference;
+    will-change: transform;
 }
 
 /* Main layout */
@@ -189,6 +191,7 @@ header {
 
 .logo:hover {
     transform: scale(1.05);
+    cursor: none;
 }
 
 nav ul {
@@ -222,6 +225,7 @@ nav a::after {
 
 nav a:hover {
     color: var(--accent-color);
+    cursor: none;
 }
 
 nav a:hover::after {
@@ -241,6 +245,7 @@ nav a:hover::after {
     background-color: var(--accent-color);
     color: #ffffff;
     transform: translateY(-2px);
+    cursor: none;
 }
 
 /* Hero Section */
@@ -299,10 +304,11 @@ nav a:hover::after {
 
 .dot-character {
     position: relative;
-    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease;
+    transition: transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
     background-color: transparent;
     border: none;
     animation: floating 4s ease-in-out infinite;
+    will-change: transform;
 }
 
 .dot-character.large {
@@ -343,8 +349,8 @@ nav a:hover::after {
     height: 5px;
     border-radius: 50%;
     background-color: var(--dot-color);
-    transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
-    animation: pulse 2s infinite alternate;
+    transition: transform 0.1s ease, opacity 0.1s ease, box-shadow 0.1s ease;
+    will-change: transform, opacity, box-shadow;
 }
 
 .active-dot {
@@ -483,7 +489,11 @@ footer {
 
 @media (max-width: 768px) {
     * {
-        cursor: auto;
+        cursor: auto !important;
+    }
+    
+    .show-more-btn, .project-card, .cta, a, button, .skill-tag, .tech-tag {
+        cursor: pointer !important;
     }
     
     .cursor-dot {
@@ -527,6 +537,42 @@ footer {
         display: none;
     }
     
+    .dot-character, .dot-characters-grid, .interaction-hint, .project-character, .about-character, .skills-character {
+        display: none !important;
+    }
+    
+    .right-column {
+        display: none;
+    }
+    
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .featured-project, .about-content, .skills-content {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .project-visual, .about-visual, .skills-visual {
+        display: none;
+    }
+    
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .tech-stack {
+        flex-wrap: wrap;
+    }
+    
+    body {
+        overflow-x: hidden;
+    }
+    
+    .section-container, .about-text p, .project-description p {
+        max-width: 100%;
+    }
+    
     footer {
         margin-top: 2rem;
         padding: 1.5rem;
@@ -534,6 +580,14 @@ footer {
         flex-direction: column;
         gap: 0.5rem;
         align-items: flex-start;
+    }
+    
+    .more-projects {
+        grid-template-columns: 1fr;
+    }
+    
+    .show-more-btn {
+        margin: 10px auto;
     }
 }
 
@@ -672,6 +726,7 @@ section {
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    cursor: none;
 }
 
 .project-card:hover {
@@ -679,6 +734,7 @@ section {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-color: rgba(99, 102, 241, 0.2);
     background-color: rgba(99, 102, 241, 0.03);
+    cursor: none;
 }
 
 .project-card-header {
@@ -697,8 +753,12 @@ section {
 
 .project-date, .project-status {
     font-size: 0.75rem;
-    color: var(--tertiary-color);
+    color: var(--accent-color);
     letter-spacing: 1px;
+    background-color: rgba(99, 102, 241, 0.1);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 600;
 }
 
 .project-card p {
@@ -755,6 +815,7 @@ section {
 .more-projects-link:hover {
     color: var(--accent-color);
     transform: translateX(3px);
+    cursor: none;
 }
 
 /* About Section */
@@ -840,14 +901,14 @@ section {
 
 /* Floating animation for all dot characters */
 @keyframes floating {
-    0% { transform: translate(0, 0); }
-    50% { transform: translate(0, -10px); }
-    100% { transform: translate(0, 0); }
+    0% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -10px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.2); }
+    0% { transform: scale3d(1, 1, 1); }
+    100% { transform: scale3d(1.2, 1.2, 1); }
 }
 
 /* Skills Section */
@@ -912,6 +973,7 @@ section {
     background-color: rgba(99, 102, 241, 0.1);
     border-color: rgba(99, 102, 241, 0.3);
     transform: translateY(-3px);
+    cursor: none;
 }
 
 @media (max-width: 1200px) {
@@ -927,4 +989,198 @@ section {
     .skills-categories {
         order: 1;
     }
-} 
+}
+
+/* Mobile Navigation */
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.mobile-nav-toggle .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.mobile-nav-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-nav-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-nav-toggle.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 576px) {
+    nav ul {
+        gap: 1rem;
+    }
+    
+    header {
+        flex-direction: column;
+        padding: 1rem 1.5rem;
+        height: auto;
+    }
+    
+    /* more rules... */
+}
+
+@media (max-width: 480px) {
+    .mobile-nav-toggle {
+        display: block;
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+    }
+    
+    nav ul {
+        position: fixed;
+        flex-direction: column;
+        background-color: rgba(15, 15, 15, 0.95);
+        backdrop-filter: blur(10px);
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        padding-top: 80px;
+        align-items: center;
+        justify-content: flex-start;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+    
+    nav ul.active {
+        transform: translateX(0);
+    }
+    
+    nav ul li {
+        margin: 1.5rem 0;
+    }
+    
+    nav a {
+        font-size: 1.2rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .skill-tags {
+        flex-wrap: wrap;
+    }
+}
+
+/* Update section spacing and scrolling */
+
+/* Dot character active section highlighting */
+.dot-character.active-section {
+    animation: activeSectionPulse 3s infinite alternate;
+    will-change: transform;
+}
+
+.dot-character.active-section .dot[data-is-active="true"] {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.8);
+}
+
+@keyframes activeSectionPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+/* Show More Button Styles */
+.show-more-btn {
+    grid-column: 1 / -1; /* Span all columns */
+    margin: 20px auto;
+    background-color: rgba(99, 102, 241, 0.1);
+    color: var(--accent-color);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    padding-bottom: 5px; /* Adjust for visual centering of ellipsis */
+}
+
+.show-more-btn:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+}
+
+.show-more-btn.active {
+    transform: rotate(180deg);
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Hidden Projects Container */
+.more-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    grid-column: 1 / -1; /* Span all columns */
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease, height 0.5s ease;
+}
+
+.more-projects.visible {
+    height: auto;
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .more-projects {
+        grid-template-columns: 1fr;
+    }
+    
+    .show-more-btn {
+        margin: 10px auto;
+    }
+}
+
+.cta, a, button, .skill-tag, .tech-tag {
+    cursor: none;
+}
+
+@media (max-width: 768px) {
+    * {
+        cursor: auto !important;
+    }
+    
+    .show-more-btn, .project-card, .cta, a, button, .skill-tag, .tech-tag {
+        cursor: pointer !important;
+    }
+    
+    .cursor-dot {
+        display: none;
+    }
+    
+    /* Rest of the media query rules */
+    header {
+        padding: 0 1.5rem;
+    }
+    
+    /* Additional rules... */
+}

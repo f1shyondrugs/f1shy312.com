@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Create the dot matrix characters with default "DEV" letters
+    // Create limited number of characters for performance
     createDefaultCharacters();
     
-    // Create featured project character
-    createFeaturedProjectCharacter();
-    
-    // Create about section character
-    createAboutSectionCharacter();
-    
-    // Create skills section character
-    createSkillsSectionCharacter();
+    // Check if we're on mobile - don't create extra characters
+    if (window.innerWidth > 768) {
+        createFeaturedProjectCharacter();
+        createAboutSectionCharacter();
+        createSkillsSectionCharacter();
+    }
     
     // Initialize custom cursor
     initCustomCursor();
@@ -19,6 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Add keyboard secret
     initKeyboardSecret();
+    
+    // Initialize mobile navigation
+    initMobileNavigation();
+    
+    // Initialize section detection
+    initSectionDetection();
     
     // Add click event to dot characters to change them
     document.querySelectorAll('.dot-character').forEach(char => {
@@ -32,47 +36,62 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         // Don't trigger if clicking on a dot character or interactive element
         if (!e.target.closest('.dot-character, a, .cta')) {
-            // Pick a random character to change for visual interest
-            const characters = document.querySelectorAll('.dot-character');
-            const randomChar = characters[Math.floor(Math.random() * characters.length)];
-            changeCharacter(randomChar);
-            resetInactivityTimer();
+            // Get characters only from the current section
+            const currentSection = getCurrentSection();
+            const charactersInSection = getCharactersInSection(currentSection);
+            
+            if (charactersInSection.length > 0) {
+                // Pick a random character from the current section
+                const randomChar = charactersInSection[Math.floor(Math.random() * charactersInSection.length)];
+                changeCharacter(randomChar);
+                resetInactivityTimer();
+            }
         }
     });
     
     // Reset inactivity timer on any interaction
-    document.addEventListener('mousemove', () => {
+    document.addEventListener('mousemove', debounce(() => {
         resetInactivityTimer();
-    });
+    }, 100), { passive: true });
     
-    // Add mousemove event for interactive effect
+    // Make dot hover animation ultra-responsive by removing debounce
     document.addEventListener('mousemove', (e) => {
         handleMouseMove(e);
+    }, { passive: true });
+    
+    // Separate custom cursor movement to be smoother (no debounce)
+    document.addEventListener('mousemove', (e) => {
         moveCustomCursor(e);
-    });
+    }, { passive: true });
     
     // Add hover effects for interactive elements
     addHoverEffects();
     
-    // Add page load animation
+    // Add page load animation - optimized for performance
     animatePageLoad();
     
     // Add smooth scrolling to anchor links
     addSmoothScrolling();
     
-    // Handle resize events
+    // Handle resize events - throttled for performance
     window.addEventListener('resize', debounce(() => {
+        // Only recreate characters if browser width changes category (mobile/desktop)
+        const wasDesktop = window.innerWidth > 768;
+        
         clearDotCharacters();
         createDefaultCharacters();
-        createFeaturedProjectCharacter();
-        createAboutSectionCharacter();
-        createSkillsSectionCharacter();
-    }, 300));
+        
+        if (wasDesktop) {
+            createFeaturedProjectCharacter();
+            createAboutSectionCharacter();
+            createSkillsSectionCharacter();
+        }
+    }, 300), { passive: true });
 });
 
 // Inactivity timer variables
 let inactivityTimeout;
-const inactivityDelay = 1500; // 20 seconds
+const inactivityDelay = 5000; // 20 seconds
 
 // Initialize inactivity timer
 function initInactivityTimer() {
@@ -89,40 +108,33 @@ function resetInactivityTimer() {
 
 // Reset to default characters
 function resetToDefaultCharacters() {
-    const char1 = document.getElementById('char1');
-    const char2 = document.getElementById('char2');
-    const char3 = document.getElementById('char3');
-    const featuredChar = document.getElementById('featured-char');
-    const aboutChar = document.getElementById('about-char');
-    const skillsChar = document.getElementById('skills-char');
+    // Get the current active section
+    const currentSection = getCurrentSection();
     
-    // Reset hero characters
-    if (char1 && char1.getAttribute('data-character') !== 'D') {
-        cycleToSpecificCharacter(char1, 'D');
-    }
+    // Reset only characters in the current section
+    const characters = getCharactersInSection(currentSection);
     
-    if (char2 && char2.getAttribute('data-character') !== 'E') {
-        cycleToSpecificCharacter(char2, 'E');
-    }
-    
-    if (char3 && char3.getAttribute('data-character') !== 'V') {
-        cycleToSpecificCharacter(char3, 'V');
-    }
-    
-    // Reset featured project character
-    if (featuredChar && featuredChar.getAttribute('data-character') !== '<') {
-        cycleToSpecificCharacter(featuredChar, '<');
-    }
-    
-    // Reset about section character
-    if (aboutChar && aboutChar.getAttribute('data-character') !== '?') {
-        cycleToSpecificCharacter(aboutChar, '?');
-    }
-    
-    // Reset skills section character (if exists)
-    if (skillsChar && skillsChar.getAttribute('data-character') !== '#') {
-        cycleToSpecificCharacter(skillsChar, '#');
-    }
+    characters.forEach(char => {
+        const charId = char.id;
+        
+        if (charId === 'char1' || charId === 'char2' || charId === 'char3') {
+            // Main hero characters
+            const letters = ['D', 'E', 'V'];
+            const letterIndex = ['char1', 'char2', 'char3'].indexOf(charId);
+            if (letterIndex >= 0 && letterIndex < letters.length) {
+                cycleToSpecificCharacter(char, letters[letterIndex]);
+            }
+        } else if (charId === 'featured-char') {
+            // Featured project character
+            cycleToSpecificCharacter(char, 'P');
+        } else if (charId === 'about-char') {
+            // About section character
+            cycleToSpecificCharacter(char, 'A');
+        } else if (charId === 'skills-char') {
+            // Skills section character
+            cycleToSpecificCharacter(char, 'S');
+        }
+    });
 }
 
 // Create default characters (D, E, V)
@@ -160,58 +172,77 @@ function createSkillsSectionCharacter() {
     }
 }
 
-// Page load animation
+// Page load animation - optimized for performance
 function animatePageLoad() {
     const elements = [
         document.querySelector('header'),
         document.querySelector('.left-column'),
         document.querySelector('.right-column'),
         document.querySelector('.scroll-indicator')
-    ];
+    ].filter(el => el); // Filter out null elements
     
-    // Reset initial state
-    elements.forEach(el => {
-        if (!el) return;
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    // Batch DOM reads before writes to avoid layout thrashing
+    const initialStyles = elements.map(el => {
+        // Read initial state (forces layout calculation once)
+        const opacity = window.getComputedStyle(el).opacity;
+        const transform = window.getComputedStyle(el).transform;
+        
+        return { element: el, opacity, transform };
     });
     
-    // Staggered animation
+    // Batch all style writes
+    initialStyles.forEach(item => {
+        item.element.style.opacity = '0';
+        item.element.style.transform = 'translateY(20px)';
+        item.element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    });
+    
+    // Trigger reflow once
+    document.body.offsetHeight;
+    
+    // Staggered animation with fewer timeouts
     setTimeout(() => {
         elements.forEach((el, index) => {
-            if (!el) return;
-            setTimeout(() => {
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            }, index * 150);
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+            // Stagger through CSS instead of multiple timeouts
+            el.style.transitionDelay = `${index * 0.15}s`;
         });
         
-        // Animate project sections after hero section
-        setTimeout(() => {
-            const projectSections = document.querySelectorAll('.featured-section, .projects-section');
-            projectSections.forEach((section, index) => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(30px)';
-                section.style.transition = 'opacity 1s ease, transform 1s ease';
-                
-                // Use Intersection Observer to trigger animation when section is in view
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            setTimeout(() => {
-                                section.style.opacity = '1';
-                                section.style.transform = 'translateY(0)';
-                            }, index * 200);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                
-                observer.observe(section);
-            });
-        }, 800);
+        // Only animate sections when they come into view
+        initLazyAnimations();
     }, 300);
+}
+
+// Initialize lazy animations for sections - only animate when visible
+function initLazyAnimations() {
+    const sections = document.querySelectorAll('.featured-section, .projects-section, .about-section, .skills-section');
+    
+    // Skip if no sections or if IntersectionObserver not available
+    if (sections.length === 0 || !('IntersectionObserver' in window)) return;
+    
+    // Prepare sections - set initial state
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 1s ease, transform 1s ease';
+    });
+    
+    // Create a single observer for all sections
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Reveal the section
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                // Stop watching once animation is triggered
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    // Start observing all sections
+    sections.forEach(section => observer.observe(section));
 }
 
 // Custom cursor functionality
@@ -229,12 +260,9 @@ function initCustomCursor() {
 function moveCustomCursor(e) {
     const cursorDot = document.querySelector('.cursor-dot');
     
-    // Update cursor position with slight delay for smooth effect
-    gsap.to(cursorDot, {
-        duration: 0.15,
-        left: e.clientX,
-        top: e.clientY
-    });
+    // Update cursor position immediately without delay
+    cursorDot.style.left = `${e.clientX}px`;
+    cursorDot.style.top = `${e.clientY}px`;
 }
 
 function addHoverEffects() {
@@ -319,20 +347,31 @@ function createDotMatrix(container, character) {
     const isLarge = container.classList.contains('large');
     const isMedium = container.classList.contains('medium');
     
-    // Adjust grid density based on container size
-    const cols = isLarge ? 15 : isMedium ? 12 : 10;
-    const rows = isLarge ? 20 : isMedium ? 15 : 12;
+    // Adjust grid density based on container size - reduce density for better performance
+    const cols = isLarge ? 12 : isMedium ? 10 : 8;
+    const rows = isLarge ? 16 : isMedium ? 12 : 10;
     
     // Calculate dot size and spacing
     const dotSize = 4;
     const colSpacing = rect.width / (cols + 1);
     const rowSpacing = rect.height / (rows + 1);
     
+    // Create a document fragment for better performance
+    const fragment = document.createDocumentFragment();
+    
     // Create grid
     for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
+            // Check if this dot is part of the character before creating DOM element
+            const isActive = isPartOfCharacter(character, x, y, cols, rows);
+            
+            // Skip creating inactive dots for performance (reduced DOM nodes)
+            if (!isActive && Math.random() > 0.3) {
+                continue;
+            }
+            
             const dot = document.createElement('div');
-            dot.className = 'dot';
+            dot.className = isActive ? 'dot active-dot' : 'dot inactive-dot';
             
             // Position dot
             const left = (x + 1) * colSpacing - dotSize / 2;
@@ -341,33 +380,33 @@ function createDotMatrix(container, character) {
             dot.style.left = `${left}px`;
             dot.style.top = `${top}px`;
             
-            // Set active dots based on character pattern
-            if (isPartOfCharacter(character, x, y, cols, rows)) {
-                dot.classList.add('active-dot');
-                dot.dataset.isActive = 'true';
-            } else {
-                dot.classList.add('inactive-dot');
-                dot.dataset.isActive = 'false';
-            }
+            // Set active status
+            dot.dataset.isActive = isActive ? 'true' : 'false';
             
             // Store position for later use with mouse interactivity
             dot.dataset.x = x;
             dot.dataset.y = y;
             
-            container.appendChild(dot);
+            fragment.appendChild(dot);
         }
     }
     
-    // Add staggered animation for active dots
+    // Append all dots at once for better performance
+    container.appendChild(fragment);
+    
+    // Add staggered animation for active dots - limit the number for performance
     const activeDots = container.querySelectorAll('.active-dot');
-    activeDots.forEach((dot, index) => {
+    const animationLimit = Math.min(activeDots.length, 50); // Limit animations
+    
+    for (let i = 0; i < animationLimit; i++) {
+        const dot = activeDots[i];
         setTimeout(() => {
             dot.style.transform = 'scale(1.3)';
             setTimeout(() => {
                 dot.style.transform = 'scale(1)';
             }, 300);
-        }, index * 10);
-    });
+        }, i * 8);
+    }
 }
 
 function isPartOfCharacter(char, x, y, cols, rows) {
@@ -871,10 +910,17 @@ function isPartOfCharacter(char, x, y, cols, rows) {
 }
 
 function handleMouseMove(e) {
+    // Get only characters in viewport for performance
     const charContainers = document.querySelectorAll('.dot-character');
+    const viewportHeight = window.innerHeight;
     
     charContainers.forEach(container => {
         const containerRect = container.getBoundingClientRect();
+        
+        // Skip elements not in viewport
+        if (containerRect.bottom < 0 || containerRect.top > viewportHeight) {
+            return;
+        }
         
         // Calculate if mouse is within or near the container
         const centerX = containerRect.left + containerRect.width / 2;
@@ -890,13 +936,17 @@ function handleMouseMove(e) {
         
         // Only process if mouse is within certain radius of container
         const maxRadius = Math.max(containerRect.width, containerRect.height);
-        if (distance < maxRadius * 2) {
+        if (distance < maxRadius * 1.5) {
             // Add a subtle rotation to the character container based on mouse position
             const rotateX = (mouseY - centerY) / 25;
             const rotateY = (mouseX - centerX) / -25;
+            
+            // Use direct style manipulation for more immediate updates
             container.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             
+            // Process all dots for more complete interactive effect
             const dots = container.querySelectorAll('.dot');
+            const maxDistance = 150; // Increase interaction distance
             
             dots.forEach(dot => {
                 const dotRect = dot.getBoundingClientRect();
@@ -908,39 +958,52 @@ function handleMouseMove(e) {
                     Math.pow(mouseY - dotCenterY, 2)
                 );
                 
-                const maxDistance = 150;
-                
                 if (distanceToDot < maxDistance) {
                     const isActive = dot.dataset.isActive === 'true';
                     const intensity = 1 - distanceToDot / maxDistance;
-                    const push = 10 * intensity;
+                    const push = 10 * intensity; // Increased push amount
                     
                     // Calculate direction to push the dot away from mouse
                     const angleRadians = Math.atan2(dotCenterY - mouseY, dotCenterX - mouseX);
                     const pushX = Math.cos(angleRadians) * push;
                     const pushY = Math.sin(angleRadians) * push;
                     
+                    // Apply direct styles without transitions for immediate response
                     if (isActive) {
-                        dot.style.transform = `translate(${pushX}px, ${pushY}px) scale(${1 + intensity * 0.8})`;
+                        // More dramatic effect for active dots
+                        dot.style.transform = `translate3d(${pushX}px, ${pushY}px, 0) scale(${1 + intensity * 0.8})`;
                         dot.style.boxShadow = `0 0 ${8 + intensity * 15}px rgba(99, 102, 241, ${0.5 + intensity * 0.5})`;
                     } else {
-                        dot.style.transform = `translate(${pushX}px, ${pushY}px)`;
+                        // Subtle effect for inactive dots
+                        dot.style.transform = `translate3d(${pushX}px, ${pushY}px, 0)`;
                         dot.style.opacity = Math.min(0.4, 0.05 + intensity * 0.5);
                     }
                 } else {
-                    // Reset if not already an active dot
+                    // Reset immediately when out of range
                     if (dot.dataset.isActive === 'false') {
-                        dot.style.transform = 'scale(1)';
+                        dot.style.transform = 'translate3d(0, 0, 0)';
                         dot.style.opacity = '0.05';
                     } else {
-                        dot.style.transform = 'scale(1)';
+                        dot.style.transform = 'translate3d(0, 0, 0)';
                         dot.style.boxShadow = '0 0 8px rgba(99, 102, 241, 0.6)';
                     }
                 }
             });
-        } else {
+        } else if (container.style.transform) {
             // Reset container transform when mouse is far away
             container.style.transform = '';
+            
+            // Reset all dots
+            const dots = container.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.dataset.isActive === 'false') {
+                    dot.style.transform = 'translate3d(0, 0, 0)';
+                    dot.style.opacity = '0.05';
+                } else {
+                    dot.style.transform = 'translate3d(0, 0, 0)';
+                    dot.style.boxShadow = '0 0 8px rgba(99, 102, 241, 0.6)';
+                }
+            });
         }
     });
 }
@@ -1233,4 +1296,96 @@ function flashSecretActivation() {
     setTimeout(() => { flash.style.opacity = '1'; }, 10);
     setTimeout(() => { flash.style.opacity = '0'; }, 200);
     setTimeout(() => { document.body.removeChild(flash); }, 400);
+}
+
+// Mobile navigation functionality
+function initMobileNavigation() {
+    const menuToggle = document.querySelector('.mobile-nav-toggle');
+    const navMenu = document.querySelector('nav ul');
+    const navLinks = document.querySelectorAll('nav a');
+    
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+    }
+}
+
+// Get current section based on scroll position
+function getCurrentSection() {
+    const sections = ['home', 'featured', 'about', 'skills'];
+    let currentSection = sections[0]; // Default to home section
+    
+    // Check which section is currently in view
+    sections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            const rect = section.getBoundingClientRect();
+            // If the section is in the viewport (or partly in it)
+            if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                currentSection = sectionId;
+            }
+        }
+    });
+    
+    return currentSection;
+}
+
+// Get characters in a specific section
+function getCharactersInSection(sectionId) {
+    switch (sectionId) {
+        case 'home':
+            return document.querySelectorAll('#char1, #char2, #char3');
+        case 'featured':
+            return document.querySelectorAll('#featured-char');
+        case 'about':
+            return document.querySelectorAll('#about-char');
+        case 'skills':
+            return document.querySelectorAll('#skills-char');
+        default:
+            return document.querySelectorAll('.dot-character');
+    }
+}
+
+// Initialize section detection with scroll event
+function initSectionDetection() {
+    // Track current active section
+    let activeSection = getCurrentSection();
+    highlightActiveSectionCharacters(activeSection);
+    
+    // Listen for scroll events to update active section - debounced for performance
+    window.addEventListener('scroll', debounce(() => {
+        const newActiveSection = getCurrentSection();
+        
+        // If section changed
+        if (newActiveSection !== activeSection) {
+            activeSection = newActiveSection;
+            highlightActiveSectionCharacters(activeSection);
+        }
+    }, 100), { passive: true });
+}
+
+// Highlight characters in the active section
+function highlightActiveSectionCharacters(sectionId) {
+    // Remove highlight from all characters
+    document.querySelectorAll('.dot-character').forEach(char => {
+        char.classList.remove('active-section');
+    });
+    
+    // Add highlight to characters in active section
+    const activeChars = getCharactersInSection(sectionId);
+    activeChars.forEach(char => {
+        char.classList.add('active-section');
+    });
 } 
