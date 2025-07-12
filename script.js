@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Add secret console messages
+    console.log("Definitely dont type 'fishy' into your keyboard");
+    
     // Create limited number of characters for performance
     createDefaultCharacters();
     
