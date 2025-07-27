@@ -19,6 +19,7 @@ python web.py
 
 3. Open your browser and navigate to `http://localhost:8080`
 
-![image](https://github.com/user-attachments/assets/e421f73d-e9e2-4bf1-9597-d3dc33ea370d)
+<img width="1552" height="940" alt="image" src="https://github.com/user-attachments/assets/c80c9523-8f61-4baa-b3c6-610d6516cc4a" />
+
 
 
