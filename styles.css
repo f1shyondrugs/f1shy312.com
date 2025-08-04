@@ -680,6 +680,45 @@ section {
     color: var(--secondary-color);
 }
 
+.project-links {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.project-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background-color: rgba(99, 102, 241, 0.1);
+    color: var(--accent-color);
+    text-decoration: none;
+    border-radius: 6px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    transition: all 0.3s ease;
+    width: 36px;
+    height: 36px;
+}
+
+.project-link:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.project-link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.project-link:hover svg {
+    transform: scale(1.1);
+}
+
 .project-cta {
     margin-top: 1rem;
 }
