@@ -14,6 +14,330 @@
     --body-font: 'Space Mono', monospace;
 }
 
+/* Fullscreen Entrance Animation */
+.entrance-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background-color);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+    overflow: hidden;
+}
+
+.entrance-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.entrance-content {
+    text-align: center;
+    z-index: 10001;
+    position: relative;
+}
+
+.entrance-logo {
+    font-family: var(--heading-font);
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards;
+}
+
+.entrance-subtitle {
+    font-family: var(--body-font);
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    letter-spacing: 4px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.6s forwards;
+    text-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+}
+
+.entrance-dots {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.9s forwards;
+}
+
+.entrance-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    animation: entranceDotPulse 2s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+}
+
+.entrance-dot:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.entrance-dot:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.entrance-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    animation: entranceBackgroundPulse 4s ease-in-out infinite;
+}
+
+
+
+@keyframes entranceSlideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes entranceDotPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+}
+
+@keyframes entranceBackgroundPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes floatParticles {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(-100px);
+    }
+}
+
+/* Enhanced entrance morphing effect */
+.entrance-overlay.hidden {
+    animation: slideUpAndOut 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.entrance-overlay.hidden .entrance-background {
+    animation: fadeOut 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    transform: none; /* Keep background in place */
+}
+
+.entrance-overlay.hidden .entrance-logo {
+    animation: slideUpAndOut 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.1s forwards;
+}
+
+.entrance-overlay.hidden .entrance-subtitle {
+    animation: slideUpAndOut 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.2s forwards;
+}
+
+.entrance-overlay.hidden .entrance-dots {
+    animation: slideUpAndOut 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards;
+}
+
+@keyframes slideUpAndOut {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Scroll Reveal Animations */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-on-scroll.reveal-left {
+    transform: translateX(-50px);
+}
+
+.reveal-on-scroll.reveal-left.revealed {
+    transform: translateX(0);
+}
+
+.reveal-on-scroll.reveal-right {
+    transform: translateX(50px);
+}
+
+.reveal-on-scroll.reveal-right.revealed {
+    transform: translateX(0);
+}
+
+.reveal-on-scroll.reveal-scale {
+    transform: translateY(50px) scale(0.9);
+}
+
+.reveal-on-scroll.reveal-scale.revealed {
+    transform: translateY(0) scale(1);
+}
+
+.reveal-on-scroll.reveal-rotate {
+    transform: translateY(50px);
+}
+
+.reveal-on-scroll.reveal-rotate.revealed {
+    transform: translateY(0);
+}
+
+.reveal-on-scroll.reveal-fade {
+    opacity: 0;
+    transform: none;
+}
+
+.reveal-on-scroll.reveal-fade.revealed {
+    opacity: 1;
+}
+
+.reveal-on-scroll.reveal-bounce {
+    transform: translateY(50px) scale(0.8);
+    transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.reveal-on-scroll.reveal-bounce.revealed {
+    transform: translateY(0) scale(1);
+}
+
+.reveal-on-scroll.reveal-slide-up {
+    transform: translateY(100px);
+    transition: all 1.1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal-on-scroll.reveal-slide-up.revealed {
+    transform: translateY(0);
+}
+
+/* Enhanced section animations */
+.section-animate {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.section-animate.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered child animations */
+.stagger-children > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.stagger-children.animate-in > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stagger-children.animate-in > *:nth-child(1) { transition-delay: 0.1s; }
+.stagger-children.animate-in > *:nth-child(2) { transition-delay: 0.2s; }
+.stagger-children.animate-in > *:nth-child(3) { transition-delay: 0.3s; }
+.stagger-children.animate-in > *:nth-child(4) { transition-delay: 0.4s; }
+.stagger-children.animate-in > *:nth-child(5) { transition-delay: 0.5s; }
+
+/* Enhanced stagger timing for different sections */
+.stagger-children.slow > * {
+    transition-duration: 1.2s;
+}
+
+.stagger-children.fast > * {
+    transition-duration: 0.6s;
+}
+
+/* Parallax effect for background elements */
+.parallax-bg {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Hover animations for interactive elements */
+.interactive-hover {
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.interactive-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+}
+
+/* Simple shader-style glitch effect */
+.glitch-effect {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch-effect:hover {
+    animation: glitch-shader 0.2s infinite;
+}
+
+@keyframes glitch-shader {
+    0%, 100% { 
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+    }
+    25% { 
+        transform: translate(-1px, 1px);
+        filter: hue-rotate(90deg);
+    }
+    50% { 
+        transform: translate(1px, -1px);
+        filter: hue-rotate(180deg);
+    }
+    75% { 
+        transform: translate(-1px, -1px);
+        filter: hue-rotate(270deg);
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -1239,4 +1563,128 @@ section {
     }
     
     /* Additional rules... */
+}
+
+/* Enhanced tech tag and skill tag animations */
+.tech-tag, .skill-tag {
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer;
+}
+
+.tech-tag:hover, .skill-tag:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+    background: var(--accent-color);
+    color: white;
+}
+
+/* Special animation for tech tags */
+.tech-tag.reveal-on-scroll.reveal-bounce {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.tech-tag.reveal-on-scroll.reveal-bounce.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Special animation for skill tags */
+.skill-tag.reveal-on-scroll.reveal-fade {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.skill-tag.reveal-on-scroll.reveal-fade.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Enhanced CTA button animations */
+.cta.interactive-hover {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.cta.interactive-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.cta.interactive-hover:hover::before {
+    left: 100%;
+}
+
+.cta.interactive-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+/* Enhanced more projects link */
+.more-projects-link.interactive-hover {
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.more-projects-link.interactive-hover:hover {
+    transform: translateX(10px);
+    color: var(--accent-color);
+}
+
+/* Enhanced glitch effect for the main title */
+.glitch-effect {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch-effect::before,
+.glitch-effect::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.glitch-effect:hover::before {
+    animation: glitch-1 0.3s infinite;
+    opacity: 0.8;
+    color: #ff0000;
+    z-index: -1;
+}
+
+.glitch-effect:hover::after {
+    animation: glitch-2 0.3s infinite;
+    opacity: 0.8;
+    color: #00ffff;
+    z-index: -2;
+}
+
+/* Enhanced entrance animation timing */
+.entrance-logo {
+    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards;
+}
+
+.entrance-subtitle {
+    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.6s forwards;
+}
+
+.entrance-dots {
+    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.9s forwards;
+}
+
+/* Clean upward exit animation */
+.entrance-overlay.hidden {
+    animation: slideUpAndOut 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }

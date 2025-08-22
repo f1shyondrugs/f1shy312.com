@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // Initialize entrance animation
+    initEntranceAnimation();
+    
     // Add secret console messages
     console.log("Definitely dont type 'fishy' into your keyboard");
     
@@ -26,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize section detection
     initSectionDetection();
+    
+    // Initialize scroll reveal animations
+    initScrollReveal();
     
     // Add click event to dot characters to change them
     document.querySelectorAll('.dot-character').forEach(char => {
@@ -91,6 +98,117 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 300), { passive: true });
 });
+
+// Entrance Animation
+function initEntranceAnimation() {
+    const entranceOverlay = document.querySelector('.entrance-overlay');
+    if (!entranceOverlay) return;
+    
+    // Wait for all animations to complete
+    setTimeout(() => {
+        // Start the morphing animation
+        entranceOverlay.classList.add('hidden');
+        
+        // Remove the overlay after all individual animations complete
+        setTimeout(() => {
+            if (entranceOverlay.parentNode) {
+                entranceOverlay.parentNode.removeChild(entranceOverlay);
+            }
+        }, 1200); // Wait for the longest animation (0.8s + 0.3s delay)
+
+        window.scrollTo(0, 0);
+        
+        // Trigger section animations
+        setTimeout(() => {
+            animateSections();
+        }, 200);
+    }, 3000); // Total entrance time: 3 seconds
+}
+
+// Animate sections on entrance
+function animateSections() {
+    const sections = document.querySelectorAll('.section-animate');
+    sections.forEach((section, index) => {
+        setTimeout(() => {
+            section.classList.add('animate-in');
+        }, index * 200);
+    });
+    
+    // Animate staggered children
+    setTimeout(() => {
+        const staggerContainers = document.querySelectorAll('.stagger-children');
+        staggerContainers.forEach(container => {
+            container.classList.add('animate-in');
+        });
+    }, 600);
+}
+
+// Scroll Reveal Animations
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    
+    if (!('IntersectionObserver' in window)) {
+        // Fallback for older browsers
+        revealElements.forEach(el => el.classList.add('revealed'));
+        return;
+    }
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    revealElements.forEach(el => observer.observe(el));
+}
+
+// Enhanced section animations with scroll trigger
+function animatePageLoad() {
+    const elements = [
+        document.querySelector('header'),
+        document.querySelector('.left-column'),
+        document.querySelector('.right-column'),
+        document.querySelector('.scroll-indicator')
+    ].filter(el => el); // Filter out null elements
+    
+    // Batch DOM reads before writes to avoid layout thrashing
+    const initialStyles = elements.map(el => {
+        // Read initial state (forces layout calculation once)
+        const opacity = window.getComputedStyle(el).opacity;
+        const transform = window.getComputedStyle(el).transform;
+        
+        return { element: el, opacity, transform };
+    });
+    
+    // Batch all style writes
+    initialStyles.forEach(item => {
+        item.element.style.opacity = '0';
+        item.element.style.transform = 'translateY(20px)';
+        item.element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    });
+    
+    // Trigger reflow once
+    document.body.offsetHeight;
+    
+    // Staggered animation with fewer timeouts
+    setTimeout(() => {
+        elements.forEach((el, index) => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            // Stagger through CSS instead of multiple timeouts
+            el.style.transitionDelay = `${index * 0.15}s`;
+        });
+        
+        // Only animate sections when they come into view
+        initLazyAnimations();
+    }, 300);
+}
 
 // Inactivity timer variables
 let inactivityTimeout;
@@ -173,79 +291,6 @@ function createSkillsSectionCharacter() {
     if (skillsChar) {
         createDotMatrix(skillsChar, '#');
     }
-}
-
-// Page load animation - optimized for performance
-function animatePageLoad() {
-    const elements = [
-        document.querySelector('header'),
-        document.querySelector('.left-column'),
-        document.querySelector('.right-column'),
-        document.querySelector('.scroll-indicator')
-    ].filter(el => el); // Filter out null elements
-    
-    // Batch DOM reads before writes to avoid layout thrashing
-    const initialStyles = elements.map(el => {
-        // Read initial state (forces layout calculation once)
-        const opacity = window.getComputedStyle(el).opacity;
-        const transform = window.getComputedStyle(el).transform;
-        
-        return { element: el, opacity, transform };
-    });
-    
-    // Batch all style writes
-    initialStyles.forEach(item => {
-        item.element.style.opacity = '0';
-        item.element.style.transform = 'translateY(20px)';
-        item.element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    });
-    
-    // Trigger reflow once
-    document.body.offsetHeight;
-    
-    // Staggered animation with fewer timeouts
-    setTimeout(() => {
-        elements.forEach((el, index) => {
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            // Stagger through CSS instead of multiple timeouts
-            el.style.transitionDelay = `${index * 0.15}s`;
-        });
-        
-        // Only animate sections when they come into view
-        initLazyAnimations();
-    }, 300);
-}
-
-// Initialize lazy animations for sections - only animate when visible
-function initLazyAnimations() {
-    const sections = document.querySelectorAll('.featured-section, .projects-section, .about-section, .skills-section');
-    
-    // Skip if no sections or if IntersectionObserver not available
-    if (sections.length === 0 || !('IntersectionObserver' in window)) return;
-    
-    // Prepare sections - set initial state
-    sections.forEach(section => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(30px)';
-                section.style.transition = 'opacity 1s ease, transform 1s ease';
-    });
-                
-    // Create a single observer for all sections
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                // Reveal the section
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-                // Stop watching once animation is triggered
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                
-    // Start observing all sections
-    sections.forEach(section => observer.observe(section));
 }
 
 // Custom cursor functionality

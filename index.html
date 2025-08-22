@@ -12,6 +12,23 @@
     <meta name="description" content="Das_F1sHy312 - Just a Developer.">
 </head>
 <body>
+    <!-- Fullscreen Entrance Animation Overlay -->
+    <div class="entrance-overlay">
+        <div class="entrance-content">
+            <div class="entrance-logo">Das_F1sHy312</div>
+            <div class="entrance-subtitle">JUST A DEVELOPER</div>
+            <div class="entrance-dots">
+                <div class="entrance-dot"></div>
+                <div class="entrance-dot"></div>
+                <div class="entrance-dot"></div>
+            </div>
+        </div>
+        
+
+        
+        <div class="entrance-background"></div>
+    </div>
+
     <div class="cursor-dot"></div>
     <div class="noise-overlay"></div>
     
@@ -35,22 +52,22 @@
     </header>
 
     <main>
-        <section id="home" class="hero">
-            <div class="grid-layout">
+        <section id="home" class="hero section-animate">
+            <div class="grid-layout stagger-children">
                 <div class="left-column">
-                    <div class="title-block">
+                    <div class="title-block reveal-on-scroll reveal-left">
                         <span class="pre-heading">HOBBYIST</span>
-                        <h1 title="Don't check the Devtools Console">JUST A DEVELOPER</h1>
+                        <h1 data-text="JUST A DEVELOPER">JUST A DEVELOPER</h1>
                         <p class="location">HESSEN, GERMANY</p>
                     </div>
                     
-                    <div class="description">
-                        <p>I'M DAS_F1SHY312, DEDICATED TO CRAFTING IMPACTFUL DIGITAL EXPERIENCES FOR ME, MYSELF AND I. (for now)</p>
-                        <a href="/projects" class="cta">VIEW PROJECTS</a>
+                    <div class="description reveal-on-scroll reveal-left">
+                        <p>I'M DAS_F1SHY312, DEDICATED TO CRAFTING IMPACTFUL DIGITAL EXPERIENCES FOR ME, MYSELF AND I. (for now (please hire me))</p>
+                        <a href="/projects" class="cta interactive-hover">VIEW PROJECTS</a>
                     </div>
                 </div>
                 
-                <div class="right-column">
+                <div class="right-column reveal-on-scroll reveal-right">
                     <div class="dot-characters-grid">
                         <div class="dot-character large" id="char1"></div>
                         <div class="dot-character medium" id="char2"></div>
@@ -60,35 +77,35 @@
                 </div>
             </div>
             
-            <div class="scroll-indicator">
+            <div class="scroll-indicator reveal-on-scroll">
                 <div class="scroll-arrow"></div>
                 <span>SCROLL</span>
             </div>
         </section>
 
         <!-- Featured Project Section -->
-        <section id="featured" class="featured-section">
-            <div class="section-container">
-                <div class="section-header">
+        <section id="featured" class="featured-section section-animate">
+            <div class="section-container stagger-children">
+                <div class="section-header reveal-on-scroll reveal-left">
                     <span class="pre-heading">FEATURED PROJECT</span>
                     <h2>POINTER - AI CODE EDITOR</h2>
                 </div>
                 
                 <div class="featured-project">
-                    <div class="project-content">
+                    <div class="project-content reveal-on-scroll reveal-left">
                         <div class="project-status">UNDER DEVELOPMENT</div>
                         <div class="project-description">
                             <p>Revolutionizing code editing with AI that runs entirely on your machine. Pointer brings lightning-fast, privacy-focused AI assistance right to your editor. Built with local LLMs for zero latency responses and complete privacy - your code never leaves your machine.</p>
                         </div>
                         <div class="tech-stack">
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">PYTHON</span>
-                            <span class="tech-tag">TYPESCRIPT</span>
+                            <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">AI</span>
+                            <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">PYTHON</span>
+                            <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">TYPESCRIPT</span>
                         </div>
-                        <a href="https://pointr.sh" class="cta project-cta">LEARN MORE</a>
-                        <a href="/projects" class="more-projects-link">more projects →</a>
+                        <a href="https://pointr.sh" class="cta project-cta interactive-hover">LEARN MORE</a>
+                        <a href="/projects" class="more-projects-link interactive-hover">more projects →</a>
                     </div>
-                    <div class="project-visual">
+                    <div class="project-visual reveal-on-scroll reveal-right">
                         <div class="dot-character project-character" id="featured-char"></div>
                     </div>
                 </div>
@@ -96,19 +113,19 @@
         </section>
 
         <!-- Additional Section -->
-        <section id="about" class="about-section">
-            <div class="section-container">
-                <div class="section-header">
+        <section id="about" class="about-section section-animate">
+            <div class="section-container stagger-children">
+                <div class="section-header reveal-on-scroll reveal-left">
                     <span class="pre-heading">ABOUT ME</span>
                     <h2>HOBBYIST DEVELOPER</h2>
                 </div>
                 
                 <div class="about-content">
-                    <div class="about-text">
+                    <div class="about-text reveal-on-scroll reveal-left">
                         <p>I'm passionate about creating digital experiences that are both functional and engaging. My journey in development started with small hobby projects and has evolved into building complex systems and applications.</p>
                         <p>Currently focused on exploring the intersection of AI and development tools, I'm always learning and experimenting with new technologies.</p>
                     </div>
-                    <div class="about-visual">
+                    <div class="about-visual reveal-on-scroll reveal-right">
                         <div class="dot-character about-character" id="about-char"></div>
                     </div>
                 </div>
@@ -116,48 +133,50 @@
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="skills-section">
-            <div class="section-container">
-                <div class="section-header">
+        <section id="skills" class="skills-section section-animate">
+            <div class="section-container stagger-children">
+                <div class="section-header reveal-on-scroll reveal-left">
                     <span class="pre-heading">MY TOOLKIT</span>
                     <h2>SKILLS & TECHNOLOGIES</h2>
                 </div>
                 
                 <div class="skills-content">
-                    <div class="skills-visual">
+                    <div class="skills-visual reveal-on-scroll reveal-left">
                         <div class="dot-character skills-character" id="skills-char"></div>
                     </div>
-                    <div class="skills-categories">
+                    <div class="skills-categories reveal-on-scroll reveal-right">
                         <div class="skill-category">
                             <h3>LANGUAGES</h3>
                             <div class="skill-tags">
-                                <span class="skill-tag">PYTHON</span>
-                                <span class="skill-tag">JAVASCRIPT</span>
-                                <span class="skill-tag">JAVA</span>
-                                <span class="skill-tag">HTML/CSS</span>
-                                <span class="skill-tag">SQL</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.1s;">PYTHON</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.2s;">JAVASCRIPT/TYPESCRIPT</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.3s;">JAVA</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.4s;">HTML/CSS</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.5s;">SQL</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.6s;">LUA</span>
                             </div>
                         </div>
                         
                         <div class="skill-category">
                             <h3>FRAMEWORKS</h3>
                             <div class="skill-tags">
-                                <span class="skill-tag">REACT</span>
-                                <span class="skill-tag">NODE.JS</span>
-                                <span class="skill-tag">FLASK</span>
-                                <span class="skill-tag">SPIGOT</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.1s;">REACT</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.2s;">NODE.JS</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.3s;">FLASK</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.4s;">BUKKIT/SPIGOT</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.5s;">(way too many)</span>
                             </div>
                         </div>
                         
                         <div class="skill-category">
                             <h3>TOOLS</h3>
                             <div class="skill-tags">
-                                <span class="skill-tag">GIT</span>
-                                <span class="skill-tag">DOCKER</span>
-                                <span class="skill-tag">VS CODE</span>
-                                <span class="skill-tag">FIGMA</span>
-                                <span class="skill-tag">ADOBE PSD/AE/PR</span>
-                                <span class="skill-tag">...</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.1s;">GIT</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.2s;">DOCKER</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.3s;">VS CODE</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.4s;">FIGMA</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.5s;">ADOBE PSD/AE/PR</span>
+                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.6s;">(also wayy too many lol)</span>
                             </div>
                         </div>
                     </div>
