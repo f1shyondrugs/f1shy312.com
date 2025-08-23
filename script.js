@@ -118,6 +118,17 @@ function initEntranceAnimation() {
 
         window.scrollTo(0, 0);
         
+        // Reroll the main characters to DEV after entrance animation
+        setTimeout(() => {
+            const char1 = document.getElementById('char1');
+            const char2 = document.getElementById('char2');
+            const char3 = document.getElementById('char3');
+            
+            if (char1) cycleToSpecificCharacter(char1, 'D');
+            if (char2) cycleToSpecificCharacter(char2, 'E');
+            if (char3) cycleToSpecificCharacter(char3, 'V');
+        }, 300);
+        
         // Trigger section animations
         setTimeout(() => {
             animateSections();

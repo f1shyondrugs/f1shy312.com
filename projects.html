@@ -24,7 +24,7 @@
         </button>
         <nav>
             <ul>
-                <li><a href="index.html" data-text="HOME">HOME</a></li>
+                <li><a href="/" data-text="HOME">HOME</a></li>
                 <li><a href="#projects" data-text="PROJECTS">PROJECTS</a></li>
                 <li><a href="https://github.com/f1shyondrugs" target="_blank" data-text="GITHUB">GITHUB</a></li>
                 <li><a href="mailto:hi@f1shy312.com" class="contact-button">HI@F1SHY312.COM</a></li>
@@ -35,7 +35,7 @@
     <main>
         <section id="projects-hero" class="projects-hero">
             <div class="section-container">
-                <div class="section-header">
+                <div class="section-header reveal-on-scroll reveal-left">
                     <span class="pre-heading">MY WORK</span>
                     <h1>PROJECTS</h1>
                     <p class="section-intro">A collection of projects I've worked on across different technologies and platforms.</p>
@@ -47,18 +47,18 @@
         <section id="projects" class="projects-section">
             <div class="section-container">
                 <!-- Python Projects -->
-                <div class="category-section">
+                <div class="category-section reveal-on-scroll reveal-left">
                     <h3>PYTHON PROJECTS</h3>
                     <div class="project-grid">
                         <!-- First 4 Python projects (always visible) -->
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>MP3 PLAYER</h4>
                             </div>
                             <p>MP3 Player with Playlists, Volume Control, etc... made with libraries customTkinter, PyGame and more.</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">PYTHON</span>
-                                <span class="tech-tag">TKINTER</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">TKINTER</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/python-mp3-player-gui" target="_blank" class="project-link" title="View on GitHub">
@@ -69,14 +69,14 @@
                             </div>
                         </div>
                         
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>TWITCH CHATBOT</h4>
                             </div>
                             <p>This Chatbot has a Point system and a whole Economy. The Chat can control your Game, play Sound Effects, Gamble with their points and much more!</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">PYTHON</span>
-                                <span class="tech-tag">API</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">API</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/advanced-twitch-bot" target="_blank" class="project-link" title="View on GitHub">
@@ -87,14 +87,14 @@
                             </div>
                         </div>
                         
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>REDDIT REPLIER</h4>
                             </div>
                             <p>Automatically replies to posts in a Reddit Community using OpenAI API to generate comments and Reddit API to send them.</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">PYTHON</span>
-                                <span class="tech-tag">OPENAI</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">OPENAI</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/reddit-automatic-replier" target="_blank" class="project-link" title="View on GitHub">
@@ -105,14 +105,14 @@
                             </div>
                         </div>
                         
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>REVERSE SHELL</h4>
                             </div>
                             <p>Uses Python Websockets to connect to a remote server. The server has a web UI to send and receive commands.</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">PYTHON</span>
-                                <span class="tech-tag">WEBSOCKETS</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">WEBSOCKETS</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/reverse-shell-python" target="_blank" class="project-link" title="View on GitHub">
@@ -124,7 +124,7 @@
                         </div>
                         
                         <!-- Show More Button -->
-                        <button class="show-more-btn" data-target="python-more">...</button>
+                        <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="python-more">...</button>
                         
                         <!-- Hidden Python projects -->
                         <div id="python-more" class="more-projects">
@@ -134,8 +134,8 @@
                                 </div>
                                 <p>This Program lets you Paper Trade with the Binance API to get the data. It shows every second, how much Percentage you've gained or lost, by buying multiple coins.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">API</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">API</span>
                                 </div>
                             </div>
                             
@@ -145,8 +145,8 @@
                                 </div>
                                 <p>This Market Analyzer gets data of every coin in the market and calculates certain things to get a basic overview.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">DATA</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">DATA</span>
                                 </div>
                             </div>
                             
@@ -156,8 +156,8 @@
                                 </div>
                                 <p>AI Voice Assistant written in python with natural language processing capabilities.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">AI</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">AI</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/ai-voice-assistant" target="_blank" class="project-link" title="View on GitHub">
@@ -174,8 +174,8 @@
                                 </div>
                                 <p>Destroy Meteors with your hands. Works via Hand/Body Tracking in Python/Machine Learning.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">ML</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">ML</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/spacedestroyers" target="_blank" class="project-link" title="View on GitHub">
@@ -192,8 +192,8 @@
                                 </div>
                                 <p>Educational demonstration of file encryption. Currently it only encrypts the testfiles folder (educational purposes only).</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">SECURITY</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SECURITY</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/python-ransomware" target="_blank" class="project-link" title="View on GitHub">
@@ -210,8 +210,8 @@
                                 </div>
                                 <p>Live camera face/eye recognition, draws squares around detected eyes/faces in real-time.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">CV</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CV</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/face-and-eye-recognition" target="_blank" class="project-link" title="View on GitHub">
@@ -228,8 +228,8 @@
                                 </div>
                                 <p>A simple python program that automatically scans for subfiles/subfolders on websites.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">SECURITY</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SECURITY</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/website-subfolder-bruteforce" target="_blank" class="project-link" title="View on GitHub">
@@ -246,8 +246,8 @@
                                 </div>
                                 <p>Python Written Human Benchmark Beater for humanbenchmark.com with automated test completion.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">AUTOMATION</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">AUTOMATION</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/notsohuman-humanbenchmark" target="_blank" class="project-link" title="View on GitHub">
@@ -264,8 +264,8 @@
                                 </div>
                                 <p>File encryption tool with secure encryption algorithms.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">SECURITY</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">SECURITY</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/encrypter" target="_blank" class="project-link" title="View on GitHub">
@@ -282,8 +282,8 @@
                                 </div>
                                 <p>Python Written Clash Royale Playing Bot with automated gameplay capabilities.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">PYTHON</span>
-                                    <span class="tech-tag">GAMING</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">GAMING</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/ClashRoyale-Bot-Python" target="_blank" class="project-link" title="View on GitHub">
@@ -298,19 +298,19 @@
                 </div>
                 
                 <!-- Web Projects -->
-                <div class="category-section">
+                <div class="category-section reveal-on-scroll reveal-right">
                     <h3>WEB PROJECTS</h3>
                     <div class="project-grid">
                         <!-- First 4 Web projects (always visible) -->
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>POINTER</h4>
                                 <span class="project-status">IN PROGRESS</span>
                             </div>
                             <p>VSCode Clone with local LLM AI Capabilities. A revolutionary code editor with AI that runs entirely on your machine.</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">TYPESCRIPT</span>
-                                <span class="tech-tag">AI</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">TYPESCRIPT</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">AI</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/pointer" target="_blank" class="project-link" title="View on GitHub">
@@ -326,15 +326,15 @@
                             </div>
                         </div>
                         
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>UBUNTUFOLIO</h4>
                             </div>
                             <p>A portfolio website styled after Ubuntu Desktop (I got depressed while doing this)</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">HTML</span>
-                                <span class="tech-tag">CSS</span>
-                                <span class="tech-tag">JS</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/ubuntufolio" target="_blank" class="project-link" title="View on GitHub">
@@ -350,15 +350,15 @@
                             </div>
                         </div>
                         
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>CASINO</h4>
                             </div>
                             <p>Casino Website with games like Plinko, Towers, Mines and more.</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">HTML</span>
-                                <span class="tech-tag">CSS</span>
-                                <span class="tech-tag">JS</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://casino.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
@@ -369,15 +369,15 @@
                             </div>
                         </div>
                         
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>CRAZYFOLIO</h4>
                             </div>
                             <p>A crazy styled portfolio website</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">HTML</span>
-                                <span class="tech-tag">CSS</span>
-                                <span class="tech-tag">JS</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/crazyfolio" target="_blank" class="project-link" title="View on GitHub">
@@ -394,7 +394,7 @@
                         </div>
                         
                         <!-- Show More Button -->
-                        <button class="show-more-btn" data-target="web-more">...</button>
+                        <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="web-more">...</button>
                         
                         <!-- Hidden Web projects -->
                         <div id="web-more" class="more-projects">
@@ -404,9 +404,9 @@
                                 </div>
                                 <p>MonkeyType off of Wish or something</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">HTML</span>
-                                    <span class="tech-tag">CSS</span>
-                                    <span class="tech-tag">JS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/monkeytype" target="_blank" class="project-link" title="View on GitHub">
@@ -428,9 +428,9 @@
                                 </div>
                                 <p>A weather forecast application with clean UI and detailed weather data.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">HTML</span>
-                                    <span class="tech-tag">CSS</span>
-                                    <span class="tech-tag">API</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">API</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/weather-web-app" target="_blank" class="project-link" title="View on GitHub">
@@ -452,8 +452,8 @@
                                 </div>
                                 <p>A simple URL shortening service</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">NODE</span>
-                                    <span class="tech-tag">API</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">NODE</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">API</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/urlshortener" target="_blank" class="project-link" title="View on GitHub">
@@ -475,8 +475,8 @@
                                 </div>
                                 <p>A stylish custom 404.f1shy312.com error page</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">HTML</span>
-                                    <span class="tech-tag">CSS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/404.f1shy312.com" target="_blank" class="project-link" title="View on GitHub">
@@ -498,9 +498,9 @@
                                 </div>
                                 <p>Minecraft Server website for blockyplayz.de with server information and features</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">HTML</span>
-                                    <span class="tech-tag">CSS</span>
-                                    <span class="tech-tag">JS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/blockyplayz-website" target="_blank" class="project-link" title="View on GitHub">
@@ -522,9 +522,9 @@
                                 </div>
                                 <p>Terminal styled portfolio website with command-line interface aesthetics</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">HTML</span>
-                                    <span class="tech-tag">CSS</span>
-                                    <span class="tech-tag">JS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/termfolio.f1shy312.com" target="_blank" class="project-link" title="View on GitHub">
@@ -546,8 +546,8 @@
                                 </div>
                                 <p>A personal collection of watched anime with ratings and comments</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">HTML</span>
-                                    <span class="tech-tag">CSS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://anime.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
@@ -564,8 +564,8 @@
                                 </div>
                                 <p>A tool for scanning Minecraft servers for open ports and vulnerabilities</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">JS</span>
-                                    <span class="tech-tag">SECURITY</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JS</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SECURITY</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://scanner.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
@@ -580,32 +580,32 @@
                 </div>
                 
                 <!-- Java Projects -->
-                <div class="category-section">
+                <div class="category-section reveal-on-scroll reveal-left">
                     <h3>JAVA PROJECTS</h3>
-                    <div class="category-intro">
+                    <div class="category-intro reveal-on-scroll reveal-fade">
                         <p>I'm currently building my own Minecraft server network called <strong>FishyNetwork</strong>. All plugins below are part of this network.</p>
                     </div>
                     <div class="project-grid">
                         <!-- First 4 Java projects (always visible) -->
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>CUSTOMCOMBAT</h4>
                             </div>
                             <p>This plugin has custom-made mobs & bosses aswell as items with Custom Abilities, stages and everything.</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">JAVA</span>
-                                <span class="tech-tag">SPIGOT</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SPIGOT</span>
                             </div>
                         </div>
                         
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>CASEOPENING</h4>
                             </div>
                             <p>A Minecraft Plugin with a cs2-like case opening system. You can customize nearly <strong>everything</strong>.</p>
                             <div class="tech-stack">
-                                <span class="tech-tag">JAVA</span>
-                                <span class="tech-tag">SPIGOT</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
+                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SPIGOT</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/caseopening" target="_blank" class="project-link" title="View on GitHub">
@@ -615,14 +615,14 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card reveal-on-scroll reveal-scale">
                                 <div class="project-card-header">
                                     <h4>SELLWAND</h4>
                                 </div>
                                 <p>A Minecraft Plugin with a sellwand system. Includes customizable wand types, prices, and permissions.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">JAVA</span>
-                                    <span class="tech-tag">SPIGOT</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SPIGOT</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/sellwand" target="_blank" class="project-link" title="View on GitHub">
@@ -633,14 +633,14 @@
                                 </div>
                             </div>
                         
-                            <div class="project-card">
+                            <div class="project-card reveal-on-scroll reveal-scale">
                                 <div class="project-card-header">
                                     <h4>LOBBYULTIMATE</h4>
                                 </div>
                                 <p>A Minecraft Plugin initializing a proxy lobby system with inventory items and a /lobby command.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">JAVA</span>
-                                    <span class="tech-tag">BUNGEE</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">BUNGEE</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/lobbyultimate" target="_blank" class="project-link" title="View on GitHub">
@@ -652,7 +652,7 @@
                             </div>
                         
                         <!-- Show More Button -->
-                        <button class="show-more-btn" data-target="java-more">...</button>
+                        <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="java-more">...</button>
                         
                         <!-- Hidden Java projects -->
                         <div id="java-more" class="more-projects">
@@ -662,8 +662,8 @@
                                 </div>
                                 <p>This command will give you 10000$ using LiteEco. A simple economy plugin integration.</p>
                                 <div class="tech-stack">
-                                    <span class="tech-tag">JAVA</span>
-                                    <span class="tech-tag">SPIGOT</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
+                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SPIGOT</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/f1shyondrugs/opcommand" target="_blank" class="project-link" title="View on GitHub">
@@ -681,8 +681,8 @@
     </main>
 
     <footer>
-        <div class="footer-left">© 2025 Das_F1sHy312</div>
-        <div class="footer-right">JUST A DEVELOPER</div>
+        <div class="footer-left reveal-on-scroll reveal-left">© 2025 Das_F1sHy312</div>
+        <div class="footer-right reveal-on-scroll reveal-right">JUST A DEVELOPER</div>
     </footer>
 
     <script src="script.js"></script>
