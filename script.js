@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     createSkillsSectionCharacter();
     }
     
+    // Create skill page characters (for cybersecurity, hardware, software pages)
+    createSkillPageCharacters();
+    
     // Initialize custom cursor
     initCustomCursor();
     
@@ -27,6 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize mobile navigation
     initMobileNavigation();
+    
+    // Initialize scroll progress bar
+    initScrollProgress();
+    
+    // Initialize Lucide icons
+    initLucideIcons();
     
     // Initialize section detection
     initSectionDetection();
@@ -96,6 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
         createAboutSectionCharacter();
         createSkillsSectionCharacter();
         }
+        
+        // Recreate skill page characters on resize
+        createSkillPageCharacters();
     }, 300), { passive: true });
 });
 
@@ -116,7 +128,25 @@ function initEntranceAnimation() {
             }
         }, 1200); // Wait for the longest animation (0.8s + 0.3s delay)
 
-        window.scrollTo(0, 0);
+        // Check if there's a hash in the URL and scroll to that section
+        if (window.location.hash) {
+            const targetElement = document.querySelector(window.location.hash);
+            if (targetElement) {
+                // Wait a bit for the page to settle, then scroll to the target
+                setTimeout(() => {
+                    targetElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
+            } else {
+                // If target not found, scroll to top
+                window.scrollTo(0, 0);
+            }
+        } else {
+            // No hash, scroll to top
+            window.scrollTo(0, 0);
+        }
         
         // Reroll the main characters to DEV after entrance animation
         setTimeout(() => {
@@ -215,9 +245,6 @@ function animatePageLoad() {
             // Stagger through CSS instead of multiple timeouts
             el.style.transitionDelay = `${index * 0.15}s`;
         });
-        
-        // Only animate sections when they come into view
-        initLazyAnimations();
     }, 300);
 }
 
@@ -302,6 +329,35 @@ function createSkillsSectionCharacter() {
     if (skillsChar) {
         createDotMatrix(skillsChar, '#');
     }
+}
+
+// Create skill page characters
+function createSkillPageCharacters() {
+    // Hero character for skill pages
+    const heroChar = document.getElementById('hero-char');
+    if (heroChar) {
+        createDotMatrix(heroChar, 'S');
+    }
+    
+    // Flipper character for hardware/cybersecurity pages
+    const flipperChar = document.getElementById('flipper-char');
+    if (flipperChar) {
+        createDotMatrix(flipperChar, 'F');
+    }
+    
+    // Wireless character for cybersecurity pages
+    const wirelessChar = document.getElementById('wireless-char');
+    if (wirelessChar) {
+        createDotMatrix(wirelessChar, 'W');
+    }
+    
+    // Security reference character for hardware pages
+    const securityRefChar = document.getElementById('security-reference-char');
+    if (securityRefChar) {
+        createDotMatrix(securityRefChar, 'S');
+    }
+    
+
 }
 
 // Custom cursor functionality
@@ -401,8 +457,12 @@ function createDotMatrix(container, character) {
     // Set character attribute for reference
     container.setAttribute('data-character', character);
     
-    // Calculate grid size based on container dimensions
-    const rect = container.getBoundingClientRect();
+    // Ensure container has proper dimensions by checking CSS
+    const computedStyle = window.getComputedStyle(container);
+    const width = parseFloat(computedStyle.width) || 200; // Default width if not set
+    const height = parseFloat(computedStyle.height) || 200; // Default height if not set
+    
+    // Calculate grid size based on container dimensions and classes
     const isLarge = container.classList.contains('large');
     const isMedium = container.classList.contains('medium');
     
@@ -412,8 +472,8 @@ function createDotMatrix(container, character) {
     
     // Calculate dot size and spacing
     const dotSize = 4;
-    const colSpacing = rect.width / (cols + 1);
-    const rowSpacing = rect.height / (rows + 1);
+    const colSpacing = width / (cols + 1);
+    const rowSpacing = height / (rows + 1);
     
     // Create a document fragment for better performance
     const fragment = document.createDocumentFragment();
@@ -1282,8 +1342,8 @@ function initKeyboardSecret() {
             secretBuffer = '';
         }
         
-        // Also handle the regular single key interaction for dot characters
-        if (isValidSecretKey(key.toUpperCase())) {
+        // Handle any letter key for dot character interaction
+        if (/^[A-Za-z]$/.test(key)) {
             // Flash the screen subtly to indicate key press
             flashSecretActivation();
             
@@ -1942,4 +2002,26 @@ function highlightActiveSectionCharacters(sectionId) {
     activeChars.forEach(char => {
         char.classList.add('active-section');
     });
+}
+
+// Initialize scroll progress bar
+function initScrollProgress() {
+    const progressBar = document.querySelector('.scroll-progress-bar');
+    if (!progressBar) return;
+    
+    // Update progress bar on scroll
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        
+        progressBar.style.width = scrollPercent + '%';
+    }, { passive: true });
+}
+
+// Initialize Lucide icons
+function initLucideIcons() {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 } 

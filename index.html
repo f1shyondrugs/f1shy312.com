@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="icon" href="logo.jpg" type="image/jpeg">
     <meta name="description" content="Das_F1sHy312 - Just a Developer.">
 </head>
@@ -25,12 +26,16 @@
         </div>
         
 
-        
+
+
         <div class="entrance-background"></div>
     </div>
 
     <div class="cursor-dot"></div>
     <div class="noise-overlay"></div>
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
     
     <header>
         <div class="logo">Das_F1sHy312</div>
@@ -145,44 +150,37 @@
                         <div class="dot-character skills-character" id="skills-char"></div>
                     </div>
                     <div class="skills-categories reveal-on-scroll reveal-right">
-                        <div class="skill-category">
-                            <h3>LANGUAGES</h3>
-                            <div class="skill-tags">
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.1s;">PYTHON</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.2s;">JAVASCRIPT/TYPESCRIPT</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.3s;">JAVA</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.4s;">HTML/CSS</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.5s;">SQL</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.6s;">LUA</span>
-                            </div>
-                        </div>
-                        
-                        <div class="skill-category">
-                            <h3>FRAMEWORKS</h3>
-                            <div class="skill-tags">
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.1s;">REACT</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.2s;">NODE.JS</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.3s;">FLASK</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.4s;">BUKKIT/SPIGOT</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.5s;">(way too many)</span>
-                            </div>
-                        </div>
-                        
-                        <div class="skill-category">
-                            <h3>TOOLS</h3>
-                            <div class="skill-tags">
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.1s;">GIT</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.2s;">DOCKER</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.3s;">VS CODE</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.4s;">FIGMA</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.5s;">ADOBE PSD/AE/PR</span>
-                                <span class="skill-tag reveal-on-scroll reveal-fade" style="transition-delay: 0.6s;">(also wayy too many lol)</span>
-                            </div>
+                        <div class="skill-category-buttons">
+                            <a href="software.html" class="skill-page-btn software-btn">
+                                <div class="btn-content">
+                                    <h3>SOFTWARE PROGRAMMING</h3>
+                                    <p>Web development, applications, and coding expertise</p>
+                                </div>
+                                <div class="btn-arrow">→</div>
+                            </a>
+                            
+                            <a href="hardware.html" class="skill-page-btn hardware-btn">
+                                <div class="btn-content">
+                                    <h3>HARDWARE</h3>
+                                    <p>Raspberry Pi, Flipper Zero, and embedded systems</p>
+                                </div>
+                                <div class="btn-arrow">→</div>
+                            </a>
+                            
+                            <a href="cybersecurity.html" class="skill-page-btn hacking-btn">
+                                <div class="btn-content">
+                                    <h3>CYBERSECURITY</h3>
+                                    <p>Penetration testing, security tools, and ethical hacking</p>
+                                </div>
+                                <div class="btn-arrow">→</div>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+
 
         <!-- Projects Section - Removed and moved to projects.html -->
     </main>
@@ -193,7 +191,7 @@
     </div>
 
     <footer>
-        <div class="footer-left">© 2025 Das_F1sHy312</div>
+        <div class="footer-left">© <script>document.write(new Date().getFullYear())</script> Das_F1sHy312</div>
         <div class="footer-right">JUST A DEVELOPER</div>
     </footer>
 
