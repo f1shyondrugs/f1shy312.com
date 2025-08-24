@@ -12,5 +12,17 @@ def index():
 def projects():
     return send_from_directory('.', 'projects.html')
 
+@app.route('/software')
+def software():
+    return send_from_directory('.', 'software.html')
+
+@app.route('/hardware')
+def hardware():
+    return send_from_directory('.', 'hardware.html')
+
+@app.route('/cybersecurity')
+def cybersecurity():
+    return send_from_directory('.', 'cybersecurity.html')
+
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5500)
