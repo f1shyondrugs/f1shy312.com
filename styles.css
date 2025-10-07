@@ -14,123 +14,9 @@
     --body-font: 'Space Mono', monospace;
 }
 
-/* Fullscreen Entrance Animation */
-.entrance-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--background-color);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-    overflow: hidden;
-}
-
-.entrance-overlay.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.entrance-content {
-    text-align: center;
-    z-index: 10001;
-    position: relative;
-}
-
-.entrance-logo {
-    font-family: var(--heading-font);
-    font-size: 4rem;
-    font-weight: 800;
-    color: var(--text-color);
-    margin-bottom: 1rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards;
-}
-
-.entrance-subtitle {
-    font-family: var(--body-font);
-    font-size: 1.2rem;
-    color: var(--accent-color);
-    letter-spacing: 4px;
-    margin-bottom: 3rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.6s forwards;
-    text-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-}
-
-.entrance-dots {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.9s forwards;
-}
-
-.entrance-dot {
-    width: 12px;
-    height: 12px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    animation: entranceDotPulse 2s ease-in-out infinite;
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
-}
-
-.entrance-dot:nth-child(2) {
-    animation-delay: 0.3s;
-}
-
-.entrance-dot:nth-child(3) {
-    animation-delay: 0.6s;
-}
-
-.entrance-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-    animation: entranceBackgroundPulse 4s ease-in-out infinite;
-}
 
 
 
-@keyframes entranceSlideIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes entranceDotPulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 0.6;
-    }
-    50% {
-        transform: scale(1.3);
-        opacity: 1;
-    }
-}
-
-@keyframes entranceBackgroundPulse {
-    0%, 100% {
-        opacity: 0.3;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.6;
-        transform: scale(1.1);
-    }
-}
 
 @keyframes floatParticles {
     0% {
@@ -141,47 +27,6 @@
     }
 }
 
-/* Enhanced entrance morphing effect */
-.entrance-overlay.hidden {
-    animation: slideUpAndOut 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-}
-
-.entrance-overlay.hidden .entrance-background {
-    animation: fadeOut 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-    transform: none; /* Keep background in place */
-}
-
-.entrance-overlay.hidden .entrance-logo {
-    animation: slideUpAndOut 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.1s forwards;
-}
-
-.entrance-overlay.hidden .entrance-subtitle {
-    animation: slideUpAndOut 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.2s forwards;
-}
-
-.entrance-overlay.hidden .entrance-dots {
-    animation: slideUpAndOut 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards;
-}
-
-@keyframes slideUpAndOut {
-    0% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-100vh);
-        opacity: 0;
-    }
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
 
 /* Scroll Reveal Animations */
 .reveal-on-scroll {
@@ -2921,23 +2766,6 @@ section {
     z-index: -2;
 }
 
-/* Enhanced entrance animation timing */
-.entrance-logo {
-    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards;
-}
-
-.entrance-subtitle {
-    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.6s forwards;
-}
-
-.entrance-dots {
-    animation: entranceSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.9s forwards;
-}
-
-/* Clean upward exit animation */
-.entrance-overlay.hidden {
-    animation: slideUpAndOut 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-}
 
 /* Project Elements */
 .project-content {

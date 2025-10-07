@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Initialize entrance animation
-    initEntranceAnimation();
     
     // Add secret console messages
     console.log("Definitely dont type 'fishy' into your keyboard");
@@ -92,6 +90,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add smooth scrolling to anchor links
     addSmoothScrolling();
     
+    // Initialize characters and animations immediately (no entrance delay)
+    setTimeout(() => {
+        const char1 = document.getElementById('char1');
+        const char2 = document.getElementById('char2');
+        const char3 = document.getElementById('char3');
+        
+        if (char1) cycleToSpecificCharacter(char1, 'D');
+        if (char2) cycleToSpecificCharacter(char2, 'E');
+        if (char3) cycleToSpecificCharacter(char3, 'V');
+    }, 100);
+    
+    // Trigger section animations immediately
+    setTimeout(() => {
+        animateSections();
+    }, 200);
+    
     // Handle resize events - throttled for performance
     window.addEventListener('resize', debounce(() => {
         // Only recreate characters if browser width changes category (mobile/desktop)
@@ -111,60 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 300), { passive: true });
 });
 
-// Entrance Animation
-function initEntranceAnimation() {
-    const entranceOverlay = document.querySelector('.entrance-overlay');
-    if (!entranceOverlay) return;
-    
-    // Wait for all animations to complete
-    setTimeout(() => {
-        // Start the morphing animation
-        entranceOverlay.classList.add('hidden');
-        
-        // Remove the overlay after all individual animations complete
-        setTimeout(() => {
-            if (entranceOverlay.parentNode) {
-                entranceOverlay.parentNode.removeChild(entranceOverlay);
-            }
-        }, 1200); // Wait for the longest animation (0.8s + 0.3s delay)
-
-        // Check if there's a hash in the URL and scroll to that section
-        if (window.location.hash) {
-            const targetElement = document.querySelector(window.location.hash);
-            if (targetElement) {
-                // Wait a bit for the page to settle, then scroll to the target
-                setTimeout(() => {
-                    targetElement.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
-                }, 100);
-            } else {
-                // If target not found, scroll to top
-                window.scrollTo(0, 0);
-            }
-        } else {
-            // No hash, scroll to top
-            window.scrollTo(0, 0);
-        }
-        
-        // Reroll the main characters to DEV after entrance animation
-        setTimeout(() => {
-            const char1 = document.getElementById('char1');
-            const char2 = document.getElementById('char2');
-            const char3 = document.getElementById('char3');
-            
-            if (char1) cycleToSpecificCharacter(char1, 'D');
-            if (char2) cycleToSpecificCharacter(char2, 'E');
-            if (char3) cycleToSpecificCharacter(char3, 'V');
-        }, 300);
-        
-        // Trigger section animations
-        setTimeout(() => {
-            animateSections();
-        }, 200);
-    }, 3000); // Total entrance time: 3 seconds
-}
 
 // Animate sections on entrance
 function animateSections() {
