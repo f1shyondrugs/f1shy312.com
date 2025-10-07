@@ -43,7 +43,6 @@
             </div>
         </section>
         
-        <!-- Featured Project Section -->
         <section id="featured-project" class="featured-project-section">
             <div class="section-container">
                 <div class="featured-project reveal-on-scroll reveal-scale">
@@ -84,14 +83,11 @@
             </div>
         </section>
         
-        <!-- Projects Section -->
         <section id="projects" class="projects-section">
             <div class="section-container">
-                <!-- Python Projects -->
                 <div class="category-section reveal-on-scroll reveal-left">
                     <h3>PYTHON PROJECTS</h3>
                     <div class="project-grid">
-                        <!-- First 4 Python projects (always visible) -->
                         <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>MP3 PLAYER</h4>
@@ -164,10 +160,8 @@
                             </div>
                         </div>
                         
-                        <!-- Show More Button -->
                         <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="python-more">...</button>
                         
-                        <!-- Hidden Python projects -->
                         <div id="python-more" class="more-projects">
                             <div class="project-card">
                                 <div class="project-card-header">
@@ -338,11 +332,9 @@
                     </div>
                 </div>
                 
-                <!-- Web Projects -->
                 <div class="category-section reveal-on-scroll reveal-right">
                     <h3>WEB PROJECTS</h3>
                     <div class="project-grid">
-                        <!-- First 4 Web projects (always visible) -->
                         <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>UBUNTUFOLIO</h4>
@@ -434,10 +426,8 @@
                             </div>
                         </div>
                         
-                        <!-- Show More Button -->
                         <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="web-more">...</button>
                         
-                        <!-- Hidden Web projects -->
                         <div id="web-more" class="more-projects">
                             <div class="project-card">
                                 <div class="project-card-header">
@@ -615,14 +605,12 @@
                     </div>
                 </div>
                 
-                <!-- Java Projects -->
                 <div class="category-section reveal-on-scroll reveal-left">
                     <h3>JAVA PROJECTS</h3>
                     <div class="category-intro reveal-on-scroll reveal-fade">
                         <p>I'm currently building my own Minecraft server network called <strong>FishyNetwork</strong>. All plugins below are part of this network.</p>
                     </div>
                     <div class="project-grid">
-                        <!-- First 4 Java projects (always visible) -->
                         <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
                                 <h4>CUSTOMCOMBAT</h4>
@@ -687,10 +675,8 @@
                                 </div>
                             </div>
                         
-                        <!-- Show More Button -->
                         <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="java-more">...</button>
                         
-                        <!-- Hidden Java projects -->
                         <div id="java-more" class="more-projects">
                             <div class="project-card">
                                 <div class="project-card-header">
@@ -723,9 +709,7 @@
 
     <script src="script.js"></script>
     <script>
-        // Additional script specifically for projects page
         document.addEventListener('DOMContentLoaded', () => {
-            // Staggered animation for project cards
             const projectCards = document.querySelectorAll('.project-card');
             projectCards.forEach((card, index) => {
                 card.style.opacity = '0';

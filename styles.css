@@ -689,7 +689,7 @@ footer {
         cursor: auto !important;
     }
     
-    .show-more-btn, .project-card, .cta, a, button, .skill-tag, .tech-tag {
+    .show-more-btn, .project-card, .cta, a, button, .skill-tag, .tech-tag, .skill-btn {
         cursor: pointer !important;
     }
     
@@ -2635,7 +2635,7 @@ section {
     }
 }
 
-.cta, a, button, .skill-tag, .tech-tag {
+.cta, a, button, .skill-tag, .tech-tag, .skill-btn {
     cursor: none;
 }
 
@@ -2644,7 +2644,7 @@ section {
         cursor: auto !important;
     }
     
-    .show-more-btn, .project-card, .cta, a, button, .skill-tag, .tech-tag {
+    .show-more-btn, .project-card, .cta, a, button, .skill-tag, .tech-tag, .skill-btn {
         cursor: pointer !important;
     }
     
@@ -2732,6 +2732,39 @@ section {
 .more-projects-link.interactive-hover:hover {
     transform: translateX(10px);
     color: var(--accent-color);
+}
+
+/* Skill action buttons */
+.skill-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.skill-btn {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    background-color: rgba(99, 102, 241, 0.1);
+    color: var(--accent-color);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    letter-spacing: 0.5px;
+    font-family: var(--body-font);
+    text-transform: uppercase;
+    cursor: none;
+}
+
+.skill-btn:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    border-color: var(--accent-color);
 }
 
 /* Enhanced glitch effect for the main title */

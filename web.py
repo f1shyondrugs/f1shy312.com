@@ -23,6 +23,10 @@ def hardware():
 @app.route('/cybersecurity')
 def cybersecurity():
     return send_from_directory('.', 'cybersecurity.html')
+    
+@app.route('/outside')
+def outside():
+    return send_from_directory('.', 'outside.html')
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5500)
