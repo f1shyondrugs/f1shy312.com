@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create skill page characters (for cybersecurity, hardware, software pages)
     createSkillPageCharacters();
     
+    // Randomize floating language icons on software page
+    initRandomLanguageFloat();
+    
     // Initialize custom cursor
     initCustomCursor();
     
@@ -122,8 +125,44 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Recreate skill page characters on resize
         createSkillPageCharacters();
+        
+        // Re-randomize language floats on resize (software page)
+        initRandomLanguageFloat();
     }, 300), { passive: true });
 });
+
+// Random floating positions for language icons (software page)
+function initRandomLanguageFloat() {
+    const container = document.querySelector('.languages-float');
+    if (!container) return;
+    
+    const items = Array.from(container.querySelectorAll('.language-float-item'));
+    if (!items.length) return;
+    
+    const count = items.length;
+    const minY = 22;
+    const maxY = 78;
+    const horizontalJitter = 6; // +/- around the base slot
+    
+    items.forEach((item, index) => {
+        // Evenly spaced base X across the container
+        const slotCenter = ((index + 0.5) / count) * 100; // 0–100%
+        const jitter = (Math.random() * 2 - 1) * horizontalJitter;
+        const x = Math.min(90, Math.max(10, slotCenter + jitter));
+        
+        const y = minY + Math.random() * (maxY - minY);
+        
+        const delay = (Math.random() * 1.0 - 0.5).toFixed(2); // -0.5s -> 0.5s
+        const scale = (0.95 + Math.random() * 0.18).toFixed(2); // 0.95 -> 1.13
+        const speed = (7 + Math.random() * 3).toFixed(2); // 7s -> 10s
+        
+        item.style.setProperty('--x', `${x.toFixed(1)}%`);
+        item.style.setProperty('--y', `${y.toFixed(1)}%`);
+        item.style.setProperty('--d', `${delay}s`);
+        item.style.setProperty('--s', scale);
+        item.style.setProperty('--speed', `${speed}s`);
+    });
+}
 
 
 // Animate sections on entrance
