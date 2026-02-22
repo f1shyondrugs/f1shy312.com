@@ -17,9 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create skill page characters (for cybersecurity, hardware, software pages)
     createSkillPageCharacters();
     
-    // Randomize floating language icons on software page
-    initRandomLanguageFloat();
-    
     // Initialize custom cursor
     initCustomCursor();
     
@@ -41,8 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize section detection
     initSectionDetection();
     
+    // Initialize featured 3D cubes
+    if (window.innerWidth > 768) {
+        initFeaturedCubes();
+    }
+    
     // Initialize scroll reveal animations
     initScrollReveal();
+    
+    // Initialize section number ticker animations
+    initSectionTickers();
+    
+    // Initialize word swap animation
+    initWordSwap();
     
     // Add click event to dot characters to change them
     document.querySelectorAll('.dot-character').forEach(char => {
@@ -93,6 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add smooth scrolling to anchor links
     addSmoothScrolling();
     
+    // Hero tag scramble/decode on hover
+    initHeroTagScramble();
+    
     // Initialize characters and animations immediately (no entrance delay)
     setTimeout(() => {
         const char1 = document.getElementById('char1');
@@ -126,43 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Recreate skill page characters on resize
         createSkillPageCharacters();
         
-        // Re-randomize language floats on resize (software page)
-        initRandomLanguageFloat();
     }, 300), { passive: true });
 });
-
-// Random floating positions for language icons (software page)
-function initRandomLanguageFloat() {
-    const container = document.querySelector('.languages-float');
-    if (!container) return;
-    
-    const items = Array.from(container.querySelectorAll('.language-float-item'));
-    if (!items.length) return;
-    
-    const count = items.length;
-    const minY = 22;
-    const maxY = 78;
-    const horizontalJitter = 6; // +/- around the base slot
-    
-    items.forEach((item, index) => {
-        // Evenly spaced base X across the container
-        const slotCenter = ((index + 0.5) / count) * 100; // 0–100%
-        const jitter = (Math.random() * 2 - 1) * horizontalJitter;
-        const x = Math.min(90, Math.max(10, slotCenter + jitter));
-        
-        const y = minY + Math.random() * (maxY - minY);
-        
-        const delay = (Math.random() * 1.0 - 0.5).toFixed(2); // -0.5s -> 0.5s
-        const scale = (0.95 + Math.random() * 0.18).toFixed(2); // 0.95 -> 1.13
-        const speed = (7 + Math.random() * 3).toFixed(2); // 7s -> 10s
-        
-        item.style.setProperty('--x', `${x.toFixed(1)}%`);
-        item.style.setProperty('--y', `${y.toFixed(1)}%`);
-        item.style.setProperty('--d', `${delay}s`);
-        item.style.setProperty('--s', scale);
-        item.style.setProperty('--speed', `${speed}s`);
-    });
-}
 
 
 // Animate sections on entrance
@@ -212,39 +188,55 @@ function initScrollReveal() {
 function animatePageLoad() {
     const elements = [
         document.querySelector('header'),
+        document.querySelector('.hero-top-meta'),
+        document.querySelector('.hero-title-block'),
+        document.querySelector('.hero-info-col'),
+        document.querySelector('.hero-visual-col'),
+        document.querySelector('.hero-scroll-cue'),
         document.querySelector('.left-column'),
         document.querySelector('.right-column'),
         document.querySelector('.scroll-indicator')
-    ].filter(el => el); // Filter out null elements
+    ].filter(el => el);
     
-    // Batch DOM reads before writes to avoid layout thrashing
     const initialStyles = elements.map(el => {
-        // Read initial state (forces layout calculation once)
         const opacity = window.getComputedStyle(el).opacity;
         const transform = window.getComputedStyle(el).transform;
-        
         return { element: el, opacity, transform };
     });
     
-    // Batch all style writes
     initialStyles.forEach(item => {
         item.element.style.opacity = '0';
-        item.element.style.transform = 'translateY(20px)';
-        item.element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        item.element.style.transform = 'translateY(30px)';
+        item.element.style.transition = 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1)';
     });
     
-    // Trigger reflow once
     document.body.offsetHeight;
     
-    // Staggered animation with fewer timeouts
     setTimeout(() => {
         elements.forEach((el, index) => {
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            // Stagger through CSS instead of multiple timeouts
-            el.style.transitionDelay = `${index * 0.15}s`;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+            el.style.transitionDelay = `${index * 0.12}s`;
         });
-    }, 300);
+    }, 200);
+
+    // Animate title words with stagger
+    const titleWords = document.querySelectorAll('.title-word');
+    titleWords.forEach((word, i) => {
+        word.style.opacity = '0';
+        word.style.transform = 'translateY(100%)';
+        word.style.transition = 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+    
+    document.body.offsetHeight;
+    
+    setTimeout(() => {
+        titleWords.forEach((word, i) => {
+            word.style.transitionDelay = `${0.3 + i * 0.1}s`;
+            word.style.opacity = '1';
+            word.style.transform = 'translateY(0)';
+        });
+    }, 100);
 }
 
 // Inactivity timer variables
@@ -359,42 +351,261 @@ function createSkillPageCharacters() {
 
 }
 
-// Custom cursor functionality
-function initCustomCursor() {
-    const cursorDot = document.querySelector('.cursor-dot');
-    
-    // Hide default cursor
-    document.body.style.cursor = 'none';
-    
-    // Initial position off-screen
-    cursorDot.style.top = '-100px';
-    cursorDot.style.left = '-100px';
+// Featured 3D cube — Three.js interactive block
+// Set data-texture="your-image.png" on .featured-cube-container to apply a custom texture.
+// Uses NearestFilter for crisp pixel-art textures (Minecraft style).
+function initFeaturedCubes() {
+    if (typeof THREE === 'undefined') return;
+    document.querySelectorAll('.featured-cube-container').forEach(container => {
+        if (container.clientWidth === 0 || container.clientHeight === 0) return;
+        setupCube(container);
+    });
 }
 
-function moveCustomCursor(e) {
-    const cursorDot = document.querySelector('.cursor-dot');
-    
-    // Update cursor position immediately without delay
-    cursorDot.style.left = `${e.clientX}px`;
-    cursorDot.style.top = `${e.clientY}px`;
+function setupCube(container) {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
+    camera.position.set(0, -1.2, 5.5);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    container.appendChild(renderer.domElement);
+
+    // Geometry — size from data-cube-size or default 2.2
+    const size = parseFloat(container.dataset.cubeSize) || 2.2;
+    const geometry = new THREE.BoxGeometry(size, size, size);
+
+    // Material — per-face textures, single texture, or dark fallback
+    // Face order: right, left, top, bottom, front, back
+    const faceKeys = ['right', 'left', 'top', 'bottom', 'front', 'back'];
+    const fallbackTex = container.dataset.texture || '';
+    const loader = new THREE.TextureLoader();
+
+    function loadTex(path) {
+        const tex = loader.load(path, () => renderer.render(scene, camera));
+        tex.minFilter = THREE.NearestFilter;
+        tex.magFilter = THREE.NearestFilter;
+        tex.encoding = THREE.sRGBEncoding;
+        return new THREE.MeshStandardMaterial({ map: tex, roughness: 0.55, metalness: 0.15 });
+    }
+
+    const defaultMat = new THREE.MeshStandardMaterial({ color: 0x111115, roughness: 0.35, metalness: 0.6 });
+
+    const hasPerFace = faceKeys.some(k => container.dataset['texture' + k.charAt(0).toUpperCase() + k.slice(1)]);
+    let material;
+
+    if (hasPerFace) {
+        material = faceKeys.map(k => {
+            const path = container.dataset['texture' + k.charAt(0).toUpperCase() + k.slice(1)];
+            return path ? loadTex(path) : (fallbackTex ? loadTex(fallbackTex) : defaultMat);
+        });
+    } else if (fallbackTex) {
+        material = loadTex(fallbackTex);
+    } else {
+        material = defaultMat;
+    }
+
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    // Accent wireframe edges
+    const edges = new THREE.EdgesGeometry(geometry);
+    const edgeMat = new THREE.LineBasicMaterial({
+        color: 0x6366f1,
+        transparent: true,
+        opacity: 0.45,
+    });
+    const wireframe = new THREE.LineSegments(edges, edgeMat);
+    cube.add(wireframe);
+
+    // Lighting
+    const ambient = new THREE.AmbientLight(0xffffff, 0.35);
+    scene.add(ambient);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 0.7);
+    keyLight.position.set(4, 5, 6);
+    scene.add(keyLight);
+
+    const fillLight = new THREE.DirectionalLight(0x8888cc, 0.25);
+    fillLight.position.set(-4, -2, 2);
+    scene.add(fillLight);
+
+    const accentLight = new THREE.PointLight(0x6366f1, 0.8, 12);
+    accentLight.position.set(-3, 2, 3);
+    scene.add(accentLight);
+
+    // Global mouse tracking — parallax across the full page
+    let pageMouseNX = 0, pageMouseNY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        pageMouseNX = (e.clientX / window.innerWidth - 0.5) * 2;
+        pageMouseNY = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+
+    // Animation
+    let targetRotX = Math.PI * 0.18;
+    let targetRotY = Math.PI * 0.25;
+
+    function animate() {
+        requestAnimationFrame(animate);
+        const t = performance.now() * 0.001;
+
+        // Orbiting accent light
+        accentLight.position.x = Math.sin(t * 0.4) * 4;
+        accentLight.position.z = Math.cos(t * 0.4) * 4;
+        accentLight.position.y = Math.sin(t * 0.25) * 2 + 2;
+
+        // Wireframe pulse
+        edgeMat.opacity = 0.3 + Math.sin(t * 1.5) * 0.15;
+
+        // Rotation — slow idle spin + full-page mouse parallax tilt
+        const idleRotY = t * 0.25;
+        const idleRotX = Math.PI * -0.12 + Math.sin(t * 0.3) * 0.08;
+
+        targetRotX = idleRotX + pageMouseNY * 0.35;
+        targetRotY = idleRotY + pageMouseNX * 0.5;
+
+        cube.rotation.x += (targetRotX - cube.rotation.x) * 0.04;
+        cube.rotation.y += (targetRotY - cube.rotation.y) * 0.04;
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Resize handler
+    window.addEventListener('resize', debounce(() => {
+        const nw = container.clientWidth;
+        const nh = container.clientHeight;
+        if (nw === 0 || nh === 0) return;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh);
+    }, 250), { passive: true });
 }
+
+// Toggle: blob wrapping on hover. Can also be toggled by typing "snap" anywhere on the page.
+let CURSOR_WRAP_SNAPPING = false;
+
+// Custom cursor: blobby dot, smooth follow, wrap-on-hover, liquid morph
+(function() {
+    let cursorDot = null;
+    let targetX = -100, targetY = -100;
+    let currentX = -100, currentY = -100;
+    let prevX = -100, prevY = -100;
+    const smooth = 0.16;
+    const wrapPadding = 12;
+    let rafId = null;
+    let wrapElement = null;
+    let liquidPhase = 0;
+
+    function lerp(a, b, t) {
+        return a + (b - a) * t;
+    }
+
+    function tick() {
+        liquidPhase += 0.022;
+        if (!cursorDot) {
+            rafId = requestAnimationFrame(tick);
+            return;
+        }
+
+        if (wrapElement) {
+            const rect = wrapElement.getBoundingClientRect();
+            const l = rect.left - wrapPadding;
+            const t = rect.top - wrapPadding;
+            const w = rect.width + wrapPadding * 2;
+            const h = rect.height + wrapPadding * 2;
+            currentX = rect.left + rect.width / 2;
+            currentY = rect.top + rect.height / 2;
+            targetX = currentX;
+            targetY = currentY;
+            cursorDot.classList.add('cursor-dot--wrapping');
+            cursorDot.style.transform = 'translate(0, 0)';
+            cursorDot.style.left = `${l}px`;
+            cursorDot.style.top = `${t}px`;
+            cursorDot.style.width = `${w}px`;
+            cursorDot.style.height = `${h}px`;
+            cursorDot.style.borderRadius = '22px 18px 24px 20px';
+            cursorDot.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+        } else {
+            cursorDot.classList.remove('cursor-dot--wrapping');
+            currentX = lerp(currentX, targetX, smooth);
+            currentY = lerp(currentY, targetY, smooth);
+            const vx = currentX - prevX;
+            const vy = currentY - prevY;
+            prevX = currentX;
+            prevY = currentY;
+            const speed = Math.min(Math.hypot(vx, vy) * 0.15, 1.2);
+            const stretch = 1 + speed * 0.12;
+            const squash = 1 / Math.sqrt(stretch);
+            const angle = Math.atan2(vy, vx);
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+            const scaleX = squash + (stretch - squash) * cos * cos;
+            const scaleY = squash + (stretch - squash) * sin * sin;
+            const wobble = 0.08 * Math.sin(liquidPhase) + 0.02 * Math.sin(liquidPhase * 2.3);
+            const br = `${50 + wobble * 20}% ${50 - wobble * 15}% ${50 + wobble * 18}% ${50 - wobble * 12}%`;
+            cursorDot.style.left = `${currentX}px`;
+            cursorDot.style.top = `${currentY}px`;
+            cursorDot.style.transform = `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`;
+            cursorDot.style.width = '20px';
+            cursorDot.style.height = '20px';
+            cursorDot.style.borderRadius = br;
+            cursorDot.style.backgroundColor = '';
+        }
+        rafId = requestAnimationFrame(tick);
+    }
+
+    function initCustomCursor() {
+        cursorDot = document.querySelector('.cursor-dot');
+        if (cursorDot) {
+            cursorDot.style.top = '-100px';
+            cursorDot.style.left = '-100px';
+            if (rafId == null) rafId = requestAnimationFrame(tick);
+        }
+    }
+
+    function moveCustomCursor(e) {
+        targetX = e.clientX;
+        targetY = e.clientY;
+    }
+
+    function setWrapElement(el) {
+        wrapElement = el;
+    }
+
+    function clearWrapElement(e) {
+        if (e) {
+            targetX = e.clientX;
+            targetY = e.clientY;
+        }
+        wrapElement = null;
+    }
+
+    window.initCustomCursor = initCustomCursor;
+    window.moveCustomCursor = moveCustomCursor;
+    window.setCursorWrapElement = setWrapElement;
+    window.clearCursorWrapElement = clearWrapElement;
+})();
 
 function addHoverEffects() {
-    // Interactive elements that should change cursor appearance
-    const interactiveElements = document.querySelectorAll('a, .cta, .dot-character');
+    const interactiveElements = document.querySelectorAll('a, .cta, button, .skill-tag, .tech-tag, .skill-btn, .dot-character');
     const cursorDot = document.querySelector('.cursor-dot');
-    
+    if (!cursorDot) return;
+
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
-            cursorDot.style.width = '24px';
-            cursorDot.style.height = '24px';
-            cursorDot.style.backgroundColor = 'white';
+            if (CURSOR_WRAP_SNAPPING) window.setCursorWrapElement(el);
         });
-        
-        el.addEventListener('mouseleave', () => {
-            cursorDot.style.width = '8px';
-            cursorDot.style.height = '8px';
-            cursorDot.style.backgroundColor = 'var(--accent-color)';
+        el.addEventListener('mouseleave', (e) => {
+            window.clearCursorWrapElement(e);
         });
     });
 }
@@ -1316,6 +1527,7 @@ function initKeyboardSecret() {
     // Define the secret code sequence
     const konamiCode = "ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba";
     const fishyCode = "fishy";
+    const snapCode = "snap";
     
     // Add event listener for keyboard input
     document.addEventListener('keydown', (e) => {
@@ -1339,6 +1551,11 @@ function initKeyboardSecret() {
             activateFishySecret();
             // Reset the buffer after successful activation
             secretBuffer = '';
+        } else if (secretBuffer.toLowerCase().includes(snapCode)) {
+            // Toggle cursor wrap snapping
+            CURSOR_WRAP_SNAPPING = !CURSOR_WRAP_SNAPPING;
+            secretBuffer = '';
+            showSnapToggleFeedback();
         }
         
         // Handle any letter key for dot character interaction
@@ -1911,6 +2128,18 @@ function flashSecretActivation() {
     setTimeout(() => { document.body.removeChild(flash); }, 400);
 }
 
+// Feedback when toggling cursor snap via "snap" key sequence
+function showSnapToggleFeedback() {
+    const msg = document.createElement('div');
+    msg.className = 'snap-toggle-feedback';
+    msg.textContent = CURSOR_WRAP_SNAPPING ? 'Snap ON' : 'Snap OFF';
+    msg.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:8px 16px;background:rgba(7,7,7,0.9);color:var(--accent-color);font-size:0.7rem;letter-spacing:2px;border-radius:6px;border:1px solid var(--border-color);z-index:10001;pointer-events:none;opacity:0;transition:opacity 0.25s ease;';
+    document.body.appendChild(msg);
+    setTimeout(() => { msg.style.opacity = '1'; }, 10);
+    setTimeout(() => { msg.style.opacity = '0'; }, 1800);
+    setTimeout(() => { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 2200);
+}
+
 // Mobile navigation functionality
 function initMobileNavigation() {
     const menuToggle = document.querySelector('.mobile-nav-toggle');
@@ -2008,13 +2237,22 @@ function initScrollProgress() {
     const progressBar = document.querySelector('.scroll-progress-bar');
     if (!progressBar) return;
     
-    // Update progress bar on scroll
+    const header = document.querySelector('header');
+    
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset;
         const docHeight = document.body.scrollHeight - window.innerHeight;
         const scrollPercent = (scrollTop / docHeight) * 100;
         
         progressBar.style.width = scrollPercent + '%';
+        
+        if (header) {
+            if (scrollTop > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
     }, { passive: true });
 }
 
@@ -2023,4 +2261,274 @@ function initLucideIcons() {
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
-} 
+}
+
+function buildTickerDigits(el) {
+    const raw = el.textContent.trim();
+    el.textContent = '';
+    el.setAttribute('data-target', raw);
+
+    for (const ch of raw) {
+        if (/\d/.test(ch)) {
+            const target = parseInt(ch, 10);
+            const wrapper = document.createElement('span');
+            wrapper.className = 'ticker-digit';
+            const strip = document.createElement('span');
+            strip.className = 'digit-strip';
+            for (let cycle = 0; cycle < 2; cycle++) {
+                for (let i = 0; i <= 9; i++) {
+                    const s = document.createElement('span');
+                    s.textContent = i;
+                    strip.appendChild(s);
+                }
+            }
+            strip.style.transform = 'translateY(0)';
+            wrapper.appendChild(strip);
+            el.appendChild(wrapper);
+            wrapper.dataset.target = target;
+        } else {
+            const span = document.createElement('span');
+            span.className = 'ticker-char';
+            span.textContent = ch;
+            el.appendChild(span);
+        }
+    }
+}
+
+function rollTickerTo(el, delay) {
+    const digits = el.querySelectorAll('.ticker-digit');
+    digits.forEach((d, i) => {
+        const strip = d.querySelector('.digit-strip');
+        const target = parseInt(d.dataset.target, 10);
+        setTimeout(() => {
+            strip.style.transform = `translateY(-${target * 1.3}em)`;
+        }, (delay || 150) + i * 120);
+    });
+}
+
+function spinTickerFull(el, delay) {
+    const digits = el.querySelectorAll('.ticker-digit');
+    digits.forEach((d, i) => {
+        const strip = d.querySelector('.digit-strip');
+        const target = parseInt(d.dataset.target, 10);
+        strip.style.transition = 'none';
+        strip.style.transform = `translateY(-${target * 1.3}em)`;
+        strip.offsetHeight;
+        strip.style.transition = '';
+        setTimeout(() => {
+            strip.style.transform = `translateY(-${(target + 10) * 1.3}em)`;
+        }, (delay || 50) + i * 80);
+    });
+}
+
+function snapTickerBack(el) {
+    const digits = el.querySelectorAll('.ticker-digit');
+    digits.forEach(d => {
+        const strip = d.querySelector('.digit-strip');
+        const target = parseInt(d.dataset.target, 10);
+        strip.style.transition = 'none';
+        strip.style.transform = `translateY(-${target * 1.3}em)`;
+        strip.offsetHeight;
+        strip.style.transition = '';
+    });
+}
+
+function resetTicker(el) {
+    const digits = el.querySelectorAll('.ticker-digit');
+    digits.forEach(d => {
+        const strip = d.querySelector('.digit-strip');
+        strip.style.transition = 'none';
+        strip.style.transform = 'translateY(0)';
+        strip.offsetHeight;
+        strip.style.transition = '';
+    });
+}
+
+function initSectionTickers() {
+    const sectionNumbers = document.querySelectorAll('.section-number');
+    if (!sectionNumbers.length) return;
+
+    sectionNumbers.forEach(el => {
+        buildTickerDigits(el);
+
+        el.addEventListener('mouseenter', () => {
+            spinTickerFull(el, 50);
+        });
+        el.addEventListener('mouseleave', () => {
+            snapTickerBack(el);
+        });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                if (el.dataset.tickerDone) return;
+                el.dataset.tickerDone = '1';
+                rollTickerTo(el, 150);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    sectionNumbers.forEach(el => observer.observe(el));
+
+    initStatTickers();
+    initHoverMicroInteractions();
+}
+
+function initStatTickers() {
+    const statValues = document.querySelectorAll('.stat-value');
+    statValues.forEach(el => {
+        const raw = el.textContent.trim();
+        if (!/\d/.test(raw)) return;
+
+        buildTickerDigits(el);
+        el.classList.add('has-ticker');
+
+        const parent = el.closest('.stat-item') || el;
+        parent.addEventListener('mouseenter', () => {
+            spinTickerFull(el, 30);
+        });
+        parent.addEventListener('mouseleave', () => {
+            snapTickerBack(el);
+        });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.tickerDone) {
+                entry.target.dataset.tickerDone = '1';
+                const el = entry.target.querySelector('.stat-value.has-ticker') || entry.target;
+                if (el.classList.contains('has-ticker')) rollTickerTo(el, 200);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+}
+
+function initHoverMicroInteractions() {
+    document.querySelectorAll('.section-row-header').forEach(header => {
+        const num = header.querySelector('.section-number');
+        if (!num) return;
+        header.addEventListener('mouseenter', () => {
+            spinTickerFull(num, 50);
+        });
+        header.addEventListener('mouseleave', () => {
+            snapTickerBack(num);
+        });
+    });
+
+    document.querySelectorAll('.skill-page-btn').forEach(btn => {
+        const idx = btn.querySelector('.btn-index');
+        if (!idx) return;
+        const original = idx.textContent.trim();
+        btn.addEventListener('mouseenter', () => {
+            idx.style.transition = 'none';
+            idx.style.transform = 'translateY(4px)';
+            idx.style.opacity = '0';
+            idx.offsetHeight;
+            idx.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+            idx.style.transform = 'translateY(0)';
+            idx.style.opacity = '1';
+        });
+    });
+}
+
+function initWordSwap() {
+    const swap = document.getElementById('word-swap-trigger');
+    if (!swap) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !swap.classList.contains('is-swapped')) {
+                setTimeout(() => {
+                    swap.classList.add('is-swapped');
+                }, 600);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    observer.observe(swap);
+}
+
+/**
+ * Hero tag: on hover, scramble text with random chars then decode back to original.
+ * Uses requestAnimationFrame for smooth, synced animation.
+ */
+function initHeroTagScramble() {
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*[]<>/?=+';
+    const SCRAMBLE_DURATION = 300;
+    const DECODE_DURATION = 420;
+    const EASE_OUT_EXPO = t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+
+    document.querySelectorAll('.hero-tag, .hero-tag-right').forEach(tag => {
+        const original = tag.textContent.trim();
+        if (!original) return;
+        tag.dataset.original = original;
+
+        let rafId = null;
+        let isHovering = false;
+
+        const cancel = () => {
+            if (rafId != null) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+        };
+
+        const randomChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+
+        const runAnimation = (phaseStart) => {
+            const totalDuration = SCRAMBLE_DURATION + DECODE_DURATION;
+
+            const tick = (now) => {
+                if (!isHovering) {
+                    tag.textContent = original;
+                    cancel();
+                    return;
+                }
+                const elapsed = now - phaseStart;
+                const progress = Math.min(elapsed / totalDuration, 1);
+
+                if (elapsed < SCRAMBLE_DURATION) {
+                    let str = '';
+                    for (let i = 0; i < original.length; i++) {
+                        str += randomChar();
+                    }
+                    tag.textContent = str;
+                } else {
+                    const decodeElapsed = elapsed - SCRAMBLE_DURATION;
+                    const decodeProgress = Math.min(decodeElapsed / DECODE_DURATION, 1);
+                    const eased = EASE_OUT_EXPO(decodeProgress);
+                    let str = '';
+                    for (let i = 0; i < original.length; i++) {
+                        const threshold = (i + 0.3) / original.length;
+                        str += eased >= threshold ? original[i] : randomChar();
+                    }
+                    tag.textContent = str;
+                }
+
+                if (progress < 1) {
+                    rafId = requestAnimationFrame(tick);
+                } else {
+                    tag.textContent = original;
+                    rafId = null;
+                }
+            };
+            rafId = requestAnimationFrame(tick);
+        };
+
+        tag.addEventListener('mouseenter', () => {
+            isHovering = true;
+            cancel();
+            runAnimation(performance.now());
+        });
+
+        tag.addEventListener('mouseleave', () => {
+            isHovering = false;
+            cancel();
+            tag.textContent = original;
+        });
+    });
+}

@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="logo.jpg" type="image/jpeg">
     <meta name="description" content="Projects by Das_F1sHy312 - Just a Developer">
 </head>
 <body>
     <div class="cursor-dot"></div>
     <div class="noise-overlay"></div>
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
     
     <header>
         <div class="logo">Das_F1sHy312</div>
@@ -33,60 +36,82 @@
     </header>
 
     <main>
-        <section id="projects-hero" class="projects-hero">
-            <div class="section-container">
-                <div class="section-header reveal-on-scroll reveal-left">
-                    <span class="pre-heading">MY WORK</span>
-                    <h1>PROJECTS</h1>
-                    <p class="section-intro">A collection of projects I've worked on across different technologies and platforms.</p>
+        <section class="subpage-hero section-animate">
+            <div class="section-container stagger-children">
+                <div class="subpage-hero-meta">
+                    <span class="hero-tag">[PORTFOLIO]</span>
+                    <span class="hero-tag-right">MY WORK</span>
                 </div>
+                <h1 class="subpage-hero-title">
+                    <span class="title-line"><span class="title-word accent-grad">PROJECTS</span></span>
+                </h1>
+                <p class="subpage-hero-desc">A collection of projects I've worked on across different technologies and platforms.</p>
             </div>
         </section>
         
-        <section id="featured-project" class="featured-project-section">
-            <div class="section-container">
+        <section id="featured-project" class="featured-project-section section-animate">
+            <div class="section-container stagger-children">
+                <div class="section-row-header featured-section-row">
+                    <div class="section-header-with-logo reveal-on-scroll reveal-left">
+                        <div class="featured-counter-and-logo">
+                            <span class="section-number">(00)</span>
+                            <img src="https://lotb.net/favicon.ico" alt="" class="featured-section-logo" onerror="this.style.display='none'">
+                        </div>
+                        <div class="section-header">
+                            <span class="pre-heading">FEATURED</span>
+                            <h2>LEGEND OF THE BLOCK</h2>
+                        </div>
+                    </div>
+                </div>
                 <div class="featured-project reveal-on-scroll reveal-scale">
                     <div class="featured-project-header">
-                        <div class="featured-project-logo">
-                            <img src="https://pointr.sh/images/logo-min.png" alt="Pointer Logo" class="project-logo">
-                        </div>
                         <div class="featured-project-info">
-                            <span class="featured-badge">FEATURED PROJECT</span>
-                            <h2>POINTER</h2>
-                            <p class="featured-description">A Code Editor with local LLM AI capabilities that runs entirely on your machine. Experience the future of coding with AI assistance that respects your privacy and works offline.</p>
+                            <p class="featured-description">A next-generation Minecraft MMORPG with custom classes (Archer, Warrior, Mage), skill trees, custom weapon attacks and enchants, and randomly spawning dungeons. Forge your legend in a world of endless adventure.</p>
                             <div class="featured-tech-stack">
-                                <span class="tech-tag featured-tech">TYPESCRIPT</span>
-                                <span class="tech-tag featured-tech">REACT</span>
-                                <span class="tech-tag featured-tech">AI/ML</span>
-                                <span class="tech-tag featured-tech">LOCAL LLM</span>
+                                <span class="tech-tag featured-tech">MINECRAFT</span>
+                                <span class="tech-tag featured-tech">JAVA</span>
+                                <span class="tech-tag featured-tech">SPIGOT</span>
+                                <span class="tech-tag featured-tech">1.21.6+</span>
                             </div>
                             <div class="featured-project-links">
-                                <a href="https://github.com/f1shyondrugs/pointer" target="_blank" class="featured-link github-link">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                    View on GitHub
-                                </a>
-                                <a href="https://pointr.sh" target="_blank" class="featured-link demo-link">
+                                <a href="https://lotb.net" target="_blank" class="featured-link demo-link">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
                                     </svg>
                                     Website
                                 </a>
+                                <a href="https://discord.gg/STG6CpcNrn" target="_blank" class="featured-link github-link" title="Join Discord">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                                    Join Discord
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="featured-project-visual">
-                        <img src="https://pointr.sh/images/preview-min.png" alt="Pointer Preview" class="project-preview">
+                        <div class="featured-cube-container"
+                            data-cube-size="2"
+                            data-texture-right="cube/cube-right.png"
+                            data-texture-left="cube/cube-left.png"
+                            data-texture-top="cube/cube-top.png"
+                            data-texture-bottom="cube/cube-bottom.png"
+                            data-texture-front="cube/cube-front.png"
+                            data-texture-back="cube/cube-back.png"
+                        ></div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <section id="projects" class="projects-section">
-            <div class="section-container">
+        <section id="projects" class="projects-section section-animate">
+            <div class="section-container stagger-children">
                 <div class="category-section reveal-on-scroll reveal-left">
+                    <div class="section-row-header">
+                        <div class="section-number">(01)</div>
+                        <div class="section-header">
+                            <span class="pre-heading">AUTOMATION & TOOLS</span>
                     <h3>PYTHON PROJECTS</h3>
+                        </div>
+                    </div>
                     <div class="project-grid">
                         <div class="project-card reveal-on-scroll reveal-scale">
                             <div class="project-card-header">
@@ -94,607 +119,112 @@
                             </div>
                             <p>MP3 Player with Playlists, Volume Control, etc... made with libraries customTkinter, PyGame and more.</p>
                             <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">TKINTER</span>
+                                <span class="tech-tag">PYTHON</span>
+                                <span class="tech-tag">TKINTER</span>
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/f1shyondrugs/python-mp3-player-gui" target="_blank" class="project-link" title="View on GitHub">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                                 </a>
                             </div>
                         </div>
                         
                         <div class="project-card reveal-on-scroll reveal-scale">
-                            <div class="project-card-header">
-                                <h4>TWITCH CHATBOT</h4>
-                            </div>
+                            <div class="project-card-header"><h4>TWITCH CHATBOT</h4></div>
                             <p>This Chatbot has a Point system and a whole Economy. The Chat can control your Game, play Sound Effects, Gamble with their points and much more!</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">API</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/f1shyondrugs/advanced-twitch-bot" target="_blank" class="project-link" title="View on GitHub">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
-                            </div>
+                            <div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">API</span></div>
+                            <div class="project-links"><a href="https://github.com/f1shyondrugs/advanced-twitch-bot" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div>
                         </div>
                         
                         <div class="project-card reveal-on-scroll reveal-scale">
-                            <div class="project-card-header">
-                                <h4>REDDIT REPLIER</h4>
-                            </div>
+                            <div class="project-card-header"><h4>REDDIT REPLIER</h4></div>
                             <p>Automatically replies to posts in a Reddit Community using OpenAI API to generate comments and Reddit API to send them.</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">OPENAI</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/f1shyondrugs/reddit-automatic-replier" target="_blank" class="project-link" title="View on GitHub">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
-                            </div>
+                            <div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">OPENAI</span></div>
+                            <div class="project-links"><a href="https://github.com/f1shyondrugs/reddit-automatic-replier" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div>
                         </div>
                         
                         <div class="project-card reveal-on-scroll reveal-scale">
-                            <div class="project-card-header">
-                                <h4>REVERSE SHELL</h4>
-                            </div>
+                            <div class="project-card-header"><h4>REVERSE SHELL</h4></div>
                             <p>Uses Python Websockets to connect to a remote server. The server has a web UI to send and receive commands.</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">WEBSOCKETS</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/f1shyondrugs/reverse-shell-python" target="_blank" class="project-link" title="View on GitHub">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
-                            </div>
+                            <div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">WEBSOCKETS</span></div>
+                            <div class="project-links"><a href="https://github.com/f1shyondrugs/reverse-shell-python" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div>
                         </div>
                         
                         <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="python-more">...</button>
                         
                         <div id="python-more" class="more-projects">
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>PAPERTRADING PROGRAM</h4>
-                                </div>
-                                <p>This Program lets you Paper Trade with the Binance API to get the data. It shows every second, how much Percentage you've gained or lost, by buying multiple coins.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">API</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>MARKET ANALYZER</h4>
-                                </div>
-                                <p>This Market Analyzer gets data of every coin in the market and calculates certain things to get a basic overview.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">DATA</span>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>AI VOICE ASSISTANT</h4>
-                                </div>
-                                <p>AI Voice Assistant written in python with natural language processing capabilities.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">AI</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/ai-voice-assistant" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>SPACE DESTROYERS</h4>
-                                </div>
-                                <p>Destroy Meteors with your hands. Works via Hand/Body Tracking in Python/Machine Learning.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">ML</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/spacedestroyers" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>PYTHON RANSOMWARE</h4>
-                                </div>
-                                <p>Educational demonstration of file encryption. Currently it only encrypts the testfiles folder (educational purposes only).</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SECURITY</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/python-ransomware" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>FACE RECOGNITION</h4>
-                                </div>
-                                <p>Live camera face/eye recognition, draws squares around detected eyes/faces in real-time.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CV</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/face-and-eye-recognition" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>WEBSITE SUBFOLDER SCANNER</h4>
-                                </div>
-                                <p>A simple python program that automatically scans for subfiles/subfolders on websites.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SECURITY</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/website-subfolder-bruteforce" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>HUMAN BENCHMARK BEATER</h4>
-                                </div>
-                                <p>Python Written Human Benchmark Beater for humanbenchmark.com with automated test completion.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">AUTOMATION</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/notsohuman-humanbenchmark" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>ENCRYPTER</h4>
-                                </div>
-                                <p>File encryption tool with secure encryption algorithms.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">SECURITY</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/encrypter" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>CLASH ROYALE BOT</h4>
-                                </div>
-                                <p>Python Written Clash Royale Playing Bot with automated gameplay capabilities.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">PYTHON</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">GAMING</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/ClashRoyale-Bot-Python" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
+                            <div class="project-card"><div class="project-card-header"><h4>PAPERTRADING PROGRAM</h4></div><p>This Program lets you Paper Trade with the Binance API to get the data. It shows every second, how much Percentage you've gained or lost, by buying multiple coins.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">API</span></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>MARKET ANALYZER</h4></div><p>This Market Analyzer gets data of every coin in the market and calculates certain things to get a basic overview.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">DATA</span></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>AI VOICE ASSISTANT</h4></div><p>AI Voice Assistant written in python with natural language processing capabilities.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">AI</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/ai-voice-assistant" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>SPACE DESTROYERS</h4></div><p>Destroy Meteors with your hands. Works via Hand/Body Tracking in Python/Machine Learning.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">ML</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/spacedestroyers" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>PYTHON RANSOMWARE</h4></div><p>Educational demonstration of file encryption. Currently it only encrypts the testfiles folder (educational purposes only).</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">SECURITY</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/python-ransomware" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>FACE RECOGNITION</h4></div><p>Live camera face/eye recognition, draws squares around detected eyes/faces in real-time.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">CV</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/face-and-eye-recognition" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>WEBSITE SUBFOLDER SCANNER</h4></div><p>A simple python program that automatically scans for subfiles/subfolders on websites.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">SECURITY</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/website-subfolder-bruteforce" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>HUMAN BENCHMARK BEATER</h4></div><p>Python Written Human Benchmark Beater for humanbenchmark.com with automated test completion.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">AUTOMATION</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/notsohuman-humanbenchmark" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>ENCRYPTER</h4></div><p>File encryption tool with secure encryption algorithms.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">SECURITY</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/encrypter" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>CLASH ROYALE BOT</h4></div><p>Python Written Clash Royale Playing Bot with automated gameplay capabilities.</p><div class="tech-stack"><span class="tech-tag">PYTHON</span><span class="tech-tag">GAMING</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/ClashRoyale-Bot-Python" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="category-section reveal-on-scroll reveal-right">
+                    <div class="section-row-header">
+                        <div class="section-number">(02)</div>
+                        <div class="section-header">
+                            <span class="pre-heading">WEBSITES & APPS</span>
                     <h3>WEB PROJECTS</h3>
+                        </div>
+                            </div>
                     <div class="project-grid">
                         <div class="project-card reveal-on-scroll reveal-scale">
-                            <div class="project-card-header">
-                                <h4>UBUNTUFOLIO</h4>
-                            </div>
-                            <p>A portfolio website styled after Ubuntu Desktop (I got depressed while doing this)</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
-                            </div>
+                            <div class="project-card-header"><h4>POINTER</h4></div>
+                            <p>AI-powered code editor that runs entirely on your machine. Local LLM assistance for zero latency and complete privacy — your code never leaves your device.</p>
+                            <div class="tech-stack"><span class="tech-tag">TYPESCRIPT</span><span class="tech-tag">REACT</span><span class="tech-tag">AI/ML</span></div>
                             <div class="project-links">
-                                <a href="https://github.com/f1shyondrugs/ubuntufolio" target="_blank" class="project-link" title="View on GitHub">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
-                                <a href="https://ubuntu.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                    </svg>
-                                </a>
+                                <a href="https://github.com/f1shyondrugs/pointer" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                                <a href="https://pointr.sh" target="_blank" class="project-link" title="Website"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a>
                             </div>
                         </div>
-
-                        <div class="project-card reveal-on-scroll reveal-scale">
-                            <div class="project-card-header">
-                                <h4>LOTB</h4>
-                            </div>
-                            <p>Website for my Minecraft Server side project <em>Legend of the Block</em>, where i tried some scroll animation stuff.</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://lotb.net" target="_blank" class="project-link" title="Live Demo">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="project-card">
-                            <div class="project-card-header">
-                                <h4>BLOCKYPLAYZ</h4>
-                            </div>
-                            <p>Minecraft Server website for blockyplayz.de with server information and features</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/f1shyondrugs/blockyplayz-website" target="_blank" class="project-link" title="View on GitHub">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
-                                <a href="https://blockyplayz.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="project-card reveal-on-scroll reveal-scale">
-                            <div class="project-card-header">
-                                <h4>CRAZYFOLIO</h4>
-                            </div>
-                            <p>A crazy styled portfolio website</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/f1shyondrugs/crazyfolio" target="_blank" class="project-link" title="View on GitHub">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
-                                <a href="https://crazyfolio.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
+                        <div class="project-card reveal-on-scroll reveal-scale"><div class="project-card-header"><h4>UBUNTUFOLIO</h4></div><p>A portfolio website styled after Ubuntu Desktop (I got depressed while doing this)</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JS</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/ubuntufolio" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="https://ubuntu.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                        <div class="project-card"><div class="project-card-header"><h4>BLOCKYPLAYZ</h4></div><p>Minecraft Server website for blockyplayz.de with server information and features</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JS</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/blockyplayz-website" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="https://blockyplayz.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                        <div class="project-card reveal-on-scroll reveal-scale"><div class="project-card-header"><h4>CRAZYFOLIO</h4></div><p>A crazy styled portfolio website</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JS</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/crazyfolio" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="https://crazyfolio.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
                         
                         <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="web-more">...</button>
                         
                         <div id="web-more" class="more-projects">
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>MONKEYTYPE</h4>
-                                </div>
-                                <p>MonkeyType off of Wish or something</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/monkeytype" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                    <a href="https://monkeytype.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>WEATHER APP</h4>
-                                </div>
-                                <p>A weather forecast application with clean UI and detailed weather data.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">API</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/weather-web-app" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                    <a href="https://weather.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>URL SHORTENER</h4>
-                                </div>
-                                <p>A simple URL shortening service</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">NODE</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">API</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/urlshortener" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                    <a href="https://urlshortener.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>404 PAGE</h4>
-                                </div>
-                                <p>A stylish custom 404.f1shy312.com error page</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/404.f1shy312.com" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                    <a href="https://404.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card reveal-on-scroll reveal-scale">
-                                <div class="project-card-header">
-                                    <h4>CASINO</h4>
-                                </div>
-                                <p>Casino Website with games like Plinko, Towers, Mines and more.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://casino.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>TERMFOLIO</h4>
-                                </div>
-                                <p>Terminal styled portfolio website with command-line interface aesthetics</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.3s;">JS</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/termfolio.f1shy312.com" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                    <a href="https://termfolio.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>ANIME LIST</h4>
-                                </div>
-                                <p>A personal collection of watched anime with ratings and comments</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">HTML</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">CSS</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://anime.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>MINECRAFT SERVER SCANNER</h4>
-                                </div>
-                                <p>A tool for scanning Minecraft servers for open ports and vulnerabilities</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JS</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SECURITY</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://scanner.f1shy312.com" target="_blank" class="project-link" title="Live Demo">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
+                            <div class="project-card"><div class="project-card-header"><h4>MONKEYTYPE</h4></div><p>MonkeyType off of Wish or something</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JS</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/monkeytype" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="https://monkeytype.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>WEATHER APP</h4></div><p>A weather forecast application with clean UI and detailed weather data.</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">API</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/weather-web-app" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="https://weather.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>URL SHORTENER</h4></div><p>A simple URL shortening service</p><div class="tech-stack"><span class="tech-tag">NODE</span><span class="tech-tag">API</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/urlshortener" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="https://urlshortener.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>404 PAGE</h4></div><p>A stylish custom 404.f1shy312.com error page</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/404.f1shy312.com" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="https://404.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                            <div class="project-card reveal-on-scroll reveal-scale"><div class="project-card-header"><h4>CASINO</h4></div><p>Casino Website with games like Plinko, Towers, Mines and more.</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JS</span></div><div class="project-links"><a href="https://casino.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>TERMFOLIO</h4></div><p>Terminal styled portfolio website with command-line interface aesthetics</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JS</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/termfolio.f1shy312.com" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="https://termfolio.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>ANIME LIST</h4></div><p>A personal collection of watched anime with ratings and comments</p><div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span></div><div class="project-links"><a href="https://anime.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
+                            <div class="project-card"><div class="project-card-header"><h4>MINECRAFT SERVER SCANNER</h4></div><p>A tool for scanning IP Addresses for Minecraft servers by searching for Minecraft's default port 25565</p><div class="tech-stack"><span class="tech-tag">JS</span><span class="tech-tag">SECURITY</span></div><div class="project-links"><a href="https://scanner.f1shy312.com" target="_blank" class="project-link" title="Live Demo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></a></div></div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="category-section reveal-on-scroll reveal-left">
+                    <div class="section-row-header">
+                        <div class="section-number">(03)</div>
+                        <div class="section-header">
+                            <span class="pre-heading">MINECRAFT PLUGINS</span>
                     <h3>JAVA PROJECTS</h3>
+                        </div>
+                    </div>
                     <div class="category-intro reveal-on-scroll reveal-fade">
-                        <p>I'm currently building my own Minecraft server network called <strong>FishyNetwork</strong>. All plugins below are part of this network.</p>
+                        <p>I'm currently building my own Minecraft server network called <strong>Legend Of The Block</strong>. There are more plugins that are not listed here due to them being private.</p>
                     </div>
                     <div class="project-grid">
-                        <div class="project-card reveal-on-scroll reveal-scale">
-                            <div class="project-card-header">
-                                <h4>CUSTOMCOMBAT</h4>
-                            </div>
-                            <p>This plugin has custom-made mobs & bosses aswell as items with Custom Abilities, stages and everything.</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SPIGOT</span>
-                            </div>
-                        </div>
-                        
-                        <div class="project-card reveal-on-scroll reveal-scale">
-                            <div class="project-card-header">
-                                <h4>CASEOPENING</h4>
-                            </div>
-                            <p>A Minecraft Plugin with a cs2-like case opening system. You can customize nearly <strong>everything</strong>.</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
-                                <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SPIGOT</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/f1shyondrugs/caseopening" target="_blank" class="project-link" title="View on GitHub">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="project-card reveal-on-scroll reveal-scale">
-                                <div class="project-card-header">
-                                    <h4>SELLWAND</h4>
-                                </div>
-                                <p>A Minecraft Plugin with a sellwand system. Includes customizable wand types, prices, and permissions.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SPIGOT</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/sellwand" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        
-                            <div class="project-card reveal-on-scroll reveal-scale">
-                                <div class="project-card-header">
-                                    <h4>LOBBYULTIMATE</h4>
-                                </div>
-                                <p>A Minecraft Plugin initializing a proxy lobby system with inventory items and a /lobby command.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">BUNGEE</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/lobbyultimate" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
+                        <div class="project-card reveal-on-scroll reveal-scale"><div class="project-card-header"><h4>CUSTOMCOMBAT</h4></div><p>This plugin has custom-made mobs & bosses aswell as items with Custom Abilities, stages and everything.</p><div class="tech-stack"><span class="tech-tag">JAVA</span><span class="tech-tag">SPIGOT</span></div></div>
+                        <div class="project-card reveal-on-scroll reveal-scale"><div class="project-card-header"><h4>CASEOPENING</h4></div><p>A Minecraft Plugin with a cs2-like case opening system. You can customize nearly <strong>everything</strong>.</p><div class="tech-stack"><span class="tech-tag">JAVA</span><span class="tech-tag">SPIGOT</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/caseopening" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                        <div class="project-card reveal-on-scroll reveal-scale"><div class="project-card-header"><h4>SELLWAND</h4></div><p>A Minecraft Plugin with a sellwand system. Includes customizable wand types, prices, and permissions.</p><div class="tech-stack"><span class="tech-tag">JAVA</span><span class="tech-tag">SPIGOT</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/sellwand" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
+                        <div class="project-card reveal-on-scroll reveal-scale"><div class="project-card-header"><h4>LOBBYULTIMATE</h4></div><p>A Minecraft Plugin initializing a proxy lobby system with inventory items and a /lobby command.</p><div class="tech-stack"><span class="tech-tag">JAVA</span><span class="tech-tag">BUNGEE</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/lobbyultimate" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
                         
                         <button class="show-more-btn reveal-on-scroll reveal-bounce" data-target="java-more">...</button>
                         
                         <div id="java-more" class="more-projects">
-                            <div class="project-card">
-                                <div class="project-card-header">
-                                    <h4>OPCOMMAND</h4>
-                                </div>
-                                <p>This command will give you 10000$ using LiteEco. A simple economy plugin integration.</p>
-                                <div class="tech-stack">
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.1s;">JAVA</span>
-                                    <span class="tech-tag reveal-on-scroll reveal-bounce" style="transition-delay: 0.2s;">SPIGOT</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/f1shyondrugs/opcommand" target="_blank" class="project-link" title="View on GitHub">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
+                            <div class="project-card"><div class="project-card-header"><h4>OPCOMMAND</h4></div><p>This command will give you 10000$ using LiteEco. A simple economy plugin integration.</p><div class="tech-stack"><span class="tech-tag">JAVA</span><span class="tech-tag">SPIGOT</span></div><div class="project-links"><a href="https://github.com/f1shyondrugs/opcommand" target="_blank" class="project-link" title="View on GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a></div></div>
                         </div>
                     </div>
                 </div>
@@ -703,10 +233,22 @@
     </main>
 
     <footer>
-        <div class="footer-left reveal-on-scroll reveal-left">© <script>document.write(new Date().getFullYear())</script> Das_F1sHy312</div>
-        <div class="footer-right reveal-on-scroll reveal-right">JUST A DEVELOPER</div>
+        <div class="footer-cta-block">
+            <div class="footer-cta-label">GET IN TOUCH</div>
+            <h2 class="footer-headline">LET'S<br>CONNECT<span class="accent-grad">.</span></h2>
+            <a href="mailto:hi@f1shy312.com" class="footer-email-btn">HI@F1SHY312.COM &rarr;</a>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            <div class="footer-left">&copy; <script>document.write(new Date().getFullYear())</script> Das_F1sHy312</div>
+            <div class="footer-center">JUST A DEVELOPER</div>
+            <div class="footer-right">
+                <a href="https://github.com/f1shyondrugs" target="_blank">GITHUB</a>
+            </div>
+        </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -715,39 +257,28 @@
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
                 card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                
                 setTimeout(() => {
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
                 }, 100 + index * 50);
             });
-            
-            // Show More functionality
             const showMoreButtons = document.querySelectorAll('.show-more-btn');
-            
             showMoreButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const targetId = button.getAttribute('data-target');
                     const targetContent = document.getElementById(targetId);
-                    
-                    // Toggle visibility
                     targetContent.classList.toggle('visible');
                     button.classList.toggle('active');
-                    
-                    // Animate the newly visible cards with a delay
                     if (targetContent.classList.contains('visible')) {
                         const hiddenCards = targetContent.querySelectorAll('.project-card');
                         hiddenCards.forEach((card, index) => {
                             card.style.opacity = '0';
                             card.style.transform = 'translateY(30px)';
-                            
                             setTimeout(() => {
                                 card.style.opacity = '1';
                                 card.style.transform = 'translateY(0)';
                             }, 100 + index * 50);
                         });
-                        
-                        // Scroll to make sure content is visible
                         setTimeout(() => {
                             button.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         }, 300);

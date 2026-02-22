@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="icon" href="logo.jpg" type="image/jpeg">
     <meta name="description" content="Outside Programming Skills - Creative Software, Games & Interests - Das_F1sHy312">
@@ -39,42 +39,42 @@
     </header>
 
     <main>
-        <section class="hero-section">
-            <div class="section-container">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <span class="pre-heading">OUTSIDE PROGRAMMING SKILLS</span>
-                        <h1>CREATIVE & PERSONAL INTERESTS</h1>
-                        <p>Beyond coding, I explore creative software, gaming, and various personal interests that fuel my passion for technology and design.</p>
-                        
-                        <div class="hero-stats">
-                            <div class="stat">
-                                <span class="stat-number">10+</span>
-                                <span class="stat-label">CREATIVE TOOLS</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-number">50+</span>
-                                <span class="stat-label">GAMES PLAYED</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-number">∞</span>
-                                <span class="stat-label">INTERESTS</span>
-                            </div>
-                        </div>
+        <section class="subpage-hero section-animate">
+            <div class="section-container stagger-children">
+                <div class="subpage-hero-meta">
+                    <span class="hero-tag">[OUTSIDE CODE]</span>
+                    <span class="hero-tag-right">SKILL PAGE</span>
+                </div>
+                <h1 class="subpage-hero-title">
+                    <span class="title-line"><span class="title-word">CREATIVE &</span></span>
+                    <span class="title-line"><span class="title-word accent-grad">PERSONAL</span></span>
+                </h1>
+                <p class="subpage-hero-desc">Beyond coding, I explore creative software, gaming, and various personal interests that fuel my passion for technology and design.</p>
+                <div class="subpage-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">10+</span>
+                        <span class="stat-label">CREATIVE TOOLS</span>
                     </div>
-                    
-                    <div class="hero-visual">
-                        <div class="dot-character hero-character" id="hero-char"></div>
+                    <div class="stat-item">
+                        <span class="stat-value">50+</span>
+                        <span class="stat-label">GAMES PLAYED</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">&infin;</span>
+                        <span class="stat-label">INTERESTS</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="languages-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2>CREATIVE SOFTWARE</h2>
-                    <p>Professional creative tools I use for design, video editing, and digital art</p>
+        <section class="languages-section section-animate">
+            <div class="section-container stagger-children">
+                <div class="section-row-header">
+                    <div class="section-number">(01)</div>
+                    <div class="section-header reveal-on-scroll reveal-left">
+                        <span class="pre-heading">DESIGN TOOLS</span>
+                        <h2>CREATIVE SOFTWARE</h2>
+                    </div>
                 </div>
                 
                 <div class="languages-grid">
@@ -141,11 +141,14 @@
             </div>
         </section>
 
-        <section class="frameworks-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2>GAMING & INTERESTS</h2>
-                    <p>Games I enjoy and personal interests that inspire my work</p>
+        <section class="frameworks-section section-animate">
+            <div class="section-container stagger-children">
+                <div class="section-row-header">
+                    <div class="section-number">(02)</div>
+                    <div class="section-header reveal-on-scroll reveal-left">
+                        <span class="pre-heading">LEISURE</span>
+                        <h2>GAMING & INTERESTS</h2>
+                    </div>
                 </div>
                 
                 <div class="frameworks-grid">
@@ -212,48 +215,46 @@
         </section>
     </main>
 
-    <div class="back-link-container">
-        <a href="/#skills" class="back-link">← BACK TO SKILLS</a>
-    </div>
-
     <footer>
-        <div class="footer-left">© <script>document.write(new Date().getFullYear())</script> Das_F1sHy312</div>
-        <div class="footer-right">JUST A DEVELOPER</div>
+        <div class="footer-cta-block">
+            <div class="footer-cta-label">BACK TO HOME</div>
+            <h2 class="footer-headline">EXPLORE<br>MORE<span class="accent-grad">.</span></h2>
+            <a href="/#skills" class="footer-email-btn">&larr; BACK TO SKILLS</a>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            <div class="footer-left">&copy; <script>document.write(new Date().getFullYear())</script> Das_F1sHy312</div>
+            <div class="footer-center">JUST A DEVELOPER</div>
+            <div class="footer-right">
+                <a href="https://github.com/f1shyondrugs" target="_blank">GITHUB</a>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>
     <script>
         function copyDiscordUsername() {
             const username = 'f1shyondrugs312';
-            
-            // Try modern clipboard API first
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(username).then(() => {
                     alert('Discord username copied: ' + username);
                 }).catch(() => {
-                    // Fallback to legacy method
                     fallbackCopyTextToClipboard(username);
                 });
             } else {
-                // Fallback for older browsers
                 fallbackCopyTextToClipboard(username);
             }
         }
-        
         function fallbackCopyTextToClipboard(text) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
-            
-            // Avoid scrolling to bottom
             textArea.style.top = "0";
             textArea.style.left = "0";
             textArea.style.position = "fixed";
             textArea.style.opacity = "0";
-            
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
-            
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
@@ -264,7 +265,6 @@
             } catch (err) {
                 alert('Failed to copy. Please manually copy: ' + text);
             }
-            
             document.body.removeChild(textArea);
         }
     </script>

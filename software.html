@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="icon" href="logo.jpg" type="image/jpeg">
@@ -40,104 +40,114 @@
     </header>
 
     <main>
-        <section class="hero-section">
-            <div class="section-container">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <span class="pre-heading">SOFTWARE PROGRAMMING</span>
-                        <h1>CODING & DEVELOPMENT</h1>
-                        <p>From web applications to game mods, I've built solutions across multiple platforms and technologies.</p>
-                        
-                        <div class="hero-stats">
-                            <div class="stat">
-                                <span class="stat-number">6+</span>
-                                <span class="stat-label">LANGUAGES</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-number">15+</span>
-                                <span class="stat-label">PROJECTS</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-number">5+</span>
-                                <span class="stat-label">YEARS</span>
-                            </div>
-                        </div>
+        <section class="subpage-hero section-animate">
+            <div class="section-container stagger-children">
+                <div class="subpage-hero-meta">
+                    <span class="hero-tag">[SOFTWARE]</span>
+                    <span class="hero-tag-right">SKILL PAGE</span>
+                </div>
+                <h1 class="subpage-hero-title">
+                    <span class="title-line"><span class="title-word">CODING &</span></span>
+                    <span class="title-line"><span class="title-word accent-grad">DEV</span></span>
+                </h1>
+                <p class="subpage-hero-desc">From web applications to game mods, I've built solutions across multiple platforms and technologies.</p>
+                <div class="subpage-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">6+</span>
+                        <span class="stat-label">LANGUAGES</span>
                     </div>
-                    
-                    <div class="hero-visual">
-                        <div class="dot-character hero-character" id="hero-char"></div>
+                    <div class="stat-item">
+                        <span class="stat-value">15+</span>
+                        <span class="stat-label">PROJECTS</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">5+</span>
+                        <span class="stat-label">YEARS</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="languages-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2>LANGUAGES & TECHNOLOGIES</h2>
-                    <p>Core programming languages and technologies I work with daily</p>
+        <section class="languages-section section-animate">
+            <div class="section-container stagger-children">
+                <div class="section-row-header">
+                    <div class="section-number">(01)</div>
+                    <div class="section-header reveal-on-scroll reveal-left">
+                        <span class="pre-heading">CORE STACK</span>
+                        <h2>LANGUAGES & TECHNOLOGIES</h2>
+                    </div>
                 </div>
                 
-                <div class="languages-float" aria-label="Languages floating showcase">
-                    <div class="language-float-item"
-                         data-title="PYTHON"
-                         data-level="EXPERT"
-                         data-tip="Automation • Web backends • AI experiments">
-                        <i class="devicon-python-plain colored" aria-hidden="true"></i>
+                <div class="lang-stack">
+                    <div class="lang-row reveal-on-scroll reveal-left">
+                        <span class="lang-idx">01</span>
+                        <div class="lang-name-wrap">
+                            <h3 class="lang-name">PYTHON</h3>
+                        </div>
+                        <p class="lang-desc">Automation, web backends, AI/ML experiments, scripting</p>
+                        <i class="devicon-python-plain colored lang-icon" aria-hidden="true"></i>
                     </div>
-
-                    <div class="language-float-item"
-                         data-title="JAVASCRIPT / TYPESCRIPT"
-                         data-level="ADVANCED"
-                         data-tip="Modern UI • Node.js • Type-safe APIs">
-                        <span class="icon-duo" aria-hidden="true">
-                            <i class="devicon-javascript-plain colored"></i>
-                            <i class="devicon-typescript-plain colored"></i>
+                    <div class="lang-row reveal-on-scroll reveal-left">
+                        <span class="lang-idx">02</span>
+                        <div class="lang-name-wrap">
+                            <h3 class="lang-name">JS / TS</h3>
+                        </div>
+                        <p class="lang-desc">Modern UI, Node.js services, type-safe APIs</p>
+                        <span class="lang-icon-duo">
+                            <i class="devicon-javascript-plain colored lang-icon" aria-hidden="true"></i>
+                            <i class="devicon-typescript-plain colored lang-icon" aria-hidden="true"></i>
                         </span>
                     </div>
-
-                    <div class="language-float-item"
-                         data-title="JAVA"
-                         data-level="INTERMEDIATE"
-                         data-tip="Minecraft plugins • OOP • Long-lived services">
-                        <i class="devicon-java-plain colored" aria-hidden="true"></i>
+                    <div class="lang-row reveal-on-scroll reveal-left">
+                        <span class="lang-idx">03</span>
+                        <div class="lang-name-wrap">
+                            <h3 class="lang-name">JAVA</h3>
+                        </div>
+                        <p class="lang-desc">Minecraft plugins, OOP architecture, long-lived services</p>
+                        <i class="devicon-java-plain colored lang-icon" aria-hidden="true"></i>
                     </div>
-
-                    <div class="language-float-item"
-                         data-title="HTML / CSS"
-                         data-level="EXPERT"
-                         data-tip="Responsive layouts • Animations • Accessibility">
-                        <span class="icon-duo" aria-hidden="true">
-                            <i class="devicon-html5-plain colored"></i>
-                            <i class="devicon-css3-plain colored"></i>
+                    <div class="lang-row reveal-on-scroll reveal-left">
+                        <span class="lang-idx">04</span>
+                        <div class="lang-name-wrap">
+                            <h3 class="lang-name">HTML / CSS</h3>
+                        </div>
+                        <p class="lang-desc">Responsive layouts, animations, accessibility-first</p>
+                        <span class="lang-icon-duo">
+                            <i class="devicon-html5-plain colored lang-icon" aria-hidden="true"></i>
+                            <i class="devicon-css3-plain colored lang-icon" aria-hidden="true"></i>
                         </span>
                     </div>
-
-                    <div class="language-float-item"
-                         data-title="SQL"
-                         data-level="ADVANCED"
-                         data-tip="Schema design • Query tuning • MySQL/Postgres">
-                        <span class="icon-duo" aria-hidden="true">
-                            <i class="devicon-mysql-plain colored"></i>
-                            <i class="devicon-postgresql-plain colored"></i>
+                    <div class="lang-row reveal-on-scroll reveal-left">
+                        <span class="lang-idx">05</span>
+                        <div class="lang-name-wrap">
+                            <h3 class="lang-name">SQL</h3>
+                        </div>
+                        <p class="lang-desc">Schema design, query tuning, MySQL & Postgres</p>
+                        <span class="lang-icon-duo">
+                            <i class="devicon-mysql-plain colored lang-icon" aria-hidden="true"></i>
+                            <i class="devicon-postgresql-plain colored lang-icon" aria-hidden="true"></i>
                         </span>
                     </div>
-
-                    <div class="language-float-item"
-                         data-title="LUA"
-                         data-level="INTERMEDIATE"
-                         data-tip="Game scripting • Quick modding • Automation">
-                        <i class="devicon-lua-plain colored" aria-hidden="true"></i>
+                    <div class="lang-row reveal-on-scroll reveal-left">
+                        <span class="lang-idx">06</span>
+                        <div class="lang-name-wrap">
+                            <h3 class="lang-name">LUA</h3>
+                        </div>
+                        <p class="lang-desc">Game scripting, rapid modding, automation tools</p>
+                        <i class="devicon-lua-plain colored lang-icon" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="frameworks-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2>FRAMEWORKS & TOOLS</h2>
-                    <p>Libraries, frameworks, and development tools that accelerate my workflow</p>
+        <section class="frameworks-section section-animate">
+            <div class="section-container stagger-children">
+                <div class="section-row-header">
+                    <div class="section-number">(02)</div>
+                    <div class="section-header reveal-on-scroll reveal-left">
+                        <span class="pre-heading">MY TOOLKIT</span>
+                        <h2>FRAMEWORKS & TOOLS</h2>
+                    </div>
                 </div>
                 
                 <div class="frameworks-grid">
@@ -153,7 +163,6 @@
                             <span class="framework-tag">SHADCN/UI</span>
                         </div>
                     </div>
-                    
                     <div class="framework-category">
                         <h3>BACKEND</h3>
                         <div class="framework-tags">
@@ -164,7 +173,6 @@
                             <span class="framework-tag">LARAVEL</span>
                         </div>
                     </div>
-                    
                     <div class="framework-category">
                         <h3>GAME DEVELOPMENT</h3>
                         <div class="framework-tags">
@@ -174,7 +182,6 @@
                             <span class="framework-tag">PYGAME</span>
                         </div>
                     </div>
-                    
                     <div class="framework-category">
                         <h3>DEVELOPMENT TOOLS</h3>
                         <div class="framework-tags">
@@ -189,7 +196,6 @@
                             <span class="framework-tag">NANO</span>
                         </div>
                     </div>
-                    
                     <div class="framework-category">
                         <h3>DATABASES & CACHING</h3>
                         <div class="framework-tags">
@@ -199,7 +205,6 @@
                             <span class="framework-tag">MYSQL</span>
                         </div>
                     </div>
-                    
                     <div class="framework-category">
                         <h3>CLOUD & DEVOPS</h3>
                         <div class="framework-tags">
@@ -210,7 +215,6 @@
                             <span class="framework-tag">GIT</span>
                         </div>
                     </div>
-                    
                     <div class="framework-category">
                         <h3>TESTING & QUALITY</h3>
                         <div class="framework-tags">
@@ -218,7 +222,6 @@
                             <span class="framework-tag">SELENIUM</span>
                         </div>
                     </div>
-                    
                     <div class="framework-category">
                         <h3>AI & MACHINE LEARNING</h3>
                         <div class="framework-tags">
@@ -235,13 +238,20 @@
         </section>
     </main>
 
-    <div class="back-link-container">
-        <a href="/#skills" class="back-link">← BACK TO SKILLS</a>
-    </div>
-
     <footer>
-        <div class="footer-left">© <script>document.write(new Date().getFullYear())</script> Das_F1sHy312</div>
-        <div class="footer-right">JUST A DEVELOPER</div>
+        <div class="footer-cta-block">
+            <div class="footer-cta-label">BACK TO HOME</div>
+            <h2 class="footer-headline">EXPLORE<br>MORE<span class="accent-grad">.</span></h2>
+            <a href="/#skills" class="footer-email-btn">← BACK TO SKILLS</a>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            <div class="footer-left">&copy; <script>document.write(new Date().getFullYear())</script> Das_F1sHy312</div>
+            <div class="footer-center">JUST A DEVELOPER</div>
+            <div class="footer-right">
+                <a href="https://github.com/f1shyondrugs" target="_blank">GITHUB</a>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>
