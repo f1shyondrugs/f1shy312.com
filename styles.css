@@ -684,7 +684,6 @@ nav ul li:last-child {
     background-color: transparent;
     border: none;
     animation: floating 4s ease-in-out infinite;
-    will-change: transform;
 }
 
 .dot-character.large {
@@ -729,7 +728,7 @@ nav ul li:last-child {
     align-self: flex-end;
 }
 
-/* Dots */
+/* Dots - no will-change to avoid hundreds of compositor layers and lag */
 .dot {
     position: absolute;
     width: 5px;
@@ -737,7 +736,6 @@ nav ul li:last-child {
     border-radius: 50%;
     background-color: var(--dot-color);
     transition: transform 0.1s ease, opacity 0.1s ease, box-shadow 0.1s ease;
-    will-change: transform, opacity, box-shadow;
 }
 
 .active-dot {
@@ -2869,6 +2867,14 @@ section {
     margin: 0 0 12px 0;
 }
 
+.embedded-build-note {
+    padding-left: 14px;
+    border-left: 3px solid rgba(99, 102, 241, 0.4);
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
 .embedded-tags {
     display: flex;
     flex-wrap: wrap;
@@ -2890,8 +2896,7 @@ section {
 .embedded-tag:hover {
     background: rgba(99, 102, 241, 0.15);
     border-color: rgba(99, 102, 241, 0.5);
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+    transform: scale(1.03);
     color: var(--accent-color);
 }
 

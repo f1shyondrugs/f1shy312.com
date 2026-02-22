@@ -82,9 +82,19 @@ document.addEventListener('DOMContentLoaded', () => {
         resetInactivityTimer();
     }, 100), { passive: true });
     
-    // Make dot hover animation ultra-responsive by removing debounce
+    // Dot hover: throttle with rAF to avoid lag (one update per frame)
+    let mouseX = 0, mouseY = 0;
+    let rafScheduled = false;
     document.addEventListener('mousemove', (e) => {
-        handleMouseMove(e);
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!rafScheduled) {
+            rafScheduled = true;
+            requestAnimationFrame(() => {
+                rafScheduled = false;
+                handleMouseMove(mouseX, mouseY);
+            });
+        }
     }, { passive: true });
     
     // Separate custom cursor movement to be smoother (no debounce)
@@ -679,6 +689,8 @@ function createDotMatrix(container, character) {
     // Adjust grid density based on container size - reduce density for better performance
     const cols = isLarge ? 12 : isMedium ? 10 : 8;
     const rows = isLarge ? 16 : isMedium ? 12 : 10;
+    container.setAttribute('data-cols', cols);
+    container.setAttribute('data-rows', rows);
     
     // Calculate dot size and spacing
     const dotSize = 4;
@@ -1238,77 +1250,56 @@ function isPartOfCharacter(char, x, y, cols, rows) {
     return (patterns[char] || defaultPattern)(x, y, cols, rows);
 }
 
-function handleMouseMove(e) {
-    // Get only characters in viewport for performance
+function handleMouseMove(mouseX, mouseY) {
     const charContainers = document.querySelectorAll('.dot-character');
     const viewportHeight = window.innerHeight;
-    
-    charContainers.forEach(container => {
+    const maxDistance = 120;
+
+    for (let i = 0; i < charContainers.length; i++) {
+        const container = charContainers[i];
         const containerRect = container.getBoundingClientRect();
-        
-        // Skip elements not in viewport
-        if (containerRect.bottom < 0 || containerRect.top > viewportHeight) {
-            return;
-        }
-        
-        // Calculate if mouse is within or near the container
+
+        if (containerRect.bottom < 0 || containerRect.top > viewportHeight) continue;
+
         const centerX = containerRect.left + containerRect.width / 2;
         const centerY = containerRect.top + containerRect.height / 2;
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-        
-        // Distance from mouse to container center
-        const distance = Math.sqrt(
-            Math.pow(mouseX - centerX, 2) + 
-            Math.pow(mouseY - centerY, 2)
-        );
-        
-        // Only process if mouse is within certain radius of container
-        const maxRadius = Math.max(containerRect.width, containerRect.height);
-        if (distance < maxRadius * 1.5) {
-            // Add a subtle rotation to the character container based on mouse position
+        const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
+        const maxRadius = Math.max(containerRect.width, containerRect.height) * 1.5;
+
+        if (distance < maxRadius) {
             const rotateX = (mouseY - centerY) / 25;
             const rotateY = (mouseX - centerX) / -25;
-            
-            // Use direct style manipulation for more immediate updates
             container.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            
-            // Process all dots for more complete interactive effect
+
+            const cols = parseInt(container.getAttribute('data-cols'), 10) || 10;
+            const rows = parseInt(container.getAttribute('data-rows'), 10) || 10;
+            const colSpacing = containerRect.width / (cols + 1);
+            const rowSpacing = containerRect.height / (rows + 1);
             const dots = container.querySelectorAll('.dot');
-            const maxDistance = 150; // Increase interaction distance
-            
-            dots.forEach(dot => {
-                const dotRect = dot.getBoundingClientRect();
-                const dotCenterX = dotRect.left + dotRect.width / 2;
-                const dotCenterY = dotRect.top + dotRect.height / 2;
-                
-                const distanceToDot = Math.sqrt(
-                    Math.pow(mouseX - dotCenterX, 2) + 
-                    Math.pow(mouseY - dotCenterY, 2)
-                );
-                
+
+            for (let d = 0; d < dots.length; d++) {
+                const dot = dots[d];
+                const x = parseInt(dot.dataset.x, 10) || 0;
+                const y = parseInt(dot.dataset.y, 10) || 0;
+                const dotCenterX = containerRect.left + (x + 1) * colSpacing;
+                const dotCenterY = containerRect.top + (y + 1) * rowSpacing;
+                const distanceToDot = Math.hypot(mouseX - dotCenterX, mouseY - dotCenterY);
+
                 if (distanceToDot < maxDistance) {
                     const isActive = dot.dataset.isActive === 'true';
                     const intensity = 1 - distanceToDot / maxDistance;
-                    const push = 10 * intensity; // Increased push amount
-                    
-                    // Calculate direction to push the dot away from mouse
-                    const angleRadians = Math.atan2(dotCenterY - mouseY, dotCenterX - mouseX);
-                    const pushX = Math.cos(angleRadians) * push;
-                    const pushY = Math.sin(angleRadians) * push;
-                    
-                    // Apply direct styles without transitions for immediate response
+                    const push = 8 * intensity;
+                    const angle = Math.atan2(dotCenterY - mouseY, dotCenterX - mouseX);
+                    const pushX = Math.cos(angle) * push;
+                    const pushY = Math.sin(angle) * push;
                     if (isActive) {
-                        // More dramatic effect for active dots
-                        dot.style.transform = `translate3d(${pushX}px, ${pushY}px, 0) scale(${1 + intensity * 0.8})`;
-                        dot.style.boxShadow = `0 0 ${8 + intensity * 15}px rgba(99, 102, 241, ${0.5 + intensity * 0.5})`;
+                        dot.style.transform = `translate3d(${pushX}px, ${pushY}px, 0) scale(${1 + intensity * 0.5})`;
+                        dot.style.boxShadow = `0 0 ${8 + intensity * 12}px rgba(99, 102, 241, ${0.5 + intensity * 0.4})`;
                     } else {
-                        // Subtle effect for inactive dots
                         dot.style.transform = `translate3d(${pushX}px, ${pushY}px, 0)`;
                         dot.style.opacity = Math.min(0.4, 0.05 + intensity * 0.5);
                     }
                 } else {
-                    // Reset immediately when out of range
                     if (dot.dataset.isActive === 'false') {
                         dot.style.transform = 'translate3d(0, 0, 0)';
                         dot.style.opacity = '0.05';
@@ -1317,14 +1308,12 @@ function handleMouseMove(e) {
                         dot.style.boxShadow = '0 0 8px rgba(99, 102, 241, 0.6)';
                     }
                 }
-            });
+            }
         } else if (container.style.transform) {
-            // Reset container transform when mouse is far away
             container.style.transform = '';
-            
-            // Reset all dots
             const dots = container.querySelectorAll('.dot');
-            dots.forEach(dot => {
+            for (let d = 0; d < dots.length; d++) {
+                const dot = dots[d];
                 if (dot.dataset.isActive === 'false') {
                     dot.style.transform = 'translate3d(0, 0, 0)';
                     dot.style.opacity = '0.05';
@@ -1332,9 +1321,9 @@ function handleMouseMove(e) {
                     dot.style.transform = 'translate3d(0, 0, 0)';
                     dot.style.boxShadow = '0 0 8px rgba(99, 102, 241, 0.6)';
                 }
-            });
+            }
         }
-    });
+    }
 }
 
 function changeCharacter(charElement) {
