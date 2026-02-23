@@ -2251,6 +2251,7 @@ section {
     position: relative;
     transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding-left 0.4s var(--ease-out-expo);
     cursor: default;
+    padding-right: 1rem;
 }
 
 .lang-row:first-child {
@@ -2281,6 +2282,7 @@ section {
     color: var(--tertiary-color);
     letter-spacing: 1px;
     transition: color 0.3s ease;
+    padding-left: 1rem;
 }
 
 .lang-row:hover .lang-idx {
