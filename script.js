@@ -501,7 +501,7 @@ function setupCube(container) {
 }
 
 // Toggle: blob wrapping on hover. Can also be toggled by typing "snap" anywhere on the page.
-let CURSOR_WRAP_SNAPPING = false;
+let CURSOR_WRAP_SNAPPING = true;
 
 // Custom cursor: blobby dot, smooth follow, wrap-on-hover, liquid morph
 (function() {
@@ -553,7 +553,7 @@ let CURSOR_WRAP_SNAPPING = false;
             prevX = currentX;
             prevY = currentY;
             const speed = Math.min(Math.hypot(vx, vy) * 0.15, 1.2);
-            const stretch = 1 + speed * 0.12;
+            const stretch = 1 + speed * 0.2;
             const squash = 1 / Math.sqrt(stretch);
             const angle = Math.atan2(vy, vx);
             const cos = Math.cos(angle);
@@ -606,13 +606,15 @@ let CURSOR_WRAP_SNAPPING = false;
 })();
 
 function addHoverEffects() {
-    const interactiveElements = document.querySelectorAll('a, .cta, button, .skill-tag, .tech-tag, .skill-btn, .dot-character');
+    const interactiveElements = document.querySelectorAll('.cta, button, .interactive-hover, .footer-email-btn, .contact-btn, .featured-link, .demo-link, .project-link');
     const cursorDot = document.querySelector('.cursor-dot');
     if (!cursorDot) return;
 
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
-            if (CURSOR_WRAP_SNAPPING) window.setCursorWrapElement(el);
+            if (CURSOR_WRAP_SNAPPING) { 
+                window.setCursorWrapElement(el);
+            }
         });
         el.addEventListener('mouseleave', (e) => {
             window.clearCursorWrapElement(e);

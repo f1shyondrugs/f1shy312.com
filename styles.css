@@ -446,7 +446,7 @@ nav a:hover::after {
     width: 100%;
 }
 
-.contact-button {
+.contact-btn {
     padding: 0.5rem 1rem;
     background-color: transparent;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -459,14 +459,14 @@ nav a:hover::after {
     letter-spacing: 1.5px !important;
 }
 
-.contact-button:hover {
+.contact-btn:hover {
     background-color: var(--text-color);
     color: var(--background-color) !important;
     border-color: var(--text-color);
     cursor: pointer;
 }
 
-.contact-button::after {
+.contact-btn::after {
     display: none !important;
 }
 
