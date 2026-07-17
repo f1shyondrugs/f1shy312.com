@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create skill page characters (for cybersecurity, hardware, software pages)
     createSkillPageCharacters();
     
+    // Scale display titles so they never overflow horizontally
+    initFitText();
+
     // Initialize custom cursor
     initCustomCursor();
     
@@ -38,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize section detection
     initSectionDetection();
     
-    // Initialize featured 3D cubes
-    if (window.innerWidth > 768) {
+    // Initialize featured 3D cubes (desktop/tablet landscape only)
+    if (window.innerWidth > 900) {
         initFeaturedCubes();
     }
     
@@ -503,7 +506,7 @@ function setupCube(container) {
 // Toggle: blob wrapping on hover. Can also be toggled by typing "snap" anywhere on the page.
 let CURSOR_WRAP_SNAPPING = true;
 
-// Custom cursor: blobby dot, smooth follow, wrap-on-hover, liquid morph
+// Custom cursor: blobby dot, smooth follow, wrap-on-hover, underline morph
 (function() {
     let cursorDot = null;
     let targetX = -100, targetY = -100;
@@ -513,10 +516,67 @@ let CURSOR_WRAP_SNAPPING = true;
     const wrapPadding = 12;
     let rafId = null;
     let wrapElement = null;
+    let wrapMode = null; // 'box' | 'underline'
     let liquidPhase = 0;
 
     function lerp(a, b, t) {
         return a + (b - a) * t;
+    }
+
+    function clearCursorModes() {
+        if (!cursorDot) return;
+        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--underline');
+    }
+
+    function applyBoxWrap(rect) {
+        const l = rect.left - wrapPadding;
+        const t = rect.top - wrapPadding;
+        const w = rect.width + wrapPadding * 2;
+        const h = rect.height + wrapPadding * 2;
+        currentX = rect.left + rect.width / 2;
+        currentY = rect.top + rect.height / 2;
+        targetX = currentX;
+        targetY = currentY;
+
+        const cs = getComputedStyle(wrapElement);
+        const elMin = Math.min(rect.width, rect.height);
+        const radii = ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft'].map(corner => {
+            const raw = String(cs[`border${corner}Radius`] || '0px').split('/')[0].trim().split(/\s+/)[0];
+            const value = parseFloat(raw);
+            if (!raw || Number.isNaN(value)) return `${wrapPadding}px`;
+            const basePx = raw.endsWith('%') ? (value / 100) * elMin : value;
+            if (basePx >= elMin / 2 - 0.5) return `${Math.min(w, h) / 2}px`;
+            return `${Math.max(0, basePx + wrapPadding)}px`;
+        });
+
+        cursorDot.classList.add('cursor-dot--wrapping');
+        cursorDot.classList.remove('cursor-dot--underline');
+        cursorDot.style.transform = 'translate(0, 0)';
+        cursorDot.style.left = `${l}px`;
+        cursorDot.style.top = `${t}px`;
+        cursorDot.style.width = `${w}px`;
+        cursorDot.style.height = `${h}px`;
+        cursorDot.style.borderRadius = radii.join(' ');
+        cursorDot.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+    }
+
+    function applyUnderlineMorph(rect) {
+        const underlineH = 2;
+        const y = rect.bottom - underlineH;
+        currentX = rect.left + rect.width / 2;
+        currentY = y + underlineH / 2;
+        targetX = currentX;
+        targetY = currentY;
+
+        cursorDot.classList.add('cursor-dot--underline');
+        cursorDot.classList.remove('cursor-dot--wrapping');
+        cursorDot.style.transform = 'translate(0, 0)';
+        cursorDot.style.left = `${rect.left}px`;
+        cursorDot.style.top = `${y}px`;
+        cursorDot.style.width = `${Math.max(rect.width, 8)}px`;
+        cursorDot.style.height = `${underlineH}px`;
+        cursorDot.style.borderRadius = '2px';
+        cursorDot.style.backgroundColor = '';
     }
 
     function tick() {
@@ -526,26 +586,15 @@ let CURSOR_WRAP_SNAPPING = true;
             return;
         }
 
-        if (wrapElement) {
+        if (wrapElement && CURSOR_WRAP_SNAPPING) {
             const rect = wrapElement.getBoundingClientRect();
-            const l = rect.left - wrapPadding;
-            const t = rect.top - wrapPadding;
-            const w = rect.width + wrapPadding * 2;
-            const h = rect.height + wrapPadding * 2;
-            currentX = rect.left + rect.width / 2;
-            currentY = rect.top + rect.height / 2;
-            targetX = currentX;
-            targetY = currentY;
-            cursorDot.classList.add('cursor-dot--wrapping');
-            cursorDot.style.transform = 'translate(0, 0)';
-            cursorDot.style.left = `${l}px`;
-            cursorDot.style.top = `${t}px`;
-            cursorDot.style.width = `${w}px`;
-            cursorDot.style.height = `${h}px`;
-            cursorDot.style.borderRadius = '22px 18px 24px 20px';
-            cursorDot.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+            if (wrapMode === 'underline') {
+                applyUnderlineMorph(rect);
+            } else {
+                applyBoxWrap(rect);
+            }
         } else {
-            cursorDot.classList.remove('cursor-dot--wrapping');
+            clearCursorModes();
             currentX = lerp(currentX, targetX, smooth);
             currentY = lerp(currentY, targetY, smooth);
             const vx = currentX - prevX;
@@ -587,8 +636,9 @@ let CURSOR_WRAP_SNAPPING = true;
         targetY = e.clientY;
     }
 
-    function setWrapElement(el) {
+    function setWrapElement(el, mode = 'box') {
         wrapElement = el;
+        wrapMode = mode || 'box';
     }
 
     function clearWrapElement(e) {
@@ -597,6 +647,7 @@ let CURSOR_WRAP_SNAPPING = true;
             targetY = e.clientY;
         }
         wrapElement = null;
+        wrapMode = null;
     }
 
     window.initCustomCursor = initCustomCursor;
@@ -606,20 +657,36 @@ let CURSOR_WRAP_SNAPPING = true;
 })();
 
 function addHoverEffects() {
-    const interactiveElements = document.querySelectorAll('.cta, button, .interactive-hover, .footer-email-btn, .contact-btn, .featured-link, .demo-link, .project-link');
     const cursorDot = document.querySelector('.cursor-dot');
     if (!cursorDot) return;
 
-    interactiveElements.forEach(el => {
+    const boxTargets = document.querySelectorAll(
+        '.cta, button, .interactive-hover, .footer-email-btn, .contact-btn, .featured-link, .demo-link, .project-link, .skill-page-btn, .skill-btn'
+    );
+    const underlineTargets = document.querySelectorAll(
+        'nav a:not(.contact-btn), .more-projects-link, .footer-right a, .back-link'
+    );
+
+    const bind = (el, mode) => {
+        if (mode === 'box' && (
+            el.classList.contains('more-projects-link') ||
+            (el.closest('nav') && !el.classList.contains('contact-btn'))
+        )) {
+            return;
+        }
+
         el.addEventListener('mouseenter', () => {
-            if (CURSOR_WRAP_SNAPPING) { 
-                window.setCursorWrapElement(el);
+            if (CURSOR_WRAP_SNAPPING) {
+                window.setCursorWrapElement(el, mode);
             }
         });
         el.addEventListener('mouseleave', (e) => {
             window.clearCursorWrapElement(e);
         });
-    });
+    };
+
+    boxTargets.forEach(el => bind(el, 'box'));
+    underlineTargets.forEach(el => bind(el, 'underline'));
 }
 
 // Available characters to display - expanded with more defined characters
@@ -1474,6 +1541,100 @@ const gsap = {
         animate();
     }
 };
+
+// Scale display titles down only when needed — never below a readable size
+const FIT_TEXT_SELECTORS = [
+    '.hero-display',
+    '.subpage-hero-title',
+    '.section-header h2',
+    '.footer-headline'
+].join(', ');
+
+function getFitTextAvailableWidth(el) {
+    const container = el.closest(
+        '.hero-title-block, .section-header, .footer-cta-block, .section-container, .project-content'
+    ) || el.parentElement;
+    if (!container) return Math.max(0, window.innerWidth - 40);
+    const width = container.getBoundingClientRect().width;
+    return Math.max(0, Math.floor(width) - 2);
+}
+
+function getFitTextContentWidth(el) {
+    const lines = el.querySelectorAll('.title-line');
+    if (lines.length) {
+        let widest = 0;
+        lines.forEach(line => {
+            const range = document.createRange();
+            range.selectNodeContents(line);
+            const w = range.getBoundingClientRect().width;
+            widest = Math.max(widest, w);
+            range.detach?.();
+        });
+        return widest;
+    }
+
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const w = range.getBoundingClientRect().width;
+    range.detach?.();
+    // For multi-line <br> headlines, scrollWidth tracks the widest line better
+    return Math.max(w, el.scrollWidth);
+}
+
+function fitTextElement(el) {
+    if (!el) return;
+
+    el.style.fontSize = '';
+
+    const available = getFitTextAvailableWidth(el);
+    if (available < 80) return;
+
+    const cssSize = parseFloat(getComputedStyle(el).fontSize);
+    if (!cssSize || Number.isNaN(cssSize)) return;
+
+    // Keep display titles readable on phones (~32–40px floor)
+    const minPx = Math.max(32, Math.min(40, Math.round(available * 0.1)));
+
+    el.style.fontSize = cssSize + 'px';
+    if (getFitTextContentWidth(el) <= available) {
+        el.style.fontSize = '';
+        return;
+    }
+
+    let lo = minPx;
+    let hi = Math.ceil(cssSize);
+
+    while (lo < hi) {
+        const mid = Math.ceil((lo + hi) / 2);
+        el.style.fontSize = mid + 'px';
+        if (getFitTextContentWidth(el) <= available) {
+            lo = mid;
+        } else {
+            hi = mid - 1;
+        }
+    }
+
+    el.style.fontSize = Math.max(minPx, lo) + 'px';
+}
+
+function fitAllText() {
+    document.querySelectorAll(FIT_TEXT_SELECTORS).forEach(fitTextElement);
+}
+
+function initFitText() {
+    const run = () => fitAllText();
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(run).catch(run);
+    } else {
+        run();
+    }
+
+    requestAnimationFrame(() => requestAnimationFrame(run));
+    window.addEventListener('load', run);
+    window.addEventListener('resize', debounce(run, 100));
+    window.addEventListener('orientationchange', () => setTimeout(run, 150));
+}
 
 // Utility function to debounce events
 function debounce(func, wait) {
