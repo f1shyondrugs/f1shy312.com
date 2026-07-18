@@ -384,6 +384,22 @@ h1 {
     border-radius: 2px;
 }
 
+.cursor-dot.cursor-dot--arrow {
+    mix-blend-mode: normal;
+    background-color: var(--accent-color);
+    box-shadow: 0 0 22px 6px rgba(99, 102, 241, 0.4);
+    filter: none;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
 /* Custom cursor becomes the underline — hide CSS underlines on fine pointers */
 @media (hover: hover) and (pointer: fine) {
     nav a:not(.contact-btn)::after {
@@ -2043,7 +2059,13 @@ section {
     opacity: 0;
     transform: translateX(-10px);
     flex-shrink: 0;
-    padding-right: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.4em;
+    line-height: 1;
+    margin-right: 1rem;
+    padding: 0.15rem;
 }
 
 .skill-page-btn:hover .btn-arrow {
@@ -3374,15 +3396,20 @@ section {
 
     .hero-display,
     .subpage-hero-title {
-        font-size: clamp(2.5rem, 11vw, 4.5rem);
+        font-size: clamp(2.25rem, 10.5vw, 4.25rem);
     }
 
     .section-header h2 {
-        font-size: clamp(2rem, 9vw, 3.25rem);
+        font-size: clamp(1.75rem, 8vw, 3rem);
+        max-width: 100%;
     }
 
     .footer-headline {
-        font-size: clamp(2.75rem, 13vw, 4.5rem);
+        font-size: clamp(2.5rem, 12vw, 4.25rem);
+    }
+
+    .lang-name {
+        font-size: clamp(1.35rem, 7vw, 2.4rem);
     }
 
     .title-line:hover {
@@ -3393,8 +3420,19 @@ section {
         transform: none;
     }
 
-    .subpage-hero-title .title-line {
+    .subpage-hero-title .title-line,
+    .hero-display .title-line {
         white-space: nowrap;
+    }
+
+    .subpage-hero {
+        min-height: 50vh;
+        padding: clamp(1.5rem, 4vw, 3rem) 0;
+    }
+
+    .subpage-hero .section-container {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
     }
 
     .hero-top-meta {
@@ -3999,10 +4037,17 @@ header.scrolled {
     align-items: flex-end;
     padding: clamp(2rem, 5vw, 6rem) 0;
     position: relative;
+    overflow-x: clip;
+    max-width: 100%;
 }
 
 .subpage-hero .section-container {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding-left: clamp(1.25rem, 5vw, 4rem);
+    padding-right: clamp(1.25rem, 5vw, 4rem);
+    box-sizing: border-box;
 }
 
 .subpage-hero-meta {
@@ -4010,6 +4055,9 @@ header.scrolled {
     justify-content: space-between;
     align-items: center;
     margin-bottom: clamp(1.5rem, 3vw, 3rem);
+    gap: 1rem;
+    flex-wrap: wrap;
+    min-width: 0;
 }
 
 .hero-tag-right {
@@ -4031,6 +4079,10 @@ header.scrolled {
     font-family: var(--heading-font);
     margin: 0 0 clamp(1.5rem, 3vw, 2.5rem) 0;
     max-width: 100%;
+    min-width: 0;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
 }
 
 .subpage-hero-title .title-word {

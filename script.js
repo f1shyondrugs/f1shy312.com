@@ -525,7 +525,11 @@ let CURSOR_WRAP_SNAPPING = true;
 
     function clearCursorModes() {
         if (!cursorDot) return;
-        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--underline');
+        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--underline', 'cursor-dot--arrow');
+        if (cursorDot.dataset.arrowGlyph === '1') {
+            cursorDot.textContent = '';
+            delete cursorDot.dataset.arrowGlyph;
+        }
     }
 
     function applyBoxWrap(rect) {
@@ -550,7 +554,11 @@ let CURSOR_WRAP_SNAPPING = true;
         });
 
         cursorDot.classList.add('cursor-dot--wrapping');
-        cursorDot.classList.remove('cursor-dot--underline');
+        cursorDot.classList.remove('cursor-dot--underline', 'cursor-dot--arrow');
+        if (cursorDot.dataset.arrowGlyph === '1') {
+            cursorDot.textContent = '';
+            delete cursorDot.dataset.arrowGlyph;
+        }
         cursorDot.style.transform = 'translate(0, 0)';
         cursorDot.style.left = `${l}px`;
         cursorDot.style.top = `${t}px`;
@@ -569,13 +577,39 @@ let CURSOR_WRAP_SNAPPING = true;
         targetY = currentY;
 
         cursorDot.classList.add('cursor-dot--underline');
-        cursorDot.classList.remove('cursor-dot--wrapping');
+        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--arrow');
+        if (cursorDot.dataset.arrowGlyph === '1') {
+            cursorDot.textContent = '';
+            delete cursorDot.dataset.arrowGlyph;
+        }
         cursorDot.style.transform = 'translate(0, 0)';
         cursorDot.style.left = `${rect.left}px`;
         cursorDot.style.top = `${y}px`;
         cursorDot.style.width = `${Math.max(rect.width, 8)}px`;
         cursorDot.style.height = `${underlineH}px`;
         cursorDot.style.borderRadius = '2px';
+        cursorDot.style.backgroundColor = '';
+    }
+
+    function applyArrowFollow() {
+        currentX = lerp(currentX, targetX, smooth);
+        currentY = lerp(currentY, targetY, smooth);
+        prevX = currentX;
+        prevY = currentY;
+
+        const size = 40;
+        cursorDot.classList.add('cursor-dot--arrow');
+        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--underline');
+        if (cursorDot.dataset.arrowGlyph !== '1') {
+            cursorDot.textContent = '→';
+            cursorDot.dataset.arrowGlyph = '1';
+        }
+        cursorDot.style.left = `${currentX}px`;
+        cursorDot.style.top = `${currentY}px`;
+        cursorDot.style.transform = 'translate(-50%, -50%)';
+        cursorDot.style.width = `${size}px`;
+        cursorDot.style.height = `${size}px`;
+        cursorDot.style.borderRadius = '50%';
         cursorDot.style.backgroundColor = '';
     }
 
@@ -587,11 +621,15 @@ let CURSOR_WRAP_SNAPPING = true;
         }
 
         if (wrapElement && CURSOR_WRAP_SNAPPING) {
-            const rect = wrapElement.getBoundingClientRect();
-            if (wrapMode === 'underline') {
-                applyUnderlineMorph(rect);
+            if (wrapMode === 'arrow') {
+                applyArrowFollow();
             } else {
-                applyBoxWrap(rect);
+                const rect = wrapElement.getBoundingClientRect();
+                if (wrapMode === 'underline') {
+                    applyUnderlineMorph(rect);
+                } else {
+                    applyBoxWrap(rect);
+                }
             }
         } else {
             clearCursorModes();
@@ -661,7 +699,7 @@ function addHoverEffects() {
     if (!cursorDot) return;
 
     const boxTargets = document.querySelectorAll(
-        '.cta, button, .interactive-hover, .footer-email-btn, .contact-btn, .featured-link, .demo-link, .project-link, .skill-page-btn, .skill-btn'
+        '.cta, button, .interactive-hover, .footer-email-btn, .contact-btn, .featured-link, .demo-link, .project-link, .skill-btn'
     );
     const underlineTargets = document.querySelectorAll(
         'nav a:not(.contact-btn), .more-projects-link, .footer-right a, .back-link'
@@ -670,6 +708,7 @@ function addHoverEffects() {
     const bind = (el, mode) => {
         if (mode === 'box' && (
             el.classList.contains('more-projects-link') ||
+            el.classList.contains('skill-page-btn') ||
             (el.closest('nav') && !el.classList.contains('contact-btn'))
         )) {
             return;
@@ -687,6 +726,17 @@ function addHoverEffects() {
 
     boxTargets.forEach(el => bind(el, 'box'));
     underlineTargets.forEach(el => bind(el, 'underline'));
+
+    // Skills rows: keep cursor following, show arrow inside, slightly scaled up
+    document.querySelectorAll('.skill-page-btn').forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            if (!CURSOR_WRAP_SNAPPING) return;
+            window.setCursorWrapElement(btn, 'arrow');
+        });
+        btn.addEventListener('mouseleave', (e) => {
+            window.clearCursorWrapElement(e);
+        });
+    });
 }
 
 // Available characters to display - expanded with more defined characters
@@ -1542,61 +1592,114 @@ const gsap = {
     }
 };
 
-// Scale display titles down only when needed — never below a readable size
+// Scale display titles to fit available width — readable floor, no mid-word overflow
 const FIT_TEXT_SELECTORS = [
     '.hero-display',
     '.subpage-hero-title',
     '.section-header h2',
-    '.footer-headline'
+    '.footer-headline',
+    '.lang-name'
 ].join(', ');
 
 function getFitTextAvailableWidth(el) {
     const container = el.closest(
-        '.hero-title-block, .section-header, .footer-cta-block, .section-container, .project-content'
+        '.hero-title-block, .subpage-hero .section-container, .section-header, .footer-cta-block, .lang-name-wrap, .section-container, .project-content'
     ) || el.parentElement;
+
     if (!container) return Math.max(0, window.innerWidth - 40);
-    const width = container.getBoundingClientRect().width;
-    return Math.max(0, Math.floor(width) - 2);
+
+    let width = container.getBoundingClientRect().width;
+
+    // section-header sits beside a section-number — use its own box
+    if (container.classList.contains('section-header') || container.classList.contains('lang-name-wrap')) {
+        width = container.getBoundingClientRect().width;
+    }
+
+    // Prefer the tighter of container vs parent content box
+    const parent = el.parentElement;
+    if (parent && parent !== container) {
+        const pw = parent.getBoundingClientRect().width;
+        if (pw > 40) width = Math.min(width, pw);
+    }
+
+    return Math.max(0, Math.floor(width) - 4);
 }
 
-function getFitTextContentWidth(el) {
+function measureLineWidth(node, fontSizePx, styleSource) {
+    const src = styleSource || node;
+    const style = getComputedStyle(src);
+    const clone = node.cloneNode(true);
+    clone.style.cssText = [
+        'position:absolute',
+        'visibility:hidden',
+        'display:inline-block',
+        'white-space:nowrap',
+        'width:auto',
+        'max-width:none',
+        'height:auto',
+        'left:-99999px',
+        'top:0',
+        `font-size:${fontSizePx}px`,
+        `font-family:${style.fontFamily}`,
+        `font-weight:${style.fontWeight}`,
+        `letter-spacing:${style.letterSpacing}`,
+        `text-transform:${style.textTransform}`,
+        `line-height:${style.lineHeight}`,
+        'margin:0',
+        'padding:0',
+        'border:0'
+    ].join(';');
+    document.body.appendChild(clone);
+    const w = clone.getBoundingClientRect().width;
+    clone.remove();
+    return w;
+}
+
+function getFitTextContentWidth(el, fontSizePx) {
     const lines = el.querySelectorAll('.title-line');
     if (lines.length) {
         let widest = 0;
         lines.forEach(line => {
-            const range = document.createRange();
-            range.selectNodeContents(line);
-            const w = range.getBoundingClientRect().width;
-            widest = Math.max(widest, w);
-            range.detach?.();
+            widest = Math.max(widest, measureLineWidth(line, fontSizePx, el));
         });
         return widest;
     }
 
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    const w = range.getBoundingClientRect().width;
-    range.detach?.();
-    // For multi-line <br> headlines, scrollWidth tracks the widest line better
-    return Math.max(w, el.scrollWidth);
+    const html = el.innerHTML;
+    if (/<br\s*\/?>/i.test(html)) {
+        const parts = html.split(/<br\s*\/?>/i);
+        let widest = 0;
+        parts.forEach(part => {
+            const probe = document.createElement('span');
+            probe.innerHTML = part;
+            widest = Math.max(widest, measureLineWidth(probe, fontSizePx, el));
+        });
+        return widest;
+    }
+
+    return measureLineWidth(el, fontSizePx, el);
 }
 
 function fitTextElement(el) {
-    if (!el) return;
+    if (!el || el.offsetParent === null && getComputedStyle(el).display === 'none') return;
 
     el.style.fontSize = '';
 
     const available = getFitTextAvailableWidth(el);
-    if (available < 80) return;
+    if (available < 60) return;
 
     const cssSize = parseFloat(getComputedStyle(el).fontSize);
     if (!cssSize || Number.isNaN(cssSize)) return;
 
-    // Keep display titles readable on phones (~32–40px floor)
-    const minPx = Math.max(32, Math.min(40, Math.round(available * 0.1)));
+    // Readable floor — a bit higher for hero/subpage titles
+    const isDisplay = el.matches('.hero-display, .subpage-hero-title, .footer-headline');
+    const minPx = isDisplay
+        ? Math.max(28, Math.min(44, Math.round(available * 0.095)))
+        : Math.max(18, Math.min(32, Math.round(available * 0.08)));
 
-    el.style.fontSize = cssSize + 'px';
-    if (getFitTextContentWidth(el) <= available) {
+    const fits = (size) => getFitTextContentWidth(el, size) <= available + 0.5;
+
+    if (fits(cssSize)) {
         el.style.fontSize = '';
         return;
     }
@@ -1606,15 +1709,11 @@ function fitTextElement(el) {
 
     while (lo < hi) {
         const mid = Math.ceil((lo + hi) / 2);
-        el.style.fontSize = mid + 'px';
-        if (getFitTextContentWidth(el) <= available) {
-            lo = mid;
-        } else {
-            hi = mid - 1;
-        }
+        if (fits(mid)) lo = mid;
+        else hi = mid - 1;
     }
 
-    el.style.fontSize = Math.max(minPx, lo) + 'px';
+    el.style.fontSize = `${Math.max(minPx, lo)}px`;
 }
 
 function fitAllText() {
