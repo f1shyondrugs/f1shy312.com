@@ -73,11 +73,17 @@
         return null;
     };
 
+    const popoutTitle = (item, url) => {
+        if (!item || !url) return '';
+        if (item.type === 'youtube') return 'Open on YouTube';
+        if (/tiktok\.com/i.test(url)) return 'Open on TikTok';
+        if (/youtube\.com|youtu\.be/i.test(url)) return 'Open on YouTube';
+        return 'Open project';
+    };
+
     const setPopout = (item) => {
         const url = sourceUrl(item);
-        const title = !item
-            ? ''
-            : (item.type === 'youtube' ? 'Open on YouTube' : 'Open on TikTok');
+        const title = popoutTitle(item, url);
         const isYt = item && item.type === 'youtube';
 
         // Bar popout only for local videos (YouTube uses native controls + float link)
