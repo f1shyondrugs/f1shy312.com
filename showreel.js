@@ -27,6 +27,22 @@
     const scrub = player.querySelector('.vp-scrub');
     const scrubFill = player.querySelector('.vp-scrub-fill');
     const timeEl = player.querySelector('.vp-time');
+    const warnBox = document.getElementById('sr-warn');
+    const warnList = document.getElementById('sr-warn-list');
+    const warnContinue = document.getElementById('sr-warn-continue');
+
+    const WARNING_COPY = {
+        volume: {
+            title: 'Volume Warning',
+            text: 'This trailer has sudden loud audio. Lower your volume before continuing.',
+            chip: 'Volume',
+        },
+        epileptic: {
+            title: 'Epilepsy Warning',
+            text: 'Contains rapid flashes and intense visual effects that may trigger seizures for people with photosensitive epilepsy.',
+            chip: 'Epilepsy',
+        },
+    };
 
     const paintIcons = () => {
         if (typeof lucide !== 'undefined') {
@@ -49,6 +65,51 @@
     let scrubbing = false;
     let lastVolume = 1;
     let ytWatchdog = null;
+    let warnActive = false;
+    let warnPendingAutoplay = false;
+
+    const itemWarnings = (item) => {
+        if (!item || !Array.isArray(item.warnings)) return [];
+        return item.warnings.filter((key) => WARNING_COPY[key]);
+    };
+
+    const hideWarn = () => {
+        warnActive = false;
+        warnPendingAutoplay = false;
+        player.classList.remove('is-warn');
+        if (warnBox) warnBox.hidden = true;
+        if (warnList) warnList.innerHTML = '';
+    };
+
+    const showWarn = (item, { pendingAutoplay = false } = {}) => {
+        const keys = itemWarnings(item);
+        if (!keys.length || !warnBox || !warnList) {
+            hideWarn();
+            return false;
+        }
+
+        warnActive = true;
+        warnPendingAutoplay = !!pendingAutoplay;
+        warnList.innerHTML = keys.map((key) => {
+            const copy = WARNING_COPY[key];
+            return `<li class="vp-warn-item">
+                <span class="vp-warn-item-title">${escapeAttr(copy.title)}</span>
+                <p class="vp-warn-item-text">${escapeAttr(copy.text)}</p>
+            </li>`;
+        }).join('');
+        warnBox.hidden = false;
+        player.classList.add('is-warn');
+        bigPlay.setAttribute('hidden', '');
+        return true;
+    };
+
+    const warnChipsHtml = (item) => {
+        const keys = itemWarnings(item);
+        if (!keys.length) return '';
+        return `<span class="sr-thumb-warn">${keys.map((key) =>
+            `<span class="sr-thumb-warn-chip">${escapeAttr(WARNING_COPY[key].chip)}</span>`
+        ).join('')}</span>`;
+    };
 
     const fmt = (s) => {
         if (!Number.isFinite(s)) return '0:00';
@@ -193,6 +254,8 @@
     };
 
     const loadItem = (i, { autoplay = false } = {}) => {
+        hideWarn();
+
         if (!items.length) {
             mode = 'empty';
             stopLocal();
@@ -305,13 +368,20 @@
         bigPlay.removeAttribute('hidden');
         updateTime();
 
+        const needsWarn = showWarn(item, { pendingAutoplay: autoplay });
+        if (needsWarn) {
+            video.pause();
+            setPlayingUI(false);
+            return;
+        }
+
         if (autoplay) {
             video.play().then(() => setPlayingUI(true)).catch(() => setPlayingUI(false));
         }
     };
 
     const togglePlay = () => {
-        if (mode !== 'video') return;
+        if (mode !== 'video' || warnActive) return;
         if (video.paused) {
             video.play().then(() => setPlayingUI(true)).catch(() => {});
         } else {
@@ -355,6 +425,7 @@
             const badge = item.type === 'youtube' && item.embeddable === false
                 ? '<span class="sr-thumb-badge">YT only</span>'
                 : '';
+            const warnBadge = warnChipsHtml(item);
 
             if (item.type === 'youtube') {
                 btn.innerHTML = `
@@ -362,6 +433,7 @@
                         <img src="https://i.ytimg.com/vi/${item.src}/hqdefault.jpg" alt="" loading="lazy">
                         <span class="sr-thumb-play"></span>
                         ${badge}
+                        ${warnBadge}
                     </div>
                     <span class="sr-thumb-meta">
                         <span class="sr-thumb-tag">${escapeAttr(item.tag)}</span>
@@ -372,6 +444,7 @@
                     <div class="sr-thumb-media">
                         <video muted playsinline preload="metadata" src="${escapeAttr(item.src)}"></video>
                         <span class="sr-thumb-play"></span>
+                        ${warnBadge}
                     </div>
                     <span class="sr-thumb-meta">
                         <span class="sr-thumb-tag">${escapeAttr(item.tag)}</span>
@@ -454,8 +527,31 @@
         setPlayingUI(false);
         if (items.length > 1) loadItem(index + 1, { autoplay: true });
     });
-    video.addEventListener('play', () => setPlayingUI(true));
+    video.addEventListener('play', () => {
+        if (warnActive) {
+            video.pause();
+            setPlayingUI(false);
+            return;
+        }
+        setPlayingUI(true);
+    });
     video.addEventListener('pause', () => setPlayingUI(false));
+
+    if (warnContinue) {
+        warnContinue.addEventListener('click', () => {
+            if (!warnActive) return;
+            const shouldPlay = warnPendingAutoplay;
+            hideWarn();
+            if (mode === 'video') {
+                bigPlay.removeAttribute('hidden');
+                if (shouldPlay) {
+                    video.play().then(() => setPlayingUI(true)).catch(() => setPlayingUI(false));
+                } else {
+                    setPlayingUI(false);
+                }
+            }
+        });
+    }
 
     muteBtn.addEventListener('click', () => {
         if (video.muted || video.volume === 0) {

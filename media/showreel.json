@@ -6,40 +6,22 @@
       "desc": "AE / motion graphics",
       "items": [
         {
-          "id": "pointer-2-final",
-          "title": "Pointer 2 — Final trailer",
+          "id": "7665743860630605059",
+          "title": "Antigravity concept ad",
           "tag": "Motion",
-          "src": "media/motion/pointer/pointer-2-final.mp4",
+          "src": "media/tiktok/f1shy/7665743860630605059.mp4",
           "type": "video",
           "aspect": "16:9",
-          "url": "https://pointer.f1shy312.com"
+          "url": "https://www.tiktok.com/@f1shyondrugs312/video/7665743860630605059"
         },
         {
-          "id": "pointer-other-trailer",
-          "title": "Pointer — Other trailer",
+          "id": "7666579444802260246",
+          "title": "Server hoster anim for @thegalitube",
           "tag": "Motion",
-          "src": "media/motion/pointer/pointer-other-trailer.mp4",
+          "src": "media/tiktok/f1shy/7666579444802260246.mp4",
           "type": "video",
           "aspect": "16:9",
-          "url": "https://pointer.f1shy312.com"
-        },
-        {
-          "id": "pointer-final",
-          "title": "Pointer — Final trailer",
-          "tag": "Motion",
-          "src": "media/motion/pointer/pointer-final.mp4",
-          "type": "video",
-          "aspect": "16:9",
-          "url": "https://pointer.f1shy312.com"
-        },
-        {
-          "id": "pointer-trailer-draft-2",
-          "title": "Pointer — Trailer draft 2",
-          "tag": "Motion",
-          "src": "media/motion/pointer/pointer-trailer-draft-2.mp4",
-          "type": "video",
-          "aspect": "16:9",
-          "url": "https://pointer.f1shy312.com"
+          "url": "https://www.tiktok.com/@f1shyondrugs312/video/7666579444802260246"
         },
         {
           "id": "7666189061811637527",
@@ -49,15 +31,6 @@
           "type": "video",
           "aspect": "16:9",
           "url": "https://www.tiktok.com/@f1shyondrugs312/video/7666189061811637527"
-        },
-        {
-          "id": "7665743860630605059",
-          "title": "Antigravity concept ad",
-          "tag": "Motion",
-          "src": "media/tiktok/f1shy/7665743860630605059.mp4",
-          "type": "video",
-          "aspect": "16:9",
-          "url": "https://www.tiktok.com/@f1shyondrugs312/video/7665743860630605059"
         },
         {
           "id": "7634199531336371478",
@@ -76,6 +49,44 @@
           "type": "video",
           "aspect": "16:9",
           "url": "https://www.tiktok.com/@f1shyondrugs312/video/7618246782362979606"
+        },
+        {
+          "id": "pointer-2-final",
+          "title": "Pointer 2 — Final trailer",
+          "tag": "Motion",
+          "src": "media/motion/pointer/pointer-2-final.mp4",
+          "type": "video",
+          "aspect": "16:9",
+          "url": "https://pointer.f1shy312.com",
+          "warnings": ["volume", "epileptic"]
+        },
+        {
+          "id": "pointer-other-trailer",
+          "title": "Pointer — Other trailer",
+          "tag": "Motion",
+          "src": "media/motion/pointer/pointer-other-trailer.mp4",
+          "type": "video",
+          "aspect": "16:9",
+          "url": "https://pointer.f1shy312.com"
+        },
+        {
+          "id": "pointer-final",
+          "title": "Pointer — Final trailer",
+          "tag": "Motion",
+          "src": "media/motion/pointer/pointer-final.mp4",
+          "type": "video",
+          "aspect": "16:9",
+          "url": "https://pointer.f1shy312.com",
+          "warnings": ["volume", "epileptic"]
+        },
+        {
+          "id": "pointer-trailer-draft-2",
+          "title": "Pointer — Trailer draft 2",
+          "tag": "Motion",
+          "src": "media/motion/pointer/pointer-trailer-draft-2.mp4",
+          "type": "video",
+          "aspect": "16:9",
+          "url": "https://pointer.f1shy312.com"
         }
       ]
     },

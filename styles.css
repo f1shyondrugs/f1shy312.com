@@ -4710,6 +4710,119 @@ header.scrolled {
     fill: none;
 }
 
+.vp-warn {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: clamp(1.1rem, 3.5vw, 2rem);
+    background:
+        linear-gradient(160deg, rgba(12, 12, 12, 0.94), rgba(5, 5, 5, 0.92)),
+        #050505;
+    color: var(--text-color);
+}
+
+.vp-warn[hidden] {
+    display: none !important;
+}
+
+.vp.is-warn .vp-big-play,
+.vp.is-warn .vp-bar {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+.vp.is-warn .vp-video {
+    pointer-events: none;
+}
+
+.vp-warn-label {
+    font-family: var(--body-font);
+    font-size: 0.62rem;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #f0b429;
+}
+
+.vp-warn-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 42ch;
+}
+
+.vp-warn-item {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.vp-warn-item-title {
+    font-family: var(--heading-font);
+    font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.vp-warn-item-text {
+    margin: 0;
+    font-family: var(--body-font);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--secondary-color);
+}
+
+.vp-warn-btn {
+    margin-top: 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-color);
+    font-family: var(--body-font);
+    font-size: 0.68rem;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.vp-warn-btn:hover {
+    border-color: #f0b429;
+    background: rgba(240, 180, 41, 0.12);
+    color: #fff;
+}
+
+.sr-thumb-warn {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    z-index: 2;
+    display: inline-flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    max-width: calc(100% - 0.8rem);
+}
+
+.sr-thumb-warn-chip {
+    padding: 0.18rem 0.35rem;
+    border: 1px solid rgba(240, 180, 41, 0.45);
+    background: rgba(7, 7, 7, 0.82);
+    color: #f0b429;
+    font-family: var(--body-font);
+    font-size: 0.5rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
 .vp-empty {
     position: absolute;
     inset: 0;
