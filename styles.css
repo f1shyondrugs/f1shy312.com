@@ -862,64 +862,6 @@ nav ul li:last-child {
 }
 
 /* ═══════════════════════════════════════════
-   MARQUEE STRIPS
-   ═══════════════════════════════════════════ */
-.marquee-strip {
-    width: 100%;
-    overflow: hidden;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-    padding: clamp(1rem, 2vw, 1.5rem) 0;
-    background: var(--background-color);
-    position: relative;
-}
-
-.marquee-track {
-    display: flex;
-    align-items: center;
-    gap: clamp(1.5rem, 3vw, 3rem);
-    white-space: nowrap;
-    animation: marqueeScroll 30s linear infinite;
-    width: max-content;
-}
-
-.marquee-reverse .marquee-track {
-    animation: marqueeScrollReverse 35s linear infinite;
-}
-
-.marquee-item {
-    font-family: var(--heading-font);
-    font-size: clamp(1rem, 2vw, 1.8rem);
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: var(--text-color);
-    text-transform: uppercase;
-    opacity: 0.6;
-    transition: opacity 0.3s ease, color 0.3s ease;
-}
-
-.marquee-item:hover {
-    opacity: 1;
-    color: var(--accent-color);
-}
-
-.marquee-sep {
-    color: var(--accent-color);
-    font-size: clamp(0.8rem, 1.5vw, 1.2rem);
-    opacity: 0.4;
-}
-
-@keyframes marqueeScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-@keyframes marqueeScrollReverse {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-}
-
-/* ═══════════════════════════════════════════
    SECTION NUMBERS & ROW HEADERS
    ═══════════════════════════════════════════ */
 .section-row-header {
@@ -1297,10 +1239,6 @@ footer {
     
     .show-more-btn {
         margin: 10px auto;
-    }
-    
-    .marquee-item {
-        font-size: 0.9rem;
     }
 }
 
@@ -3629,10 +3567,6 @@ section {
         font-size: 0.8rem;
     }
 
-    .marquee-item {
-        font-size: 0.8rem;
-    }
-
     .skill-tags,
     .tech-stack,
     .framework-tags,
@@ -3996,10 +3930,6 @@ section {
 header.scrolled {
     background-color: rgba(7, 7, 7, 0.95);
     border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-.marquee-strip:hover .marquee-track {
-    animation-play-state: paused;
 }
 
 .hero-info-col .hero-description {
