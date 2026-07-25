@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.innerWidth > 900) {
         initFeaturedCubes();
     }
+
+    // Interactive 3D skills keyboard
+    initSkillsKeyboard();
     
     // Initialize scroll reveal animations
     initScrollReveal();
@@ -501,6 +504,422 @@ function setupCube(container) {
         camera.updateProjectionMatrix();
         renderer.setSize(nw, nh);
     }, 250), { passive: true });
+}
+
+/* ═══════════════════════════════════════════
+   3D SKILLS KEYBOARD
+   ═══════════════════════════════════════════ */
+const SKILLS_KEYBOARD_MAP = {
+    q: { name: 'Python', cat: 'Language', icon: 'devicon-python-plain colored', color: 0x3776ab },
+    w: { name: 'JavaScript', cat: 'Language', icon: 'devicon-javascript-plain colored', color: 0xf7df1e },
+    e: { name: 'TypeScript', cat: 'Language', icon: 'devicon-typescript-plain colored', color: 0x3178c6 },
+    r: { name: 'React', cat: 'Frontend', icon: 'devicon-react-original colored', color: 0x61dafb },
+    t: { name: 'Vue.js', cat: 'Frontend', icon: 'devicon-vuejs-plain colored', color: 0x42b883 },
+    y: { name: 'Node.js', cat: 'Backend', icon: 'devicon-nodejs-plain colored', color: 0x339933 },
+    u: { name: 'Flask', cat: 'Backend', icon: 'devicon-flask-original', color: 0xffffff },
+    i: { name: 'FastAPI', cat: 'Backend', icon: 'devicon-fastapi-plain colored', color: 0x009688 },
+    o: { name: 'Docker', cat: 'DevOps', icon: 'devicon-docker-plain colored', color: 0x2496ed },
+    p: { name: 'Git', cat: 'Tooling', icon: 'devicon-git-plain colored', color: 0xf05032 },
+    a: { name: 'Java', cat: 'Language', icon: 'devicon-java-plain colored', color: 0xed8b00 },
+    s: { name: 'Spigot', cat: 'Game Dev', icon: 'devicon-java-plain colored', color: 0xc2b280 },
+    d: { name: 'Lua', cat: 'Language', icon: 'devicon-lua-plain colored', color: 0x2c2d72 },
+    f: { name: 'Supabase', cat: 'Database', icon: 'devicon-supabase-plain colored', color: 0x3ecf8e },
+    g: { name: 'AWS', cat: 'Cloud', icon: 'devicon-amazonwebservices-original colored', color: 0xff9900 },
+    h: { name: 'Linux', cat: 'Systems', icon: 'devicon-linux-plain', color: 0xfcc624 },
+    j: { name: 'VS Code', cat: 'Tooling', icon: 'devicon-vscode-plain colored', color: 0x007acc },
+    k: { name: 'IntelliJ', cat: 'Tooling', icon: 'devicon-intellij-plain colored', color: 0xfe315d },
+    l: { name: 'After Effects', cat: 'Creative', icon: 'devicon-aftereffects-plain colored', color: 0x9999ff },
+    z: { name: 'Raspberry Pi', cat: 'Hardware', icon: 'devicon-raspberrypi-line colored', color: 0xc51a4a },
+    x: { name: 'Flipper Zero', cat: 'Hardware', iconSvg: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff8200"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="8" cy="12" r="2.2" fill="#111"/><rect x="12" y="9" width="7" height="6" rx="1" fill="#111"/></svg>'), color: 0xff8200 },
+    c: { name: 'Cybersecurity', cat: 'Security', iconSvg: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#6366f1"><path d="M12 2l8 3v6c0 5.25-3.4 9.74-8 11-4.6-1.26-8-5.75-8-11V5l8-3zm0 4.2L7 7.7v3.4c0 3.5 2.2 6.55 5 7.7 2.8-1.15 5-4.2 5-7.7V7.7l-5-1.5z"/></svg>'), color: 0x6366f1 },
+    v: { name: 'Photoshop', cat: 'Creative', icon: 'devicon-photoshop-plain colored', color: 0x31a8ff },
+    b: { name: 'Minecraft', cat: 'Game Dev', iconSvg: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="#5b8c3e"/><rect x="3" y="3" width="8" height="8" fill="#8b5a2b"/><rect x="13" y="3" width="8" height="8" fill="#6b8e23"/><rect x="3" y="13" width="8" height="8" fill="#7cfc00"/><rect x="13" y="13" width="8" height="8" fill="#556b2f"/></svg>'), color: 0x5b8c3e },
+    n: { name: 'PyTorch', cat: 'AI / ML', icon: 'devicon-pytorch-original colored', color: 0xee4c2c },
+    m: { name: 'OpenAI', cat: 'AI / ML', iconSvg: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#10a37f"><path d="M22.28 9.82a5.5 5.5 0 0 0-.47-4.15 5.58 5.58 0 0 0-6.03-2.6A5.57 5.57 0 0 0 6.4 1.3 5.5 5.5 0 0 0 1.8 5.9a5.5 5.5 0 0 0 .67 6.28 5.5 5.5 0 0 0 .47 4.15 5.58 5.58 0 0 0 6.03 2.6 5.55 5.55 0 0 0 4.18 1.87c2.2 0 4.2-1.28 5.12-3.28a5.5 5.5 0 0 0 4.6-4.6 5.52 5.52 0 0 0-.59-3.1zM13.7 20.18a4.13 4.13 0 0 1-2.65-1l.13-.07 4.32-2.5a.7.7 0 0 0 .36-.61v-6.1l1.83 1.06c.04.02.07.07.07.12v5.07a4.15 4.15 0 0 1-4.06 4.03zm-8.7-3.72a4.12 4.12 0 0 1-.5-2.77l.13.08 4.32 2.5a.7.7 0 0 0 .71 0l5.27-3.04v2.12a.14.14 0 0 1-.06.12l-4.37 2.52a4.15 4.15 0 0 1-5.5-1.53zm-1.13-9.4a4.12 4.12 0 0 1 2.15-1.84v5.2a.7.7 0 0 0 .36.61l5.27 3.04-1.83 1.06a.14.14 0 0 1-.13 0L5.32 12.7a4.15 4.15 0 0 1-1.45-5.64zm14.9 3.48-5.27-3.04 1.83-1.06a.14.14 0 0 1 .13 0l4.37 2.52a4.15 4.15 0 0 1-1.44 7.49v-5.2a.7.7 0 0 0-.35-.6l-.27-.11zm1.8-2.8-.13-.08-4.32-2.5a.7.7 0 0 0-.71 0L11.14 8.1V5.98c0-.05.02-.1.06-.12l4.37-2.52a4.15 4.15 0 0 1 6.2 4.3zM8.57 13.53l-1.83-1.06a.14.14 0 0 1-.07-.12V7.28c0-.05.02-.1.06-.12l4.37-2.52a.14.14 0 0 1 .13 0l4.37 2.52c.04.02.06.07.06.12v5.07c0 .05-.02.1-.06.12l-4.37 2.52a.14.14 0 0 1-.13 0l-.53-.3z"/></svg>'), color: 0x10a37f },
+};
+
+function initSkillsKeyboard() {
+    const container = document.getElementById('skills-keyboard');
+    const tooltip = document.getElementById('kb-tooltip');
+    const mobileGrid = document.getElementById('skills-mobile-grid');
+
+    if (mobileGrid) {
+        buildSkillsMobileGrid(mobileGrid);
+    }
+
+    if (!container || typeof THREE === 'undefined') return;
+    if (window.innerWidth <= 768) return;
+    if (container.dataset.initialized === '1') return;
+    container.dataset.initialized = '1';
+
+    const w = container.clientWidth || 800;
+    const h = container.clientHeight || 400;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(32, w / h, 0.1, 100);
+    camera.position.set(0, 9.2, 11.5);
+    camera.lookAt(0, 0, 0.4);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    container.appendChild(renderer.domElement);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.45);
+    scene.add(ambient);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 0.85);
+    keyLight.position.set(4, 12, 6);
+    scene.add(keyLight);
+
+    const fill = new THREE.DirectionalLight(0x8899ff, 0.28);
+    fill.position.set(-6, 4, -2);
+    scene.add(fill);
+
+    const rim = new THREE.PointLight(0x6366f1, 1.1, 28);
+    rim.position.set(0, 4, 4);
+    scene.add(rim);
+
+    const keyboard = new THREE.Group();
+    scene.add(keyboard);
+
+    // Case
+    const caseGeo = new THREE.BoxGeometry(15.4, 0.55, 5.6);
+    const caseMat = new THREE.MeshStandardMaterial({
+        color: 0x101014,
+        roughness: 0.55,
+        metalness: 0.35,
+    });
+    const caseMesh = new THREE.Mesh(caseGeo, caseMat);
+    caseMesh.position.y = -0.05;
+    keyboard.add(caseMesh);
+
+    const plateGeo = new THREE.BoxGeometry(14.7, 0.12, 5.0);
+    const plateMat = new THREE.MeshStandardMaterial({
+        color: 0x17171d,
+        roughness: 0.7,
+        metalness: 0.2,
+    });
+    const plate = new THREE.Mesh(plateGeo, plateMat);
+    plate.position.y = 0.28;
+    keyboard.add(plate);
+
+    const accentStrip = new THREE.Mesh(
+        new THREE.BoxGeometry(14.7, 0.04, 0.08),
+        new THREE.MeshStandardMaterial({
+            color: 0x6366f1,
+            emissive: 0x6366f1,
+            emissiveIntensity: 0.55,
+            roughness: 0.35,
+            metalness: 0.2,
+        })
+    );
+    accentStrip.position.set(0, 0.36, -2.35);
+    keyboard.add(accentStrip);
+
+    const layout = [
+        { keys: ['esc', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'bk'], widths: [1.2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.4], z: 1.7 },
+        { keys: ['tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '\\'], widths: [1.4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.2], z: 0.55 },
+        { keys: ['caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', 'ent'], widths: [1.6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.6], z: -0.6 },
+        { keys: ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'sh2'], widths: [2.0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.2], z: -1.75 },
+    ];
+
+    const keyUnit = 1.05;
+    const keyGap = 0.12;
+    const keyHeight = 0.42;
+    const interactiveKeys = [];
+    const textureCache = new Map();
+
+    function makeKeyTexture(label, skill) {
+        const cacheKey = label + (skill ? skill.name : '');
+        if (textureCache.has(cacheKey)) return textureCache.get(cacheKey);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 128;
+        canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+
+        const grad = ctx.createLinearGradient(0, 0, 0, 128);
+        if (skill) {
+            grad.addColorStop(0, '#23232c');
+            grad.addColorStop(1, '#15151b');
+        } else {
+            grad.addColorStop(0, '#1a1a20');
+            grad.addColorStop(1, '#111116');
+        }
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 128, 128);
+
+        // subtle top highlight
+        ctx.fillStyle = 'rgba(255,255,255,0.06)';
+        ctx.fillRect(8, 8, 112, 18);
+
+        if (skill) {
+            ctx.fillStyle = '#f4f4f5';
+            ctx.font = 'bold 34px Syne, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(label.toUpperCase(), 64, 52);
+
+            ctx.fillStyle = 'rgba(129,140,248,0.95)';
+            ctx.font = '600 16px "Space Mono", monospace';
+            const short = skill.name.length > 9 ? skill.name.slice(0, 8) + '…' : skill.name;
+            ctx.fillText(short.toUpperCase(), 64, 92);
+        } else {
+            ctx.fillStyle = 'rgba(240,240,240,0.35)';
+            ctx.font = '600 28px "Space Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const pretty = label.length > 3 ? label.slice(0, 3).toUpperCase() : label.toUpperCase();
+            ctx.fillText(pretty, 64, 64);
+        }
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.encoding = THREE.sRGBEncoding;
+        tex.anisotropy = 4;
+        textureCache.set(cacheKey, tex);
+        return tex;
+    }
+
+    function createKeyMesh(label, widthUnits, x, z) {
+        const skill = SKILLS_KEYBOARD_MAP[label] || null;
+        const width = widthUnits * keyUnit - keyGap;
+        const depth = keyUnit - keyGap;
+
+        const geo = new THREE.BoxGeometry(width, keyHeight, depth);
+        const topTex = makeKeyTexture(label, skill);
+        const sideColor = skill ? 0x1c1c24 : 0x141418;
+        const sideMat = new THREE.MeshStandardMaterial({
+            color: sideColor,
+            roughness: 0.55,
+            metalness: 0.18,
+        });
+        const topMat = new THREE.MeshStandardMaterial({
+            map: topTex,
+            roughness: 0.4,
+            metalness: 0.12,
+            emissive: skill ? skill.color : 0x000000,
+            emissiveIntensity: skill ? 0.08 : 0,
+        });
+        const materials = [sideMat, sideMat, topMat, sideMat, sideMat, sideMat];
+        const mesh = new THREE.Mesh(geo, materials);
+        mesh.position.set(x, 0.52, z);
+        mesh.userData = {
+            baseY: 0.52,
+            pressY: 0.34,
+            targetY: 0.52,
+            label,
+            skill,
+            topMat,
+            isSkill: !!skill,
+        };
+
+        if (skill) {
+            const edge = new THREE.LineSegments(
+                new THREE.EdgesGeometry(geo),
+                new THREE.LineBasicMaterial({
+                    color: skill.color,
+                    transparent: true,
+                    opacity: 0.22,
+                })
+            );
+            mesh.add(edge);
+            mesh.userData.edgeMat = edge.material;
+        }
+
+        keyboard.add(mesh);
+        if (skill) interactiveKeys.push(mesh);
+        return mesh;
+    }
+
+    layout.forEach(row => {
+        const total = row.widths.reduce((a, b) => a + b, 0);
+        let x = -((total * keyUnit) / 2) + (row.widths[0] * keyUnit) / 2;
+        row.keys.forEach((key, i) => {
+            createKeyMesh(key, row.widths[i], x, row.z);
+            if (i < row.keys.length - 1) {
+                x += ((row.widths[i] + row.widths[i + 1]) * keyUnit) / 2;
+            }
+        });
+    });
+
+    // Spacebar row
+    const space = createKeyMesh('space', 6.2, 0, -2.9);
+    space.userData.isSkill = false;
+
+    keyboard.rotation.x = 0.38;
+    keyboard.rotation.y = -0.22;
+    keyboard.position.y = -0.2;
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let hovered = null;
+    let tooltipX = 0;
+    let tooltipY = 0;
+    let tooltipTX = 0;
+    let tooltipTY = 0;
+    let tipVisible = false;
+
+    const tipName = document.getElementById('kb-tooltip-name');
+    const tipCat = document.getElementById('kb-tooltip-cat');
+    const tipIcon = document.getElementById('kb-tooltip-icon');
+
+    function setTooltipContent(skill) {
+        if (!tooltip || !skill) return;
+        tipName.textContent = skill.name;
+        tipCat.textContent = skill.cat;
+        tipIcon.className = 'kb-tooltip-icon';
+        tipIcon.innerHTML = '';
+        if (skill.iconSvg) {
+            const img = document.createElement('img');
+            img.src = skill.iconSvg;
+            img.alt = '';
+            tipIcon.appendChild(img);
+        } else if (skill.icon) {
+            tipIcon.className = 'kb-tooltip-icon ' + skill.icon;
+        }
+    }
+
+    function showTooltip(skill, clientX, clientY) {
+        if (!tooltip) return;
+        setTooltipContent(skill);
+        tooltipTX = clientX;
+        tooltipTY = clientY;
+        if (!tipVisible) {
+            tooltipX = clientX;
+            tooltipY = clientY;
+            tooltip.style.left = `${tooltipX}px`;
+            tooltip.style.top = `${tooltipY}px`;
+        }
+        tooltip.classList.add('is-visible');
+        tooltip.setAttribute('aria-hidden', 'false');
+        tipVisible = true;
+    }
+
+    function hideTooltip() {
+        if (!tooltip) return;
+        tooltip.classList.remove('is-visible');
+        tooltip.setAttribute('aria-hidden', 'true');
+        tipVisible = false;
+    }
+
+    function onPointerMove(e) {
+        const rect = renderer.domElement.getBoundingClientRect();
+        pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        tooltipTX = e.clientX;
+        tooltipTY = e.clientY;
+
+        raycaster.setFromCamera(pointer, camera);
+        const hits = raycaster.intersectObjects(interactiveKeys, false);
+        const next = hits.length ? hits[0].object : null;
+
+        if (hovered && hovered !== next) {
+            hovered.userData.targetY = hovered.userData.baseY;
+            if (hovered.userData.topMat) hovered.userData.topMat.emissiveIntensity = 0.08;
+            if (hovered.userData.edgeMat) hovered.userData.edgeMat.opacity = 0.22;
+        }
+
+        if (next && next.userData.skill) {
+            next.userData.targetY = next.userData.pressY;
+            if (next.userData.topMat) next.userData.topMat.emissiveIntensity = 0.28;
+            if (next.userData.edgeMat) next.userData.edgeMat.opacity = 0.7;
+            showTooltip(next.userData.skill, e.clientX, e.clientY);
+            container.style.cursor = 'pointer';
+        } else {
+            hideTooltip();
+            container.style.cursor = 'default';
+        }
+
+        hovered = next && next.userData.skill ? next : null;
+    }
+
+    function onPointerLeave() {
+        if (hovered) {
+            hovered.userData.targetY = hovered.userData.baseY;
+            if (hovered.userData.topMat) hovered.userData.topMat.emissiveIntensity = 0.08;
+            if (hovered.userData.edgeMat) hovered.userData.edgeMat.opacity = 0.22;
+        }
+        hovered = null;
+        hideTooltip();
+    }
+
+    renderer.domElement.addEventListener('pointermove', onPointerMove);
+    renderer.domElement.addEventListener('pointerleave', onPointerLeave);
+
+    let targetRotY = keyboard.rotation.y;
+    let targetRotX = keyboard.rotation.x;
+
+    document.addEventListener('mousemove', (e) => {
+        const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+        const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+        targetRotY = -0.22 + nx * 0.12;
+        targetRotX = 0.38 + ny * 0.06;
+    }, { passive: true });
+
+    let raf = 0;
+    function animate() {
+        raf = requestAnimationFrame(animate);
+        const t = performance.now() * 0.001;
+
+        rim.intensity = 0.85 + Math.sin(t * 1.4) * 0.25;
+        accentStrip.material.emissiveIntensity = 0.45 + Math.sin(t * 2.2) * 0.2;
+
+        keyboard.rotation.y += (targetRotY - keyboard.rotation.y) * 0.05;
+        keyboard.rotation.x += (targetRotX - keyboard.rotation.x) * 0.05;
+
+        interactiveKeys.forEach(key => {
+            key.position.y += (key.userData.targetY - key.position.y) * 0.22;
+        });
+
+        if (tipVisible && tooltip) {
+            tooltipX += (tooltipTX - tooltipX) * 0.18;
+            tooltipY += (tooltipTY - tooltipY) * 0.18;
+            tooltip.style.left = `${tooltipX}px`;
+            tooltip.style.top = `${tooltipY}px`;
+        }
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', debounce(() => {
+        if (window.innerWidth <= 768) {
+            hideTooltip();
+            return;
+        }
+        const nw = container.clientWidth;
+        const nh = container.clientHeight;
+        if (nw === 0 || nh === 0) return;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh);
+    }, 250), { passive: true });
+}
+
+function buildSkillsMobileGrid(grid) {
+    if (grid.dataset.built === '1') return;
+    grid.dataset.built = '1';
+    Object.values(SKILLS_KEYBOARD_MAP).forEach(skill => {
+        const chip = document.createElement('div');
+        chip.className = 'skills-mobile-chip';
+        if (skill.iconSvg) {
+            const img = document.createElement('img');
+            img.src = skill.iconSvg;
+            img.alt = '';
+            chip.appendChild(img);
+        } else if (skill.icon) {
+            const icon = document.createElement('i');
+            icon.className = skill.icon;
+            icon.setAttribute('aria-hidden', 'true');
+            chip.appendChild(icon);
+        }
+        const label = document.createElement('span');
+        label.textContent = skill.name;
+        chip.appendChild(label);
+        grid.appendChild(chip);
+    });
 }
 
 // Toggle: blob wrapping on hover. Can also be toggled by typing "snap" anywhere on the page.

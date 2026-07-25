@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="icon" href="logo.jpg" type="image/jpeg">
     <meta name="description" content="Das_F1sHy312 - JUST A DEVELOPER..">
@@ -146,52 +147,64 @@
                     <div class="section-header reveal-on-scroll reveal-left">
                         <span class="pre-heading">MY TOOLKIT</span>
                         <h2>SKILLS &amp;<br>EXPERTISE</h2>
+                        <p class="section-subtitle kb-hint">HOVER THE KEYS</p>
                     </div>
                 </div>
-                
-                <div class="skills-content">
-                    <div class="skills-visual reveal-on-scroll reveal-left">
-                        <div class="dot-character skills-character" id="skills-char"></div>
-                    </div>
-                    <div class="skills-categories reveal-on-scroll reveal-right">
-                        <div class="skill-category-buttons">
-                            <a href="software" class="skill-page-btn software-btn">
-                                <span class="btn-index">01</span>
-                                <div class="btn-content">
-                                    <h3>SOFTWARE PROGRAMMING</h3>
-                                    <p>Web development, applications, and coding expertise</p>
-                                </div>
-                                <div class="btn-arrow">&rarr;</div>
-                            </a>
-                            
-                            <a href="hardware" class="skill-page-btn hardware-btn">
-                                <span class="btn-index">02</span>
-                                <div class="btn-content">
-                                    <h3>HARDWARE</h3>
-                                    <p>Raspberry Pi, Flipper Zero, and embedded systems</p>
-                                </div>
-                                <div class="btn-arrow">&rarr;</div>
-                            </a>
-                            
-                            <a href="cybersecurity" class="skill-page-btn hacking-btn">
-                                <span class="btn-index">03</span>
-                                <div class="btn-content">
-                                    <h3>CYBERSECURITY</h3>
-                                    <p>Penetration testing, security tools, and ethical hacking</p>
-                                </div>
-                                <div class="btn-arrow">&rarr;</div>
-                            </a>
-                            
-                            <a href="outside" class="skill-page-btn outside-btn">
-                                <span class="btn-index">04</span>
-                                <div class="btn-content">
-                                    <h3>OUTSIDE PROGRAMMING</h3>
-                                    <p>Creative software, games, and personal interests</p>
-                                </div>
-                                <div class="btn-arrow">&rarr;</div>
-                            </a>
+
+                <div class="skills-keyboard-wrap reveal-on-scroll reveal-scale">
+                    <div class="skills-keyboard" id="skills-keyboard" aria-label="Interactive 3D skills keyboard"></div>
+                    <div class="kb-tooltip" id="kb-tooltip" aria-hidden="true">
+                        <div class="kb-tooltip-glow"></div>
+                        <div class="kb-tooltip-inner">
+                            <div class="kb-tooltip-icon-wrap">
+                                <i class="kb-tooltip-icon" id="kb-tooltip-icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="kb-tooltip-copy">
+                                <span class="kb-tooltip-name" id="kb-tooltip-name"></span>
+                                <span class="kb-tooltip-cat" id="kb-tooltip-cat"></span>
+                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="skills-mobile-grid" id="skills-mobile-grid" aria-hidden="true"></div>
+
+                <div class="skill-category-buttons reveal-on-scroll reveal-left">
+                    <a href="software" class="skill-page-btn software-btn">
+                        <span class="btn-index">01</span>
+                        <div class="btn-content">
+                            <h3>SOFTWARE PROGRAMMING</h3>
+                            <p>Web development, applications, and coding expertise</p>
+                        </div>
+                        <div class="btn-arrow">&rarr;</div>
+                    </a>
+
+                    <a href="hardware" class="skill-page-btn hardware-btn">
+                        <span class="btn-index">02</span>
+                        <div class="btn-content">
+                            <h3>HARDWARE</h3>
+                            <p>Raspberry Pi, Flipper Zero, and embedded systems</p>
+                        </div>
+                        <div class="btn-arrow">&rarr;</div>
+                    </a>
+
+                    <a href="cybersecurity" class="skill-page-btn hacking-btn">
+                        <span class="btn-index">03</span>
+                        <div class="btn-content">
+                            <h3>CYBERSECURITY</h3>
+                            <p>Penetration testing, security tools, and ethical hacking</p>
+                        </div>
+                        <div class="btn-arrow">&rarr;</div>
+                    </a>
+
+                    <a href="outside" class="skill-page-btn outside-btn">
+                        <span class="btn-index">04</span>
+                        <div class="btn-content">
+                            <h3>OUTSIDE PROGRAMMING</h3>
+                            <p>Creative software, games, and personal interests</p>
+                        </div>
+                        <div class="btn-arrow">&rarr;</div>
+                    </a>
                 </div>
             </div>
         </section>

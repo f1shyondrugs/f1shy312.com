@@ -1205,6 +1205,18 @@ footer {
     .project-visual, .about-visual, .skills-visual, .featured-project-visual {
         display: none;
     }
+
+    .skills-keyboard-wrap {
+        display: none;
+    }
+
+    .skills-mobile-grid {
+        display: grid;
+    }
+
+    .kb-hint {
+        display: none;
+    }
     
     .project-grid {
         grid-template-columns: 1fr;
@@ -1835,6 +1847,179 @@ section {
     background-color: var(--surface-color);
     position: relative;
     border-top: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.skills-section::before {
+    content: '';
+    position: absolute;
+    inset: 10% -20% auto;
+    height: 55%;
+    background:
+        radial-gradient(ellipse at 50% 40%, rgba(99, 102, 241, 0.14), transparent 62%),
+        radial-gradient(ellipse at 20% 80%, rgba(34, 211, 238, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.skills-section .section-container {
+    position: relative;
+    z-index: 1;
+}
+
+.kb-hint {
+    margin-top: 0.75rem;
+    letter-spacing: 0.28em;
+    color: var(--tertiary-color);
+}
+
+.skills-keyboard-wrap {
+    position: relative;
+    width: 100%;
+    margin: clamp(1.5rem, 4vw, 3rem) 0 clamp(2rem, 5vw, 3.5rem);
+    min-height: clamp(280px, 42vw, 460px);
+}
+
+.skills-keyboard {
+    width: 100%;
+    height: clamp(280px, 42vw, 460px);
+    border-radius: 0;
+    cursor: none;
+    touch-action: none;
+}
+
+.skills-keyboard canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+.kb-tooltip {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 40;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate3d(-50%, calc(-100% - 18px), 0) scale(0.92);
+    transition:
+        opacity 0.35s var(--ease-out-expo),
+        transform 0.45s var(--ease-out-expo);
+    will-change: transform, opacity;
+}
+
+.kb-tooltip.is-visible {
+    opacity: 1;
+    transform: translate3d(-50%, calc(-100% - 28px), 0) scale(1);
+}
+
+.kb-tooltip-glow {
+    position: absolute;
+    inset: -18px;
+    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.35), transparent 70%);
+    filter: blur(8px);
+    opacity: 0.9;
+}
+
+.kb-tooltip-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-width: 180px;
+    padding: 0.85rem 1.1rem;
+    background: linear-gradient(160deg, rgba(18, 18, 22, 0.96), rgba(10, 10, 12, 0.92));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 2px solid var(--accent-color);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+}
+
+.kb-tooltip-icon-wrap {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.kb-tooltip-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+    color: #fff;
+}
+
+.kb-tooltip-icon img {
+    width: 1.35rem;
+    height: 1.35rem;
+    display: block;
+}
+
+.kb-tooltip-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.kb-tooltip-name {
+    font-family: var(--heading-font);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-color);
+    line-height: 1.1;
+}
+
+.kb-tooltip-cat {
+    font-family: var(--body-font);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-hover);
+}
+
+.skills-mobile-grid {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0 2rem;
+}
+
+.skills-mobile-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.75rem 0.9rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-left: 2px solid rgba(99, 102, 241, 0.55);
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s var(--ease-out-expo);
+}
+
+.skills-mobile-chip:hover {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.35);
+    transform: translateY(-2px);
+}
+
+.skills-mobile-chip i,
+.skills-mobile-chip img {
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    flex-shrink: 0;
+}
+
+.skills-mobile-chip span {
+    font-family: var(--body-font);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--text-color);
 }
 
 .skills-content {
@@ -1901,7 +2086,7 @@ section {
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding: 0 clamp(0.5rem, 2vw, 2rem);
+    padding: 0;
 }
 
 .skill-page-btn {
