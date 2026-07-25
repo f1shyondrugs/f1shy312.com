@@ -1041,6 +1041,7 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: clamp(1rem, 2vw, 2rem);
+    overflow-x: clip;
 }
 
 .footer-cta-label {
@@ -1053,7 +1054,7 @@ footer {
 
 .footer-headline {
     font-family: var(--heading-font);
-    font-size: clamp(3rem, 10vw, 10rem);
+    font-size: clamp(2.4rem, 9vw, 10rem);
     font-weight: 800;
     line-height: 0.9;
     letter-spacing: -0.04em;
@@ -1061,7 +1062,23 @@ footer {
     color: var(--text-color);
     transition: letter-spacing 0.5s var(--ease-out-expo), text-shadow 0.4s ease;
     cursor: default;
+    width: 100%;
     max-width: 100%;
+    margin: 0;
+    text-align: center;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
+    box-sizing: border-box;
+}
+
+.footer-headline-line {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-align: center;
+    /* grow letter-spacing from the optical center, even when overflowing */
+    overflow: visible;
 }
 
 .footer-headline:hover {
@@ -3670,7 +3687,7 @@ section {
     }
 
     .footer-headline {
-        font-size: clamp(2.5rem, 12vw, 4.25rem);
+        font-size: clamp(2.1rem, 11vw, 4.25rem);
     }
 
     .lang-name {

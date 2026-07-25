@@ -1653,6 +1653,11 @@ function getFitTextAvailableWidth(el) {
         width = container.getBoundingClientRect().width;
     }
 
+    // Use content-box width (exclude horizontal padding)
+    const cs = getComputedStyle(container);
+    const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    width = Math.max(0, width - padX);
+
     // Prefer the tighter of container vs parent content box
     const parent = el.parentElement;
     if (parent && parent !== container) {
@@ -1694,7 +1699,7 @@ function measureLineWidth(node, fontSizePx, styleSource) {
 }
 
 function getFitTextContentWidth(el, fontSizePx) {
-    const lines = el.querySelectorAll('.title-line');
+    const lines = el.querySelectorAll('.title-line, .footer-headline-line');
     if (lines.length) {
         let widest = 0;
         lines.forEach(line => {

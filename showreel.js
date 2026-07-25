@@ -466,13 +466,87 @@
     volumeRange.addEventListener('click', (e) => e.stopPropagation());
     volumeWrap.addEventListener('pointerdown', (e) => e.stopPropagation());
 
-    fsBtn.addEventListener('click', () => {
-        const frame = player.querySelector('.vp-frame');
-        if (!document.fullscreenElement) {
-            (frame.requestFullscreen || frame.webkitRequestFullscreen)?.call(frame);
-        } else {
-            document.exitFullscreen?.();
+    const isFullscreen = () => !!(
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.webkitCurrentFullScreenElement ||
+        (typeof video.webkitDisplayingFullscreen === 'boolean' && video.webkitDisplayingFullscreen)
+    );
+
+    const exitFullscreen = () => {
+        if (typeof video.webkitExitFullscreen === 'function' && video.webkitDisplayingFullscreen) {
+            video.webkitExitFullscreen();
+            return;
         }
+        const exit = document.exitFullscreen
+            || document.webkitExitFullscreen
+            || document.webkitCancelFullScreen;
+        exit?.call(document);
+    };
+
+    const enterFullscreen = () => {
+        // iOS Safari: only <video> supports fullscreen (not arbitrary elements)
+        if (typeof video.webkitEnterFullscreen === 'function') {
+            const go = () => {
+                try {
+                    video.webkitEnterFullscreen();
+                } catch (_) { /* fall through to standard API */ }
+            };
+            // iOS often requires the video to be playing
+            if (video.paused) {
+                video.play().then(go).catch(go);
+            } else {
+                go();
+            }
+            // If webkit path exists, don't also try element fullscreen on iOS
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+                return;
+            }
+        }
+
+        const frame = player.querySelector('.vp-frame');
+        const target = frame || video;
+        const req = target.requestFullscreen
+            || target.webkitRequestFullscreen
+            || target.webkitRequestFullScreen
+            || video.requestFullscreen
+            || video.webkitRequestFullscreen;
+
+        if (!req) return;
+        const result = req.call(target);
+        if (result && typeof result.catch === 'function') {
+            result.catch(() => {
+                const vReq = video.requestFullscreen || video.webkitRequestFullscreen;
+                vReq?.call(video)?.catch?.(() => {});
+            });
+        }
+    };
+
+    const toggleFullscreen = () => {
+        if (mode !== 'video') return;
+        if (isFullscreen()) exitFullscreen();
+        else enterFullscreen();
+    };
+
+    fsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleFullscreen();
+    });
+
+    // Keep UI in sync when user exits via native controls (esp. iOS)
+    video.addEventListener('webkitbeginfullscreen', () => {
+        player.classList.add('is-native-fs');
+    });
+    video.addEventListener('webkitendfullscreen', () => {
+        player.classList.remove('is-native-fs');
+    });
+    document.addEventListener('fullscreenchange', () => {
+        player.classList.toggle('is-native-fs', isFullscreen());
+    });
+    document.addEventListener('webkitfullscreenchange', () => {
+        player.classList.toggle('is-native-fs', isFullscreen());
     });
 
     scrub.addEventListener('pointerdown', (e) => {
@@ -515,7 +589,7 @@
         } else if ((e.key === 'm' || e.key === 'M') && mode === 'video') {
             muteBtn.click();
         } else if ((e.key === 'f' || e.key === 'F') && mode === 'video') {
-            fsBtn.click();
+            toggleFullscreen();
         }
     });
 
