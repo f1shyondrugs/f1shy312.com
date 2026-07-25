@@ -591,6 +591,23 @@ nav ul li:last-child {
     text-transform: uppercase;
     cursor: default;
     transition: opacity 0.2s ease, letter-spacing 0.35s var(--ease-out-expo);
+    display: inline-block;
+    white-space: nowrap;
+    contain: layout style;
+}
+
+.hero-tag.is-scrambling {
+    transition: none;
+}
+
+.hero-tag .ht-ch {
+    display: inline-block;
+    min-width: 0.65em;
+    text-align: center;
+}
+
+.hero-tag .ht-ch--space {
+    min-width: 0.4em;
 }
 
 .hero-title-block {

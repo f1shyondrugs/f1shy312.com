@@ -827,7 +827,8 @@ function createDotCharacters() {
     });
 }
 
-function createDotMatrix(container, character) {
+function createDotMatrix(container, character, opts = {}) {
+    const skipIntro = !!opts.skipIntro;
     // Clear container
     container.innerHTML = '';
     
@@ -892,9 +893,11 @@ function createDotMatrix(container, character) {
     // Append all dots at once for better performance
     container.appendChild(fragment);
     
-    // Add staggered animation for active dots - limit the number for performance
+    // Skip staggered intro during shuffle cycles — those timers jank the whole page
+    if (skipIntro) return;
+
     const activeDots = container.querySelectorAll('.active-dot');
-    const animationLimit = Math.min(activeDots.length, 50); // Limit animations
+    const animationLimit = Math.min(activeDots.length, 50);
     
     for (let i = 0; i < animationLimit; i++) {
         const dot = activeDots[i];
@@ -1521,7 +1524,7 @@ function cycleCharactersWithDeceleration(charElement) {
         
         // Update the character
         charElement.innerHTML = '';
-        createDotMatrix(charElement, newChar);
+        createDotMatrix(charElement, newChar, { skipIntro: true });
         
         // Continue cycling with increasing delay or stop
         if (cycleCount < totalCycles) {
@@ -1568,7 +1571,7 @@ function cycleToSpecificCharacter(charElement, targetChar) {
         
         // Update the character
         charElement.innerHTML = '';
-        createDotMatrix(charElement, newChar);
+        createDotMatrix(charElement, newChar, { skipIntro: true });
         
         // Continue cycling with increasing delay or stop
         if (cycleCount < totalCycles) {
@@ -2795,15 +2798,25 @@ function initCareerTimeline() {
     const items = Array.from(document.querySelectorAll('.career-item'));
     if (!timeline || !fill || !progressEl || !items.length) return;
 
+    let inView = false;
+    let rafId = null;
+    let lastFill = -1;
+    let lastActive = null;
+
     const update = () => {
+        if (!inView) return;
+
         const vh = window.innerHeight;
         const mid = vh * 0.5;
         const trackRect = progressEl.getBoundingClientRect();
         const trackHeight = Math.max(trackRect.height, 1);
 
-        // Pixel fill locked to viewport center
         const fillPx = Math.max(0, Math.min(trackHeight, mid - trackRect.top));
-        fill.style.height = `${fillPx}px`;
+        const fillRounded = Math.round(fillPx);
+        if (fillRounded !== lastFill) {
+            fill.style.height = `${fillRounded}px`;
+            lastFill = fillRounded;
+        }
 
         let best = null;
         let bestDist = Infinity;
@@ -2815,7 +2828,6 @@ function initCareerTimeline() {
             const dist = Math.abs(cy - mid);
             item.classList.toggle('is-passed', cy <= mid + 1);
 
-            // Depth fade: full opacity near center, softer at top/bottom edges
             const edge = vh * 0.22;
             let depth = 1;
             if (cy < edge) {
@@ -2823,7 +2835,6 @@ function initCareerTimeline() {
             } else if (cy > vh - edge) {
                 depth = Math.max(0, (vh - cy) / edge);
             }
-            // Ease the fade for a softer falloff
             depth = depth * depth * (3 - 2 * depth);
             const opacity = 0.14 + depth * 0.86;
             const rise = (1 - depth) * 14;
@@ -2837,83 +2848,146 @@ function initCareerTimeline() {
             }
         });
 
-        items.forEach(item => item.classList.toggle('is-active', item === best));
+        if (best !== lastActive) {
+            items.forEach(item => item.classList.toggle('is-active', item === best));
+            lastActive = best;
+        }
     };
 
     const loop = () => {
         update();
-        requestAnimationFrame(loop);
+        if (inView) rafId = requestAnimationFrame(loop);
+        else rafId = null;
     };
 
+    const start = () => {
+        if (rafId != null) return;
+        rafId = requestAnimationFrame(loop);
+    };
+
+    const stop = () => {
+        if (rafId != null) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+    };
+
+    const io = new IntersectionObserver((entries) => {
+        inView = entries.some(e => e.isIntersecting);
+        if (inView) start();
+        else stop();
+    }, { rootMargin: '80px 0px', threshold: 0 });
+
+    io.observe(wrap || timeline);
     update();
-    requestAnimationFrame(loop);
-    window.addEventListener('resize', update, { passive: true });
+    window.addEventListener('resize', () => { if (inView) update(); }, { passive: true });
 }
 
 /**
  * Hero tag: on hover, scramble text with random chars then decode back to original.
- * Uses requestAnimationFrame for smooth, synced animation.
+ * Per-glyph spans + throttled updates so it doesn't thrash layout / jank the page.
  */
 function initHeroTagScramble() {
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*[]<>/?=+';
     const SCRAMBLE_DURATION = 300;
     const DECODE_DURATION = 420;
+    const FRAME_MS = 32; // ~30fps — enough for scramble, far less main-thread work
     const EASE_OUT_EXPO = t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
 
     document.querySelectorAll('.hero-tag, .hero-tag-right').forEach(tag => {
-        const original = tag.textContent.trim();
+        const original = (tag.dataset.original || tag.textContent).trim();
         if (!original) return;
         tag.dataset.original = original;
 
+        // Fixed-width glyph slots so scramble never reflows surrounding layout
+        tag.textContent = '';
+        const glyphs = [];
+        for (let i = 0; i < original.length; i++) {
+            const span = document.createElement('span');
+            span.className = 'ht-ch';
+            span.textContent = original[i] === ' ' ? '\u00A0' : original[i];
+            if (original[i] === ' ') span.classList.add('ht-ch--space');
+            tag.appendChild(span);
+            glyphs.push(span);
+        }
+
         let rafId = null;
         let isHovering = false;
+        let lastPaint = 0;
 
         const cancel = () => {
             if (rafId != null) {
                 cancelAnimationFrame(rafId);
                 rafId = null;
             }
+            tag.classList.remove('is-scrambling');
         };
 
-        const randomChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+        const randomChar = () => CHARS[(Math.random() * CHARS.length) | 0];
+
+        const paint = (str) => {
+            for (let i = 0; i < glyphs.length; i++) {
+                const next = str[i] === ' ' ? '\u00A0' : str[i];
+                if (glyphs[i].textContent !== next) glyphs[i].textContent = next;
+            }
+        };
+
+        const restore = () => {
+            for (let i = 0; i < glyphs.length; i++) {
+                const next = original[i] === ' ' ? '\u00A0' : original[i];
+                glyphs[i].textContent = next;
+            }
+        };
 
         const runAnimation = (phaseStart) => {
             const totalDuration = SCRAMBLE_DURATION + DECODE_DURATION;
+            tag.classList.add('is-scrambling');
 
             const tick = (now) => {
                 if (!isHovering) {
-                    tag.textContent = original;
+                    restore();
                     cancel();
                     return;
                 }
+
+                if (now - lastPaint < FRAME_MS && now - phaseStart < totalDuration) {
+                    rafId = requestAnimationFrame(tick);
+                    return;
+                }
+                lastPaint = now;
+
                 const elapsed = now - phaseStart;
                 const progress = Math.min(elapsed / totalDuration, 1);
+                let str = '';
 
                 if (elapsed < SCRAMBLE_DURATION) {
-                    let str = '';
                     for (let i = 0; i < original.length; i++) {
-                        str += randomChar();
+                        str += original[i] === ' ' ? ' ' : randomChar();
                     }
-                    tag.textContent = str;
                 } else {
-                    const decodeElapsed = elapsed - SCRAMBLE_DURATION;
-                    const decodeProgress = Math.min(decodeElapsed / DECODE_DURATION, 1);
+                    const decodeProgress = Math.min((elapsed - SCRAMBLE_DURATION) / DECODE_DURATION, 1);
                     const eased = EASE_OUT_EXPO(decodeProgress);
-                    let str = '';
                     for (let i = 0; i < original.length; i++) {
+                        if (original[i] === ' ') {
+                            str += ' ';
+                            continue;
+                        }
                         const threshold = (i + 0.3) / original.length;
                         str += eased >= threshold ? original[i] : randomChar();
                     }
-                    tag.textContent = str;
                 }
+
+                paint(str);
 
                 if (progress < 1) {
                     rafId = requestAnimationFrame(tick);
                 } else {
-                    tag.textContent = original;
+                    restore();
                     rafId = null;
+                    tag.classList.remove('is-scrambling');
                 }
             };
+            lastPaint = 0;
             rafId = requestAnimationFrame(tick);
         };
 
@@ -2926,7 +3000,7 @@ function initHeroTagScramble() {
         tag.addEventListener('mouseleave', () => {
             isHovering = false;
             cancel();
-            tag.textContent = original;
+            restore();
         });
     });
 }
