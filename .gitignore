@@ -1,4 +1,6 @@
 
 __pycache__/
 *.pyc
+media/meta/
+media/tiktok/**/*.info.json
 

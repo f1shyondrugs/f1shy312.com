@@ -28,5 +28,9 @@ def cybersecurity():
 def outside():
     return send_from_directory('.', 'outside.html')
 
+@app.route('/graphic-design')
+def graphic_design():
+    return send_from_directory('.', 'graphic-design.html')
+
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5500)

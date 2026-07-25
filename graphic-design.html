@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Design | Das_F1sHy312</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <meta name="description" content="Graphic Design Showreel - Das_F1sHy312">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="noise-overlay"></div>
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+    
+    <header>
+        <a href="/" class="logo">Das_F1sHy312</a>
+        <button class="mobile-nav-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <nav>
+            <ul>
+                <li><a href="/" data-text="HOME">HOME</a></li>
+                <li><a href="/#about" data-text="ABOUT">ABOUT</a></li>
+                <li><a href="/#skills" data-text="SKILLS">SKILLS</a></li>
+                <li><a href="/projects" data-text="PROJECTS">PROJECTS</a></li>
+                <li><a href="https://github.com/f1shyondrugs" target="_blank" data-text="GITHUB">GITHUB</a></li>
+                <li><a href="mailto:hi@f1shy312.com" class="contact-btn">HI@F1SHY312.COM</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="subpage-hero section-animate">
+            <div class="section-container stagger-children">
+                <div class="subpage-hero-meta">
+                    <span class="hero-tag">[GRAPHIC DESIGN]</span>
+                    <span class="hero-tag-right">STILL + MOTION</span>
+                </div>
+                <h1 class="subpage-hero-title">
+                    <span class="title-line"><span class="title-word">DESIGN &amp;</span></span>
+                    <span class="title-line"><span class="title-word accent-grad">MOTION</span></span>
+                </h1>
+                <p class="subpage-hero-desc">Logos and website layouts on the static side. Motion design, AMV edits, and regular video work too.</p>
+            </div>
+        </section>
+
+        <section class="showreel-section section-animate" id="showreel">
+            <div class="section-container">
+                <div class="section-row-header">
+                    <div class="section-number">(01)</div>
+                    <div class="section-header reveal-on-scroll reveal-left">
+                        <span class="pre-heading">SHOWREEL</span>
+                        <h2>SELECTED<br>WORK</h2>
+                    </div>
+                </div>
+
+                <div class="sr-browser reveal-on-scroll reveal-fade" id="showreel-browser" hidden>
+                    <div class="sr-tabs" role="tablist" aria-label="Showreel categories" id="sr-tabs"></div>
+                    <div class="sr-subtabs" id="sr-subtabs" hidden></div>
+                    <p class="sr-desc" id="sr-desc"></p>
+
+                    <div class="sr-layout">
+                    <div class="sr-stage-wrap">
+                        <div class="vp" id="sr-player" data-aspect="16:9">
+                            <div class="vp-frame">
+                                <video class="vp-video" playsinline preload="metadata"></video>
+                                <div class="vp-yt" hidden></div>
+                                <div class="vp-yt-fallback" hidden>
+                                    <span class="vp-yt-fallback-label">CAN'T EMBED</span>
+                                    <p class="vp-yt-fallback-text">This video can't be played here — open it on YouTube instead.</p>
+                                    <a class="vp-yt-fallback-btn" href="#" target="_blank" rel="noopener noreferrer">
+                                        <i data-lucide="external-link"></i>
+                                        <span>WATCH ON YOUTUBE</span>
+                                    </a>
+                                </div>
+                                <a class="vp-popout-float" href="#" target="_blank" rel="noopener noreferrer" aria-label="Open original" title="Open original" hidden>
+                                    <i data-lucide="external-link"></i>
+                                </a>
+                                <button type="button" class="vp-big-play" aria-label="Play">
+                                    <i data-lucide="play"></i>
+                                </button>
+                                <div class="vp-empty">
+                                    <span class="vp-empty-label">COMING SOON</span>
+                                    <span class="vp-empty-hint">Logos &amp; layouts land here later</span>
+                                </div>
+                            </div>
+                            <div class="vp-bar">
+                                <button type="button" class="vp-btn vp-play" aria-label="Play/Pause">
+                                    <i data-lucide="play" class="vp-icon-play"></i>
+                                    <i data-lucide="pause" class="vp-icon-pause"></i>
+                                </button>
+                                <div class="vp-scrub" role="slider" aria-label="Seek" tabindex="0">
+                                    <div class="vp-scrub-track">
+                                        <div class="vp-scrub-fill"></div>
+                                    </div>
+                                </div>
+                                <span class="vp-time">0:00 / 0:00</span>
+                                <div class="vp-volume">
+                                    <button type="button" class="vp-btn vp-mute" aria-label="Mute">
+                                        <i data-lucide="volume-2" class="vp-icon-vol"></i>
+                                        <i data-lucide="volume-x" class="vp-icon-mute"></i>
+                                    </button>
+                                    <div class="vp-volume-panel" aria-hidden="true">
+                                        <input
+                                            type="range"
+                                            class="vp-volume-range"
+                                            min="0"
+                                            max="1"
+                                            step="0.01"
+                                            value="1"
+                                            aria-label="Volume"
+                                        >
+                                    </div>
+                                </div>
+                                <a class="vp-btn vp-popout" href="#" target="_blank" rel="noopener noreferrer" aria-label="Open original" title="Open original">
+                                    <i data-lucide="external-link"></i>
+                                </a>
+                                <button type="button" class="vp-btn vp-fs" aria-label="Fullscreen">
+                                    <i data-lucide="maximize"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="sr-now">
+                            <span class="sr-now-tag" id="sr-now-tag"></span>
+                            <h3 class="sr-now-title" id="sr-now-title"></h3>
+                            <span class="sr-now-count" id="sr-now-count"></span>
+                        </div>
+                    </div>
+
+                    <aside class="sr-side">
+                        <div class="sr-rail-head">
+                            <span class="sr-rail-label">PLAYLIST</span>
+                            <div class="sr-rail-nav">
+                                <button type="button" class="sr-rail-btn" id="sr-rail-prev" aria-label="Previous"><span class="sr-rail-prev-label">&larr;</span></button>
+                                <button type="button" class="sr-rail-btn" id="sr-rail-next" aria-label="Next"><span class="sr-rail-next-label">&rarr;</span></button>
+                            </div>
+                        </div>
+                        <div class="sr-rail" id="sr-rail" tabindex="0"></div>
+                    </aside>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-cta-block">
+            <div class="footer-cta-label">BACK TO HOME</div>
+            <h2 class="footer-headline">EXPLORE<br>MORE<span class="accent-grad">.</span></h2>
+            <a href="/#skills" class="footer-email-btn">&larr; BACK TO SKILLS</a>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            <div class="footer-left">&copy; <script>document.write(new Date().getFullYear())</script> Das_F1sHy312</div>
+            <div class="footer-center">JUST A DEVELOPER.</div>
+            <div class="footer-right">
+                <a href="https://github.com/f1shyondrugs" target="_blank">GITHUB</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
+    <script src="showreel.js"></script>
+</body>
+</html>

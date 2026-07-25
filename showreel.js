@@ -1,0 +1,540 @@
+(() => {
+    const browser = document.getElementById('showreel-browser');
+    if (!browser) return;
+
+    const tabsEl = document.getElementById('sr-tabs');
+    const subtabsEl = document.getElementById('sr-subtabs');
+    const descEl = document.getElementById('sr-desc');
+    const railEl = document.getElementById('sr-rail');
+    const nowTag = document.getElementById('sr-now-tag');
+    const nowTitle = document.getElementById('sr-now-title');
+    const nowCount = document.getElementById('sr-now-count');
+    const player = document.getElementById('sr-player');
+    const video = player.querySelector('.vp-video');
+    const ytBox = player.querySelector('.vp-yt');
+    const ytFallback = player.querySelector('.vp-yt-fallback');
+    const ytFallbackBtn = player.querySelector('.vp-yt-fallback-btn');
+    const emptyBox = player.querySelector('.vp-empty');
+    const bigPlay = player.querySelector('.vp-big-play');
+    const playBtn = player.querySelector('.vp-play');
+    const muteBtn = player.querySelector('.vp-mute');
+    const volumeWrap = player.querySelector('.vp-volume');
+    const volumeRange = player.querySelector('.vp-volume-range');
+    const popoutBtn = player.querySelector('.vp-popout');
+    const popoutFloat = player.querySelector('.vp-popout-float');
+    const fsBtn = player.querySelector('.vp-fs');
+    const barEl = player.querySelector('.vp-bar');
+    const scrub = player.querySelector('.vp-scrub');
+    const scrubFill = player.querySelector('.vp-scrub-fill');
+    const timeEl = player.querySelector('.vp-time');
+
+    const paintIcons = () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons({
+                attrs: {
+                    'stroke-width': '1.75',
+                    width: '16',
+                    height: '16',
+                },
+            });
+        }
+    };
+
+    let data = null;
+    let catId = null;
+    let subId = null;
+    let items = [];
+    let index = 0;
+    let mode = 'empty'; // video | youtube | empty
+    let scrubbing = false;
+    let lastVolume = 1;
+    let ytWatchdog = null;
+
+    const fmt = (s) => {
+        if (!Number.isFinite(s)) return '0:00';
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return `${m}:${String(sec).padStart(2, '0')}`;
+    };
+
+    const escapeAttr = (s) => String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;');
+
+    const sourceUrl = (item) => {
+        if (!item) return null;
+        if (item.url) return item.url;
+        if (item.type === 'youtube') return `https://www.youtube.com/watch?v=${item.id || item.src}`;
+        if (item.src && item.src.includes('/lotb/')) {
+            return `https://www.tiktok.com/@lotb.net/video/${item.id}`;
+        }
+        if (item.id) return `https://www.tiktok.com/@f1shyondrugs312/video/${item.id}`;
+        return null;
+    };
+
+    const setPopout = (item) => {
+        const url = sourceUrl(item);
+        const title = !item
+            ? ''
+            : (item.type === 'youtube' ? 'Open on YouTube' : 'Open on TikTok');
+        const isYt = item && item.type === 'youtube';
+
+        // Bar popout only for local videos (YouTube uses native controls + float link)
+        if (popoutBtn) {
+            if (!url || isYt) {
+                popoutBtn.hidden = true;
+                popoutBtn.removeAttribute('href');
+            } else {
+                popoutBtn.hidden = false;
+                popoutBtn.href = url;
+                popoutBtn.title = title;
+            }
+        }
+
+        if (popoutFloat) {
+            if (!url) {
+                popoutFloat.hidden = true;
+                popoutFloat.removeAttribute('href');
+            } else {
+                popoutFloat.hidden = false;
+                popoutFloat.href = url;
+                popoutFloat.title = title;
+            }
+        }
+    };
+
+    const setPlayingUI = (playing) => {
+        playBtn.classList.toggle('is-playing', playing);
+        player.classList.toggle('is-playing', playing);
+        if (playing || mode !== 'video') {
+            bigPlay.setAttribute('hidden', '');
+        } else {
+            bigPlay.removeAttribute('hidden');
+        }
+    };
+
+    const syncVolumeUI = () => {
+        const muted = video.muted || video.volume === 0;
+        muteBtn.classList.toggle('is-muted', muted);
+        player.classList.toggle('is-muted', muted);
+        const shown = muted ? 0 : video.volume;
+        volumeRange.value = String(shown);
+        volumeRange.style.setProperty('--vp-vol', `${shown * 100}%`);
+    };
+
+    const setVolume = (value) => {
+        const vol = Math.min(Math.max(Number(value), 0), 1);
+        video.volume = vol;
+        if (vol > 0) {
+            lastVolume = vol;
+            video.muted = false;
+        } else {
+            video.muted = true;
+        }
+        syncVolumeUI();
+    };
+
+    const stopLocal = () => {
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+        setPlayingUI(false);
+    };
+
+    const clearYt = () => {
+        if (ytWatchdog) {
+            clearTimeout(ytWatchdog);
+            ytWatchdog = null;
+        }
+        ytBox.innerHTML = '';
+        ytBox.hidden = true;
+        ytFallback.hidden = true;
+        player.classList.remove('is-yt-fallback');
+    };
+
+    const showYtFallback = (item) => {
+        if (ytWatchdog) {
+            clearTimeout(ytWatchdog);
+            ytWatchdog = null;
+        }
+        ytBox.innerHTML = '';
+        ytBox.hidden = true;
+        mode = 'youtube';
+        video.hidden = true;
+        video.style.display = 'none';
+        bigPlay.setAttribute('hidden', '');
+        barEl.hidden = true;
+        ytFallback.hidden = false;
+        player.classList.add('is-yt-fallback');
+        player.classList.remove('is-youtube');
+        const url = sourceUrl(item);
+        ytFallbackBtn.href = url || '#';
+        setPopout(item);
+        paintIcons();
+    };
+
+    const setAspect = (aspect) => {
+        player.dataset.aspect = aspect || '16:9';
+    };
+
+    const updateTime = () => {
+        const cur = video.currentTime || 0;
+        const dur = video.duration || 0;
+        timeEl.textContent = `${fmt(cur)} / ${fmt(dur)}`;
+        const pct = dur ? (cur / dur) * 100 : 0;
+        if (!scrubbing) scrubFill.style.width = `${pct}%`;
+    };
+
+    const loadItem = (i, { autoplay = false } = {}) => {
+        if (!items.length) {
+            mode = 'empty';
+            stopLocal();
+            clearYt();
+            player.classList.remove('is-youtube', 'is-yt-fallback');
+            player.classList.add('is-empty');
+            video.hidden = true;
+            video.style.display = 'none';
+            bigPlay.setAttribute('hidden', '');
+            barEl.hidden = true;
+            popoutBtn.hidden = true;
+            if (popoutFloat) popoutFloat.hidden = true;
+            nowTag.textContent = catId === 'still' ? 'Still' : 'Empty';
+            nowTitle.textContent = catId === 'still' ? 'Logos & layouts' : 'No clips in this tab';
+            nowCount.textContent = '';
+            emptyBox.querySelector('.vp-empty-label').textContent =
+                catId === 'still' ? 'COMING SOON' : 'NOTHING HERE';
+            emptyBox.querySelector('.vp-empty-hint').textContent =
+                catId === 'still' ? 'Logos & layouts land here later' : 'Pick another category';
+            setAspect('16:9');
+            return;
+        }
+
+        index = ((i % items.length) + items.length) % items.length;
+        const item = items[index];
+        player.classList.remove('is-empty');
+        nowTag.textContent = item.tag || '';
+        nowTitle.textContent = item.title || '';
+        nowCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+        setAspect(item.aspect || '16:9');
+        setPopout(item);
+
+        [...railEl.children].forEach((el, idx) => {
+            el.classList.toggle('is-active', idx === index);
+        });
+        const active = railEl.children[index];
+        if (active && typeof active.scrollIntoView === 'function') {
+            try {
+                const vertical = window.matchMedia('(min-width: 1100px)').matches;
+                active.scrollIntoView({
+                    behavior: 'smooth',
+                    inline: vertical ? 'nearest' : 'center',
+                    block: vertical ? 'nearest' : 'nearest',
+                });
+            } catch (_) { /* ignore */ }
+        }
+
+        if (item.type === 'youtube') {
+            mode = 'youtube';
+            stopLocal();
+            video.pause();
+            video.removeAttribute('src');
+            video.load();
+            video.hidden = true;
+            video.style.display = 'none';
+            bigPlay.setAttribute('hidden', '');
+            player.classList.add('is-youtube');
+            player.classList.remove('is-yt-fallback', 'is-empty');
+
+            // Known non-embeddable (from showreel.json) or runtime fallback
+            if (item.embeddable === false) {
+                showYtFallback(item);
+                return;
+            }
+
+            clearYt();
+            player.classList.add('is-youtube');
+            barEl.hidden = true;
+            ytBox.hidden = false;
+            ytFallback.hidden = true;
+            const auto = autoplay ? '1' : '0';
+            ytBox.innerHTML = `<iframe
+                id="sr-yt-frame"
+                src="https://www.youtube-nocookie.com/embed/${item.src}?rel=0&modestbranding=1&playsinline=1&autoplay=${auto}"
+                title="${escapeAttr(item.title)}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+            ></iframe>`;
+
+            // YouTube posts error codes via postMessage when embedding is blocked
+            const onMsg = (event) => {
+                if (!String(event.origin || '').includes('youtube')) return;
+                let payload = event.data;
+                if (typeof payload === 'string') {
+                    try { payload = JSON.parse(payload); } catch (_) { return; }
+                }
+                if (!payload || payload.event !== 'onError') return;
+                const code = Number(payload.info);
+                // 101 / 150 = embedding disabled by owner
+                if (code === 101 || code === 150 || code === 100 || code === 2) {
+                    window.removeEventListener('message', onMsg);
+                    showYtFallback(item);
+                }
+            };
+            window.addEventListener('message', onMsg);
+            setTimeout(() => window.removeEventListener('message', onMsg), 10000);
+            return;
+        }
+
+        mode = 'video';
+        clearYt();
+        player.classList.remove('is-youtube', 'is-yt-fallback');
+        barEl.hidden = false;
+        video.hidden = false;
+        video.style.display = '';
+        video.src = item.src;
+        video.load();
+        setPlayingUI(false);
+        bigPlay.removeAttribute('hidden');
+        updateTime();
+
+        if (autoplay) {
+            video.play().then(() => setPlayingUI(true)).catch(() => setPlayingUI(false));
+        }
+    };
+
+    const togglePlay = () => {
+        if (mode !== 'video') return;
+        if (video.paused) {
+            video.play().then(() => setPlayingUI(true)).catch(() => {});
+        } else {
+            video.pause();
+            setPlayingUI(false);
+        }
+    };
+
+    const seekFromEvent = (e) => {
+        if (mode !== 'video' || !video.duration) return;
+        const rect = scrub.getBoundingClientRect();
+        const x = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+        scrubFill.style.width = `${x * 100}%`;
+        video.currentTime = x * video.duration;
+        updateTime();
+    };
+
+    const getActiveItems = () => {
+        const cat = data.categories.find((c) => c.id === catId);
+        if (!cat) return { items: [], desc: '', empty: true };
+        if (cat.subtabs) {
+            const sub = cat.subtabs.find((s) => s.id === subId) || cat.subtabs[0];
+            return { items: sub.items || [], desc: cat.desc, empty: false, sub };
+        }
+        return { items: cat.items || [], desc: cat.desc, empty: !!cat.empty };
+    };
+
+    const renderRail = () => {
+        railEl.innerHTML = '';
+        if (!items.length) {
+            railEl.innerHTML = '<div class="sr-rail-empty">Nothing here yet — placeholders only.</div>';
+            return;
+        }
+
+        items.forEach((item, i) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `sr-thumb sr-thumb--${item.aspect === '9:16' ? 'portrait' : 'wide'}`;
+            btn.dataset.index = String(i);
+
+            const badge = item.type === 'youtube' && item.embeddable === false
+                ? '<span class="sr-thumb-badge">YT only</span>'
+                : '';
+
+            if (item.type === 'youtube') {
+                btn.innerHTML = `
+                    <div class="sr-thumb-media">
+                        <img src="https://i.ytimg.com/vi/${item.src}/hqdefault.jpg" alt="" loading="lazy">
+                        <span class="sr-thumb-play"></span>
+                        ${badge}
+                    </div>
+                    <span class="sr-thumb-meta">
+                        <span class="sr-thumb-tag">${escapeAttr(item.tag)}</span>
+                        <span class="sr-thumb-title">${escapeAttr(item.title)}</span>
+                    </span>`;
+            } else {
+                btn.innerHTML = `
+                    <div class="sr-thumb-media">
+                        <video muted playsinline preload="metadata" src="${escapeAttr(item.src)}"></video>
+                        <span class="sr-thumb-play"></span>
+                    </div>
+                    <span class="sr-thumb-meta">
+                        <span class="sr-thumb-tag">${escapeAttr(item.tag)}</span>
+                        <span class="sr-thumb-title">${escapeAttr(item.title)}</span>
+                    </span>`;
+            }
+
+            btn.addEventListener('click', () => loadItem(i, { autoplay: true }));
+            railEl.appendChild(btn);
+        });
+    };
+
+    const renderSubtabs = (cat) => {
+        if (!cat.subtabs) {
+            subtabsEl.hidden = true;
+            subtabsEl.innerHTML = '';
+            subId = null;
+            return;
+        }
+        subtabsEl.hidden = false;
+        subtabsEl.innerHTML = '';
+        if (!subId || !cat.subtabs.some((s) => s.id === subId)) {
+            subId = cat.subtabs[0].id;
+        }
+        cat.subtabs.forEach((sub) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'sr-subtab' + (sub.id === subId ? ' is-active' : '');
+            btn.textContent = `${sub.label} (${sub.items.length})`;
+            btn.addEventListener('click', () => {
+                subId = sub.id;
+                refresh();
+            });
+            subtabsEl.appendChild(btn);
+        });
+    };
+
+    const refresh = () => {
+        const cat = data.categories.find((c) => c.id === catId);
+        [...tabsEl.children].forEach((el) => {
+            el.classList.toggle('is-active', el.dataset.id === catId);
+        });
+        renderSubtabs(cat);
+        const active = getActiveItems();
+        items = active.items;
+        descEl.textContent = active.desc || '';
+        renderRail();
+        loadItem(0, { autoplay: false });
+    };
+
+    const renderTabs = () => {
+        tabsEl.innerHTML = '';
+        data.categories.forEach((cat) => {
+            const count = cat.subtabs
+                ? cat.subtabs.reduce((n, s) => n + s.items.length, 0)
+                : (cat.items || []).length;
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'sr-tab';
+            btn.dataset.id = cat.id;
+            btn.setAttribute('role', 'tab');
+            btn.innerHTML = `<span class="sr-tab-label">${cat.label}</span><span class="sr-tab-count">${cat.empty ? 'soon' : count}</span>`;
+            btn.addEventListener('click', () => {
+                if (catId === cat.id) return;
+                catId = cat.id;
+                subId = cat.subtabs ? cat.subtabs[0].id : null;
+                refresh();
+            });
+            tabsEl.appendChild(btn);
+        });
+    };
+
+    // Player events
+    bigPlay.addEventListener('click', togglePlay);
+    playBtn.addEventListener('click', togglePlay);
+    video.addEventListener('click', togglePlay);
+    video.addEventListener('timeupdate', updateTime);
+    video.addEventListener('loadedmetadata', updateTime);
+    video.addEventListener('ended', () => {
+        setPlayingUI(false);
+        if (items.length > 1) loadItem(index + 1, { autoplay: true });
+    });
+    video.addEventListener('play', () => setPlayingUI(true));
+    video.addEventListener('pause', () => setPlayingUI(false));
+
+    muteBtn.addEventListener('click', () => {
+        if (video.muted || video.volume === 0) {
+            video.muted = false;
+            video.volume = lastVolume > 0 ? lastVolume : 1;
+        } else {
+            lastVolume = video.volume || 1;
+            video.muted = true;
+        }
+        syncVolumeUI();
+    });
+
+    volumeRange.addEventListener('input', () => setVolume(volumeRange.value));
+    volumeRange.addEventListener('click', (e) => e.stopPropagation());
+    volumeWrap.addEventListener('pointerdown', (e) => e.stopPropagation());
+
+    fsBtn.addEventListener('click', () => {
+        const frame = player.querySelector('.vp-frame');
+        if (!document.fullscreenElement) {
+            (frame.requestFullscreen || frame.webkitRequestFullscreen)?.call(frame);
+        } else {
+            document.exitFullscreen?.();
+        }
+    });
+
+    scrub.addEventListener('pointerdown', (e) => {
+        scrubbing = true;
+        scrub.setPointerCapture(e.pointerId);
+        seekFromEvent(e);
+    });
+    scrub.addEventListener('pointermove', (e) => {
+        if (!scrubbing) return;
+        seekFromEvent(e);
+    });
+    scrub.addEventListener('pointerup', () => { scrubbing = false; });
+    scrub.addEventListener('pointercancel', () => { scrubbing = false; });
+
+    const scrollRail = (dir) => {
+        const vertical = window.matchMedia('(min-width: 1100px)').matches;
+        const amount = 280 * dir;
+        railEl.scrollBy(vertical
+            ? { top: amount, behavior: 'smooth' }
+            : { left: amount, behavior: 'smooth' });
+    };
+
+    document.getElementById('sr-rail-prev').addEventListener('click', () => scrollRail(-1));
+    document.getElementById('sr-rail-next').addEventListener('click', () => scrollRail(1));
+
+    document.addEventListener('keydown', (e) => {
+        if (!player.offsetParent) return;
+        const tag = (document.activeElement?.tagName || '').toLowerCase();
+        if (tag === 'input' || tag === 'textarea' || document.activeElement?.isContentEditable) return;
+
+        if (e.key === ' ' && mode === 'video') {
+            e.preventDefault();
+            togglePlay();
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            loadItem(index + 1, { autoplay: mode === 'video' });
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            loadItem(index - 1, { autoplay: mode === 'video' });
+        } else if ((e.key === 'm' || e.key === 'M') && mode === 'video') {
+            muteBtn.click();
+        } else if ((e.key === 'f' || e.key === 'F') && mode === 'video') {
+            fsBtn.click();
+        }
+    });
+
+    fetch('media/showreel.json')
+        .then((r) => r.json())
+        .then((json) => {
+            data = json;
+            catId = data.categories[0].id;
+            paintIcons();
+            renderTabs();
+            browser.hidden = false;
+            refresh();
+            video.volume = 1;
+            syncVolumeUI();
+            paintIcons();
+        })
+        .catch((err) => {
+            console.error('Showreel failed to load', err);
+            browser.hidden = false;
+            descEl.textContent = 'Could not load showreel data.';
+        });
+})();

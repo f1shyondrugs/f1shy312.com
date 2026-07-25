@@ -105,13 +105,19 @@ document.addEventListener('DOMContentLoaded', () => {
         moveCustomCursor(e);
     }, { passive: true });
     
+    // Smooth ease-in-out page scroll (Lenis)
+    initSmoothScroll();
+
+    // Career timeline progress (after Lenis so it can hook scroll)
+    initCareerTimeline();
+
     // Add hover effects for interactive elements
     addHoverEffects();
     
     // Add page load animation - optimized for performance
     animatePageLoad();
     
-    // Add smooth scrolling to anchor links
+    // Anchor scrolling handled by Lenis (fallback without it)
     addSmoothScrolling();
     
     // Hero tag scramble/decode on hover
@@ -525,18 +531,20 @@ let CURSOR_WRAP_SNAPPING = true;
 
     function clearCursorModes() {
         if (!cursorDot) return;
-        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--underline', 'cursor-dot--arrow');
+        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--underline', 'cursor-dot--arrow', 'cursor-dot--outline');
+        cursorDot.style.border = '';
         if (cursorDot.dataset.arrowGlyph === '1') {
             cursorDot.textContent = '';
             delete cursorDot.dataset.arrowGlyph;
         }
     }
 
-    function applyBoxWrap(rect) {
-        const l = rect.left - wrapPadding;
-        const t = rect.top - wrapPadding;
-        const w = rect.width + wrapPadding * 2;
-        const h = rect.height + wrapPadding * 2;
+    function applyBoxWrap(rect, outlineOnly = false) {
+        const pad = outlineOnly ? 6 : wrapPadding;
+        const l = rect.left - pad;
+        const t = rect.top - pad;
+        const w = rect.width + pad * 2;
+        const h = rect.height + pad * 2;
         currentX = rect.left + rect.width / 2;
         currentY = rect.top + rect.height / 2;
         targetX = currentX;
@@ -547,25 +555,37 @@ let CURSOR_WRAP_SNAPPING = true;
         const radii = ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft'].map(corner => {
             const raw = String(cs[`border${corner}Radius`] || '0px').split('/')[0].trim().split(/\s+/)[0];
             const value = parseFloat(raw);
-            if (!raw || Number.isNaN(value)) return `${wrapPadding}px`;
+            if (!raw || Number.isNaN(value)) return `${pad}px`;
             const basePx = raw.endsWith('%') ? (value / 100) * elMin : value;
             if (basePx >= elMin / 2 - 0.5) return `${Math.min(w, h) / 2}px`;
-            return `${Math.max(0, basePx + wrapPadding)}px`;
+            return `${Math.max(0, basePx + pad)}px`;
         });
 
-        cursorDot.classList.add('cursor-dot--wrapping');
         cursorDot.classList.remove('cursor-dot--underline', 'cursor-dot--arrow');
         if (cursorDot.dataset.arrowGlyph === '1') {
             cursorDot.textContent = '';
             delete cursorDot.dataset.arrowGlyph;
         }
+
+        if (outlineOnly) {
+            cursorDot.classList.add('cursor-dot--outline');
+            cursorDot.classList.remove('cursor-dot--wrapping');
+            cursorDot.style.backgroundColor = 'transparent';
+            cursorDot.style.border = '1.5px solid rgba(255, 255, 255, 0.7)';
+            cursorDot.style.boxShadow = 'none';
+        } else {
+            cursorDot.classList.add('cursor-dot--wrapping');
+            cursorDot.classList.remove('cursor-dot--outline');
+            cursorDot.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+            cursorDot.style.border = '';
+        }
+
         cursorDot.style.transform = 'translate(0, 0)';
         cursorDot.style.left = `${l}px`;
         cursorDot.style.top = `${t}px`;
         cursorDot.style.width = `${w}px`;
         cursorDot.style.height = `${h}px`;
         cursorDot.style.borderRadius = radii.join(' ');
-        cursorDot.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
     }
 
     function applyUnderlineMorph(rect) {
@@ -577,7 +597,7 @@ let CURSOR_WRAP_SNAPPING = true;
         targetY = currentY;
 
         cursorDot.classList.add('cursor-dot--underline');
-        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--arrow');
+        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--arrow', 'cursor-dot--outline');
         if (cursorDot.dataset.arrowGlyph === '1') {
             cursorDot.textContent = '';
             delete cursorDot.dataset.arrowGlyph;
@@ -589,6 +609,7 @@ let CURSOR_WRAP_SNAPPING = true;
         cursorDot.style.height = `${underlineH}px`;
         cursorDot.style.borderRadius = '2px';
         cursorDot.style.backgroundColor = '';
+        cursorDot.style.border = '';
     }
 
     function applyArrowFollow() {
@@ -599,7 +620,7 @@ let CURSOR_WRAP_SNAPPING = true;
 
         const size = 40;
         cursorDot.classList.add('cursor-dot--arrow');
-        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--underline');
+        cursorDot.classList.remove('cursor-dot--wrapping', 'cursor-dot--underline', 'cursor-dot--outline');
         if (cursorDot.dataset.arrowGlyph !== '1') {
             cursorDot.textContent = '→';
             cursorDot.dataset.arrowGlyph = '1';
@@ -611,6 +632,7 @@ let CURSOR_WRAP_SNAPPING = true;
         cursorDot.style.height = `${size}px`;
         cursorDot.style.borderRadius = '50%';
         cursorDot.style.backgroundColor = '';
+        cursorDot.style.border = '';
     }
 
     function tick() {
@@ -627,8 +649,10 @@ let CURSOR_WRAP_SNAPPING = true;
                 const rect = wrapElement.getBoundingClientRect();
                 if (wrapMode === 'underline') {
                     applyUnderlineMorph(rect);
+                } else if (wrapMode === 'outline') {
+                    applyBoxWrap(rect, true);
                 } else {
-                    applyBoxWrap(rect);
+                    applyBoxWrap(rect, false);
                 }
             }
         } else {
@@ -656,6 +680,7 @@ let CURSOR_WRAP_SNAPPING = true;
             cursorDot.style.height = '20px';
             cursorDot.style.borderRadius = br;
             cursorDot.style.backgroundColor = '';
+            cursorDot.style.border = '';
         }
         rafId = requestAnimationFrame(tick);
     }
@@ -699,16 +724,18 @@ function addHoverEffects() {
     if (!cursorDot) return;
 
     const boxTargets = document.querySelectorAll(
-        '.cta, button, .interactive-hover, .footer-email-btn, .contact-btn, .featured-link, .demo-link, .project-link, .skill-btn'
+        '.cta, button, .interactive-hover, .footer-email-btn, .contact-btn, .featured-link, .demo-link, .project-link, .skill-btn, .vp-popout, .vp-popout-float, .vp-yt-fallback-btn, .vp-btn, .sr-tab, .sr-subtab, .sr-rail-btn, .sr-thumb'
     );
     const underlineTargets = document.querySelectorAll(
-        'nav a:not(.contact-btn), .more-projects-link, .footer-right a, .back-link'
+        '.logo, nav a:not(.contact-btn), .more-projects-link, .footer-right a, .back-link, .cta-secondary, .career-copy a'
     );
 
     const bind = (el, mode) => {
         if (mode === 'box' && (
             el.classList.contains('more-projects-link') ||
+            el.classList.contains('cta-secondary') ||
             el.classList.contains('skill-page-btn') ||
+            el.classList.contains('mobile-nav-toggle') ||
             (el.closest('nav') && !el.classList.contains('contact-btn'))
         )) {
             return;
@@ -726,6 +753,17 @@ function addHoverEffects() {
 
     boxTargets.forEach(el => bind(el, 'box'));
     underlineTargets.forEach(el => bind(el, 'underline'));
+
+    // Hamburger: outline wrap only (no fill)
+    document.querySelectorAll('.mobile-nav-toggle').forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            if (!CURSOR_WRAP_SNAPPING) return;
+            window.setCursorWrapElement(btn, 'outline');
+        });
+        btn.addEventListener('mouseleave', (e) => {
+            window.clearCursorWrapElement(e);
+        });
+    });
 
     // Skills rows: keep cursor following, show arrow inside, slightly scaled up
     document.querySelectorAll('.skill-page-btn').forEach(btn => {
@@ -1748,23 +1786,64 @@ function debounce(func, wait) {
     };
 }
 
+// Smooth page scroll with ease-in/out feel (Lenis)
+let lenisInstance = null;
+
+function initSmoothScroll() {
+    if (typeof Lenis === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const easeInOutCubic = (t) => (
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+    );
+
+    lenisInstance = new Lenis({
+        autoRaf: true,
+        autoToggle: true,
+        anchors: false, // handled in addSmoothScrolling with header offset
+        allowNestedScroll: true,
+        stopInertiaOnNavigate: true,
+        lerp: 0.08,
+        smoothWheel: true,
+        wheelMultiplier: 0.85,
+        touchMultiplier: 1.1,
+        syncTouch: false
+    });
+
+    window.lenis = lenisInstance;
+    window.__lenisEase = easeInOutCubic;
+
+    // Keep mobile drawer scroll native
+    document.querySelectorAll('nav ul').forEach(el => {
+        el.setAttribute('data-lenis-prevent', '');
+    });
+}
+
 // Add smooth scrolling to anchor links
 function addSmoothScrolling() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
             const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
+            if (!targetId || targetId === '#') return;
+
             const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                // Apply scroll animation
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80, // Adjust for header height
-                    behavior: 'smooth'
+            if (!targetElement) return;
+
+            e.preventDefault();
+
+            if (lenisInstance) {
+                lenisInstance.scrollTo(targetElement, {
+                    offset: -80,
+                    duration: 1.35,
+                    easing: window.__lenisEase || ((t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2))
                 });
+                return;
             }
+
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
         });
     });
 }
@@ -2701,6 +2780,69 @@ function initWordSwap() {
     }, { threshold: 0.5 });
 
     observer.observe(swap);
+}
+
+function initCareerTimeline() {
+    const timeline = document.getElementById('career-timeline');
+    const fill = document.getElementById('career-progress-fill');
+    const wrap = timeline ? timeline.closest('.career-timeline-wrap') : null;
+    const progressEl = wrap ? wrap.querySelector('.career-progress') : null;
+    const items = Array.from(document.querySelectorAll('.career-item'));
+    if (!timeline || !fill || !progressEl || !items.length) return;
+
+    const update = () => {
+        const vh = window.innerHeight;
+        const mid = vh * 0.5;
+        const trackRect = progressEl.getBoundingClientRect();
+        const trackHeight = Math.max(trackRect.height, 1);
+
+        // Pixel fill locked to viewport center
+        const fillPx = Math.max(0, Math.min(trackHeight, mid - trackRect.top));
+        fill.style.height = `${fillPx}px`;
+
+        let best = null;
+        let bestDist = Infinity;
+
+        items.forEach(item => {
+            const dot = item.querySelector('.career-dot') || item;
+            const rect = dot.getBoundingClientRect();
+            const cy = rect.top + rect.height * 0.5;
+            const dist = Math.abs(cy - mid);
+            item.classList.toggle('is-passed', cy <= mid + 1);
+
+            // Depth fade: full opacity near center, softer at top/bottom edges
+            const edge = vh * 0.22;
+            let depth = 1;
+            if (cy < edge) {
+                depth = Math.max(0, cy / edge);
+            } else if (cy > vh - edge) {
+                depth = Math.max(0, (vh - cy) / edge);
+            }
+            // Ease the fade for a softer falloff
+            depth = depth * depth * (3 - 2 * depth);
+            const opacity = 0.14 + depth * 0.86;
+            const rise = (1 - depth) * 14;
+
+            item.style.opacity = opacity.toFixed(3);
+            item.style.transform = `translateY(${rise.toFixed(1)}px)`;
+
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = item;
+            }
+        });
+
+        items.forEach(item => item.classList.toggle('is-active', item === best));
+    };
+
+    const loop = () => {
+        update();
+        requestAnimationFrame(loop);
+    };
+
+    update();
+    requestAnimationFrame(loop);
+    window.addEventListener('resize', update, { passive: true });
 }
 
 /**

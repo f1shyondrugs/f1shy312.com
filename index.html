@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Das_F1sHy312 | JUST A DEVELOPER.</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -21,7 +22,7 @@
     </div>
     
     <header>
-        <div class="logo">Das_F1sHy312</div>
+        <a href="/" class="logo">Das_F1sHy312</a>
         <button class="mobile-nav-toggle">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -57,7 +58,10 @@
                 <div class="hero-bottom">
                     <div class="hero-info-col">
                         <p class="hero-description">I'M DAS_F1SHY312, DEDICATED TO CRAFTING IMPACTFUL DIGITAL EXPERIENCES FOR ME, MYSELF AND I. <span class="muted">(for now)</span></p>
-                        <a href="/projects" class="cta interactive-hover">VIEW PROJECTS</a>
+                        <div class="hero-actions">
+                            <a href="/projects" class="cta cta-primary interactive-hover">VIEW PROJECTS</a>
+                            <a href="mailto:hi@f1shy312.com" class="cta-secondary">HI@F1SHY312.COM &rarr;</a>
+                        </div>
                     </div>
                     <div class="hero-visual-col">
                         <div class="dot-characters-grid">
@@ -136,6 +140,129 @@
                         <div class="dot-character about-character" id="about-char"></div>
                     </div>
                 </div>
+
+                <div class="career-block reveal-on-scroll reveal-fade">
+                    <p class="career-label">the path so far</p>
+
+                    <div class="career-timeline-wrap">
+                        <div class="career-progress" aria-hidden="true">
+                            <div class="career-progress-track"></div>
+                            <div class="career-progress-fill" id="career-progress-fill"></div>
+                        </div>
+                        <ol class="career-timeline" id="career-timeline">
+                        <li class="career-item" data-year="2016">
+                            <div class="career-role">
+                                <span class="career-year">2016</span>
+                                <h4>Minecraft Mechanisms</h4>
+                                <span class="career-meta">Command Blocks &amp; Redstone</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Started with Minecraft Java command blocks and redstone. At that point, I realized I love building mechanisms that just click.</p>
+                        </li>
+                        <li class="career-item" data-year="2017">
+                            <div class="career-role">
+                                <span class="career-year">2017</span>
+                                <h4>Windows Batch</h4>
+                                <span class="career-meta">First Scripts</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Jumped into Windows batch programming. Early automation, messy ahh scripts, and the first time making the computer do the work.</p>
+                        </li>
+                        <li class="career-item" data-year="2018">
+                            <div class="career-role">
+                                <span class="career-year">2018</span>
+                                <h4>Python Beginnings</h4>
+                                <span class="career-meta">Simplest Apps</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Started learning Python with the simplest apps. Calculators, basic terminal apps, etc.</p>
+                        </li>
+                        <li class="career-item" data-year="2019">
+                            <div class="career-role">
+                                <span class="career-year">2019–2020</span>
+                                <h4>Web Basics</h4>
+                                <span class="career-meta">Python · HTML · CSS · JS</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Built basic websites with Python, HTML, CSS, and JavaScript as i took a course at the robot school gmbh as i had my holidays.</p>
+                        </li>
+                        <li class="career-item" data-year="2021">
+                            <div class="career-role">
+                                <span class="career-year">2021</span>
+                                <h4>Twitch Bot</h4>
+                                <span class="career-meta">Chat Entertainment</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Made a Twitch bot packed with commands and mechanics to entertain chat and keep it active. Written in Python.</p>
+                        </li>
+                        <li class="career-item" data-year="2023">
+                            <div class="career-role">
+                                <span class="career-year">2023</span>
+                                <h4>Clash Royale Bot</h4>
+                                <span class="career-meta">First Real Project</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Built a Clash Royale bot for farming XP cuz i was bored. the first project that felt like an actual product, not just practice. (also made a yt video on it)</p>
+                        </li>
+                        <li class="career-item" data-year="2024">
+                            <div class="career-role">
+                                <span class="career-year">2024</span>
+                                <h4>Cybersecurity</h4>
+                                <span class="career-meta">Kali · Wi‑Fi · Java</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Got into cybersecurity and pentesting with Kali Linux and Wi‑Fi stuff. Started learning Java end of 2024.</p>
+                        </li>
+                        <li class="career-item" data-year="2025">
+                            <div class="career-role">
+                                <span class="career-year">2025</span>
+                                <h4>Java &amp; Pointer</h4>
+                                <span class="career-meta">Plugins · YOUR AI Code Editor</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Shipped first Java plugins and started Pointer. a real project. More at <a href="https://pointer.f1shy312.com" target="_blank" rel="noopener">pointer.f1shy312.com</a>.</p>
+                        </li>
+                        <li class="career-item" data-year="2025b">
+                            <div class="career-role">
+                                <span class="career-year">LATE 2025</span>
+                                <h4>Legend of the Block</h4>
+                                <span class="career-meta">Minecraft MMORPG</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">Late 2025: started the Minecraft server project Legend of the Block. many classes, systems, the whole MMORPG stack. <a href="https://lotb.net" target="_blank" rel="noopener">lotb.net</a></p>
+                        </li>
+                        <li class="career-item" data-year="NOW">
+                            <div class="career-role">
+                                <span class="career-year">NOW</span>
+                                <h4>Still Building</h4>
+                                <span class="career-meta">LOTB &amp; Beyond</span>
+                            </div>
+                            <div class="career-axis" aria-hidden="true">
+                                <span class="career-dot"></span>
+                            </div>
+                            <p class="career-copy">2026. till deep into LOTB and expanding it.</p>
+                        </li>
+                        </ol>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -172,9 +299,18 @@
                                 </div>
                                 <div class="btn-arrow">&rarr;</div>
                             </a>
+
+                            <a href="graphic-design" class="skill-page-btn design-btn">
+                                <span class="btn-index">03</span>
+                                <div class="btn-content">
+                                    <h3>GRAPHIC DESIGN</h3>
+                                    <p>Logos, web layouts, motion design &amp; video edits</p>
+                                </div>
+                                <div class="btn-arrow">&rarr;</div>
+                            </a>
                             
                             <a href="cybersecurity" class="skill-page-btn hacking-btn">
-                                <span class="btn-index">03</span>
+                                <span class="btn-index">04</span>
                                 <div class="btn-content">
                                     <h3>CYBERSECURITY</h3>
                                     <p>Penetration testing, security tools, and ethical hacking</p>
@@ -183,7 +319,7 @@
                             </a>
                             
                             <a href="outside" class="skill-page-btn outside-btn">
-                                <span class="btn-index">04</span>
+                                <span class="btn-index">05</span>
                                 <div class="btn-content">
                                     <h3>OUTSIDE PROGRAMMING</h3>
                                     <p>Creative software, games, and personal interests</p>
@@ -219,6 +355,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
