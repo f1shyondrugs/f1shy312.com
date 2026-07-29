@@ -575,6 +575,47 @@
         (typeof video.webkitDisplayingFullscreen === 'boolean' && video.webkitDisplayingFullscreen)
     );
 
+    const isPlayerFullscreen = () => {
+        const fsEl = document.fullscreenElement || document.webkitFullscreenElement || document.webkitCurrentFullScreenElement;
+        return !!(fsEl && (fsEl === player || player.contains(fsEl)));
+    };
+
+    let fsControlsTimer = null;
+    let fsPointerOnBar = false;
+    const clearFsControlsTimer = () => {
+        if (fsControlsTimer) {
+            clearTimeout(fsControlsTimer);
+            fsControlsTimer = null;
+        }
+    };
+
+    const showFsControls = () => {
+        if (!isPlayerFullscreen()) return;
+        player.classList.add('is-fs-controls');
+        clearFsControlsTimer();
+        fsControlsTimer = setTimeout(() => {
+            if (fsPointerOnBar) {
+                showFsControls();
+                return;
+            }
+            player.classList.remove('is-fs-controls');
+        }, 2200);
+    };
+
+    const syncFullscreenUI = () => {
+        const on = isFullscreen();
+        player.classList.toggle('is-native-fs', on);
+        if (isPlayerFullscreen()) {
+            showFsControls();
+            fsBtn?.setAttribute('aria-label', 'Exit fullscreen');
+        } else {
+            player.classList.remove('is-fs-controls');
+            clearFsControlsTimer();
+            fsPointerOnBar = false;
+            fsBtn?.setAttribute('aria-label', 'Fullscreen');
+        }
+    };
+
     const exitFullscreen = () => {
         if (typeof video.webkitExitFullscreen === 'function' && video.webkitDisplayingFullscreen) {
             video.webkitExitFullscreen();
@@ -588,34 +629,36 @@
 
     const enterFullscreen = () => {
         // iOS Safari: only <video> supports fullscreen (not arbitrary elements)
-        if (typeof video.webkitEnterFullscreen === 'function') {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        if (isIOS && typeof video.webkitEnterFullscreen === 'function') {
             const go = () => {
                 try {
+                    video.controls = true;
                     video.webkitEnterFullscreen();
                 } catch (_) { /* fall through to standard API */ }
             };
-            // iOS often requires the video to be playing
             if (video.paused) {
                 video.play().then(go).catch(go);
             } else {
                 go();
             }
-            // If webkit path exists, don't also try element fullscreen on iOS
-            if (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
-                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
-                return;
-            }
+            return;
         }
 
-        const frame = player.querySelector('.vp-frame');
-        const target = frame || video;
+        // Full player (frame + control bar) so custom controls stay available
+        const target = player;
         const req = target.requestFullscreen
             || target.webkitRequestFullscreen
-            || target.webkitRequestFullScreen
-            || video.requestFullscreen
-            || video.webkitRequestFullscreen;
+            || target.webkitRequestFullScreen;
 
-        if (!req) return;
+        if (!req) {
+            const vReq = video.requestFullscreen || video.webkitRequestFullscreen;
+            vReq?.call(video)?.catch?.(() => {});
+            return;
+        }
+
         const result = req.call(target);
         if (result && typeof result.catch === 'function') {
             result.catch(() => {
@@ -639,16 +682,31 @@
 
     // Keep UI in sync when user exits via native controls (esp. iOS)
     video.addEventListener('webkitbeginfullscreen', () => {
+        video.controls = true;
         player.classList.add('is-native-fs');
     });
     video.addEventListener('webkitendfullscreen', () => {
+        video.controls = false;
         player.classList.remove('is-native-fs');
+        player.classList.remove('is-fs-controls');
+        clearFsControlsTimer();
     });
-    document.addEventListener('fullscreenchange', () => {
-        player.classList.toggle('is-native-fs', isFullscreen());
+    document.addEventListener('fullscreenchange', syncFullscreenUI);
+    document.addEventListener('webkitfullscreenchange', syncFullscreenUI);
+
+    player.addEventListener('mousemove', () => {
+        if (isPlayerFullscreen()) showFsControls();
     });
-    document.addEventListener('webkitfullscreenchange', () => {
-        player.classList.toggle('is-native-fs', isFullscreen());
+    player.addEventListener('pointerdown', () => {
+        if (isPlayerFullscreen()) showFsControls();
+    });
+    barEl.addEventListener('pointerenter', () => {
+        fsPointerOnBar = true;
+        if (isPlayerFullscreen()) showFsControls();
+    });
+    barEl.addEventListener('pointerleave', () => {
+        fsPointerOnBar = false;
+        if (isPlayerFullscreen()) showFsControls();
     });
 
     scrub.addEventListener('pointerdown', (e) => {
