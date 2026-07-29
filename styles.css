@@ -5584,13 +5584,7 @@ header.scrolled {
     aspect-ratio: 1;
     z-index: 0;
     pointer-events: none;
-    transform: rotate(-8deg) scale(1);
-    filter: grayscale(1) brightness(0.85) contrast(1.05);
-    opacity: 0.42;
-    transition:
-        transform 0.35s var(--ease-out-quart),
-        filter 0.35s ease,
-        opacity 0.35s ease;
+    transform: rotate(-8deg);
 }
 
 .toolkit-logo img {
@@ -5598,12 +5592,19 @@ header.scrolled {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    filter: grayscale(1) brightness(1.2) contrast(0.95);
+    opacity: 0.38;
+    transform: scale(1);
+    transition:
+        filter 0.35s ease,
+        opacity 0.35s ease,
+        transform 0.35s var(--ease-out-quart);
 }
 
-.toolkit-item:hover .toolkit-logo {
-    transform: rotate(-4deg) scale(1.1);
-    filter: grayscale(0) brightness(1) contrast(1);
-    opacity: 0.92;
+.toolkit-item:hover .toolkit-logo img {
+    filter: none;
+    opacity: 0.95;
+    transform: scale(1.12);
 }
 
 .toolkit-plugins {
@@ -5688,10 +5689,5 @@ header.scrolled {
     .toolkit-use {
         opacity: 0.85;
         transform: none;
-    }
-
-    .toolkit-logo {
-        filter: grayscale(0.35) brightness(0.95);
-        opacity: 0.7;
     }
 }

@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
-  <rect width="64" height="64" rx="12" fill="#4285F4"/>
-  <path fill="#fff" d="M18.5 44.5h5.4l1.35-3.7h6.5l1.35 3.7h5.5L31.2 18.2h-6.4L18.5 44.5zm8.8-8.3 2.2-6.2 2.2 6.2h-4.4zM42.2 44.5h5.2V33.8h4.1v-4.3h-4.1v-3.4h4.8v-4.4H42.2v22.8z"/>
-</svg>
+<svg fill="#4285F4" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Google Fonts</title><path fill="#4285F4" d="M4 2.8A3.6 3.6 0 1 0 4 10a3.6 3.6 0 0 0 0-7.2zm7.6 0v18.4h7.2a5.2 5.2 0 1 1 0-10.4 4 4 0 1 1 0-8zm7.2 0v8a4 4 0 1 0 0-8zm0 8v10.4A5.2 5.2 0 0 0 24 16a5.2 5.2 0 0 0-5.2-5.2zm-7.7-7.206L0 21.199h8.8l2.3-3.64Z"/></svg>
