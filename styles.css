@@ -5607,6 +5607,50 @@ header.scrolled {
     transform: scale(1.12);
 }
 
+.toolkit-logo--duo {
+    right: -10%;
+    bottom: -16%;
+    width: clamp(8.5rem, 48%, 11.5rem);
+    aspect-ratio: auto;
+    height: clamp(5.5rem, 32%, 7rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.15rem;
+    align-items: end;
+}
+
+.toolkit-logo--duo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+.toolkit-logo--duo img:first-child {
+    transform: rotate(-6deg) translate(8%, 6%);
+}
+
+.toolkit-logo--duo img:last-child {
+    transform: rotate(8deg) translate(-4%, 2%);
+}
+
+.toolkit-item:hover .toolkit-logo--duo img {
+    filter: none;
+    opacity: 0.95;
+}
+
+.toolkit-item:hover .toolkit-logo--duo img:first-child {
+    transform: rotate(-2deg) translate(8%, 6%) scale(1.08);
+}
+
+.toolkit-item:hover .toolkit-logo--duo img:last-child {
+    transform: rotate(4deg) translate(-4%, 2%) scale(1.08);
+}
+
+.toolkit-item--duo .toolkit-name {
+    max-width: 62%;
+}
+
 .toolkit-plugins {
     margin-top: clamp(1.75rem, 4vw, 2.75rem);
 }
