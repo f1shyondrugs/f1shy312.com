@@ -575,6 +575,73 @@
         (typeof video.webkitDisplayingFullscreen === 'boolean' && video.webkitDisplayingFullscreen)
     );
 
+    const isPlayerFullscreen = () => {
+        const fsEl = document.fullscreenElement || document.webkitFullscreenElement || document.webkitCurrentFullScreenElement;
+        return !!(fsEl && (fsEl === player || player.contains(fsEl)));
+    };
+
+    let fsControlsTimer = null;
+    let fsPointerOnBar = false;
+    let fsMoveBound = false;
+
+    const clearFsControlsTimer = () => {
+        if (fsControlsTimer) {
+            clearTimeout(fsControlsTimer);
+            fsControlsTimer = null;
+        }
+    };
+
+    const showFsControls = () => {
+        if (!player.classList.contains('is-native-fs') && !isPlayerFullscreen()) return;
+        player.classList.add('is-fs-controls');
+        clearFsControlsTimer();
+        fsControlsTimer = setTimeout(() => {
+            if (fsPointerOnBar) {
+                showFsControls();
+                return;
+            }
+            player.classList.remove('is-fs-controls');
+        }, 2500);
+    };
+
+    const onFsMouseMove = () => showFsControls();
+
+    const bindFsMove = () => {
+        if (fsMoveBound) return;
+        fsMoveBound = true;
+        document.addEventListener('mousemove', onFsMouseMove, { passive: true });
+        document.addEventListener('pointermove', onFsMouseMove, { passive: true });
+    };
+
+    const unbindFsMove = () => {
+        if (!fsMoveBound) return;
+        fsMoveBound = false;
+        document.removeEventListener('mousemove', onFsMouseMove);
+        document.removeEventListener('pointermove', onFsMouseMove);
+    };
+
+    const syncFullscreenUI = () => {
+        const on = isFullscreen();
+        const playerFs = isPlayerFullscreen();
+        player.classList.toggle('is-native-fs', playerFs);
+        if (playerFs) {
+            bindFsMove();
+            showFsControls();
+            fsBtn?.setAttribute('aria-label', 'Exit fullscreen');
+        } else {
+            unbindFsMove();
+            player.classList.remove('is-fs-controls');
+            clearFsControlsTimer();
+            fsPointerOnBar = false;
+            fsBtn?.setAttribute('aria-label', 'Fullscreen');
+            // If some other element (e.g. <video>) got fullscreen, leave it —
+            // desktop path always targets the player.
+            if (!on) {
+                /* exited */
+            }
+        }
+    };
+
     const exitFullscreen = () => {
         if (typeof video.webkitExitFullscreen === 'function' && video.webkitDisplayingFullscreen) {
             video.webkitExitFullscreen();
@@ -588,40 +655,33 @@
 
     const enterFullscreen = () => {
         // iOS Safari: only <video> supports fullscreen (not arbitrary elements)
-        if (typeof video.webkitEnterFullscreen === 'function') {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        if (isIOS && typeof video.webkitEnterFullscreen === 'function') {
             const go = () => {
                 try {
+                    video.controls = true;
                     video.webkitEnterFullscreen();
-                } catch (_) { /* fall through to standard API */ }
+                } catch (_) { /* ignore */ }
             };
-            // iOS often requires the video to be playing
             if (video.paused) {
                 video.play().then(go).catch(go);
             } else {
                 go();
             }
-            // If webkit path exists, don't also try element fullscreen on iOS
-            if (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
-                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
-                return;
-            }
+            return;
         }
 
-        const frame = player.querySelector('.vp-frame');
-        const target = frame || video;
-        const req = target.requestFullscreen
-            || target.webkitRequestFullscreen
-            || target.webkitRequestFullScreen
-            || video.requestFullscreen
-            || video.webkitRequestFullscreen;
+        // Always fullscreen the whole player so the bottom bar stays available
+        const req = player.requestFullscreen
+            || player.webkitRequestFullscreen
+            || player.webkitRequestFullScreen;
 
         if (!req) return;
-        const result = req.call(target);
+        const result = req.call(player);
         if (result && typeof result.catch === 'function') {
-            result.catch(() => {
-                const vReq = video.requestFullscreen || video.webkitRequestFullscreen;
-                vReq?.call(video)?.catch?.(() => {});
-            });
+            result.catch(() => {});
         }
     };
 
@@ -639,16 +699,32 @@
 
     // Keep UI in sync when user exits via native controls (esp. iOS)
     video.addEventListener('webkitbeginfullscreen', () => {
+        video.controls = true;
         player.classList.add('is-native-fs');
     });
     video.addEventListener('webkitendfullscreen', () => {
+        video.controls = false;
         player.classList.remove('is-native-fs');
+        player.classList.remove('is-fs-controls');
+        clearFsControlsTimer();
+        unbindFsMove();
     });
-    document.addEventListener('fullscreenchange', () => {
-        player.classList.toggle('is-native-fs', isFullscreen());
+    document.addEventListener('fullscreenchange', syncFullscreenUI);
+    document.addEventListener('webkitfullscreenchange', syncFullscreenUI);
+
+    player.addEventListener('mousemove', () => {
+        if (player.classList.contains('is-native-fs')) showFsControls();
     });
-    document.addEventListener('webkitfullscreenchange', () => {
-        player.classList.toggle('is-native-fs', isFullscreen());
+    player.addEventListener('pointerdown', () => {
+        if (player.classList.contains('is-native-fs')) showFsControls();
+    });
+    barEl.addEventListener('pointerenter', () => {
+        fsPointerOnBar = true;
+        if (player.classList.contains('is-native-fs')) showFsControls();
+    });
+    barEl.addEventListener('pointerleave', () => {
+        fsPointerOnBar = false;
+        if (player.classList.contains('is-native-fs')) showFsControls();
     });
 
     scrub.addEventListener('pointerdown', (e) => {
