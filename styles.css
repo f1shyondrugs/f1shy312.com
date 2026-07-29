@@ -5503,18 +5503,20 @@ header.scrolled {
 .toolkit-item {
     position: relative;
     display: grid;
-    gap: 0.55rem;
-    min-height: 7.5rem;
-    padding: 1rem 1.05rem 1.1rem;
+    align-content: start;
+    gap: 0.45rem;
+    min-height: 9.5rem;
+    padding: 1rem 1.05rem 1.15rem;
     border: 1px solid var(--border-color);
     background:
         linear-gradient(160deg, rgba(255, 255, 255, 0.03), transparent 55%),
         var(--surface-color);
     overflow: hidden;
+    isolation: isolate;
     transition:
-        border-color 0.25s var(--ease-out-quart),
-        transform 0.25s var(--ease-out-quart),
-        background 0.25s ease;
+        border-color 0.28s var(--ease-out-quart),
+        transform 0.28s var(--ease-out-quart),
+        background 0.28s ease;
 }
 
 .toolkit-item:hover {
@@ -5526,11 +5528,14 @@ header.scrolled {
 }
 
 .toolkit-cat {
+    position: relative;
+    z-index: 1;
     font-family: var(--body-font);
     font-size: 0.58rem;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--tertiary-color);
+    transition: color 0.25s ease;
 }
 
 .toolkit-item:hover .toolkit-cat {
@@ -5538,7 +5543,10 @@ header.scrolled {
 }
 
 .toolkit-name {
+    position: relative;
+    z-index: 1;
     margin: 0;
+    max-width: 70%;
     font-family: var(--heading-font);
     font-size: clamp(1.05rem, 2vw, 1.35rem);
     font-weight: 800;
@@ -5547,23 +5555,55 @@ header.scrolled {
     color: var(--text-color);
 }
 
-.toolkit-mark {
-    position: absolute;
-    right: 0.85rem;
-    bottom: 0.65rem;
-    font-family: var(--heading-font);
-    font-size: clamp(1.6rem, 3vw, 2.1rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: rgba(255, 255, 255, 0.06);
-    line-height: 1;
-    pointer-events: none;
-    transition: color 0.25s ease, transform 0.25s var(--ease-out-quart);
+.toolkit-use {
+    position: relative;
+    z-index: 1;
+    margin: 0.15rem 0 0;
+    max-width: 18ch;
+    font-family: var(--body-font);
+    font-size: 0.68rem;
+    line-height: 1.45;
+    color: var(--secondary-color);
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s var(--ease-out-quart);
 }
 
-.toolkit-item:hover .toolkit-mark {
-    color: rgba(99, 102, 241, 0.28);
-    transform: scale(1.04);
+.toolkit-item:hover .toolkit-use {
+    opacity: 1;
+    transform: none;
+}
+
+.toolkit-logo {
+    position: absolute;
+    right: -18%;
+    bottom: -22%;
+    width: clamp(7.5rem, 42%, 10.5rem);
+    aspect-ratio: 1;
+    z-index: 0;
+    pointer-events: none;
+    transform: rotate(-8deg) scale(1);
+    filter: grayscale(1) brightness(0.85) contrast(1.05);
+    opacity: 0.42;
+    transition:
+        transform 0.35s var(--ease-out-quart),
+        filter 0.35s ease,
+        opacity 0.35s ease;
+}
+
+.toolkit-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.toolkit-item:hover .toolkit-logo {
+    transform: rotate(-4deg) scale(1.1);
+    filter: grayscale(0) brightness(1) contrast(1);
+    opacity: 0.92;
 }
 
 .toolkit-plugins {
@@ -5598,7 +5638,7 @@ header.scrolled {
 }
 
 .toolkit-item--plugin {
-    min-height: 6.5rem;
+    min-height: 8.75rem;
     background:
         linear-gradient(160deg, rgba(240, 180, 41, 0.04), transparent 55%),
         var(--surface-color);
@@ -5615,8 +5655,8 @@ header.scrolled {
     color: #c9a227;
 }
 
-.toolkit-item--plugin:hover .toolkit-mark {
-    color: rgba(240, 180, 41, 0.28);
+.toolkit-item--plugin:hover .toolkit-cat {
+    color: #f0b429;
 }
 
 @media (max-width: 900px) {
@@ -5634,6 +5674,24 @@ header.scrolled {
 
     .toolkit-item,
     .toolkit-item--plugin {
-        min-height: 0;
+        min-height: 8.25rem;
+    }
+
+    .toolkit-logo {
+        right: -14%;
+        bottom: -18%;
+        width: 7.25rem;
+    }
+}
+
+@media (hover: none) {
+    .toolkit-use {
+        opacity: 0.85;
+        transform: none;
+    }
+
+    .toolkit-logo {
+        filter: grayscale(0.35) brightness(0.95);
+        opacity: 0.7;
     }
 }
