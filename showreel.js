@@ -8,6 +8,7 @@
     const railEl = document.getElementById('sr-rail');
     const nowTag = document.getElementById('sr-now-tag');
     const nowTitle = document.getElementById('sr-now-title');
+    const nowDate = document.getElementById('sr-now-date');
     const nowCount = document.getElementById('sr-now-count');
     const player = document.getElementById('sr-player');
     const video = player.querySelector('.vp-video');
@@ -54,6 +55,15 @@
                 },
             });
         }
+    };
+
+    const bindCursorWrap = (element) => {
+        element.addEventListener('mouseenter', () => {
+            window.setCursorWrapElement?.(element, 'box');
+        });
+        element.addEventListener('mouseleave', (event) => {
+            window.clearCursorWrapElement?.(event);
+        });
     };
 
     let data = null;
@@ -116,6 +126,12 @@
         const m = Math.floor(s / 60);
         const sec = Math.floor(s % 60);
         return `${m}:${String(sec).padStart(2, '0')}`;
+    };
+
+    const formatDate = (value) => {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return '';
+        const [year, month, day] = value.split('-');
+        return `${day}.${month}.${year}`;
     };
 
     const escapeAttr = (s) => String(s)
@@ -270,6 +286,11 @@
             if (popoutFloat) popoutFloat.hidden = true;
             nowTag.textContent = catId === 'still' ? 'Still' : 'Empty';
             nowTitle.textContent = catId === 'still' ? 'Logos & layouts' : 'No clips in this tab';
+            if (nowDate) {
+                nowDate.textContent = '';
+                nowDate.removeAttribute('datetime');
+                nowDate.hidden = true;
+            }
             nowCount.textContent = '';
             emptyBox.querySelector('.vp-empty-label').textContent =
                 catId === 'still' ? 'COMING SOON' : 'NOTHING HERE';
@@ -284,6 +305,12 @@
         player.classList.remove('is-empty');
         nowTag.textContent = item.tag || '';
         nowTitle.textContent = item.title || '';
+        if (nowDate) {
+            const formattedDate = formatDate(item.date);
+            nowDate.textContent = formattedDate ? `Published ${formattedDate}` : '';
+            nowDate.dateTime = item.date || '';
+            nowDate.hidden = !formattedDate;
+        }
         nowCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
         setAspect(item.aspect || '16:9');
         setPopout(item);
@@ -426,6 +453,10 @@
                 ? '<span class="sr-thumb-badge">YT only</span>'
                 : '';
             const warnBadge = warnChipsHtml(item);
+            const date = formatDate(item.date);
+            const dateHtml = date
+                ? `<time class="sr-thumb-date" datetime="${item.date}">${date}</time>`
+                : '';
 
             if (item.type === 'youtube') {
                 btn.innerHTML = `
@@ -438,17 +469,19 @@
                     <span class="sr-thumb-meta">
                         <span class="sr-thumb-tag">${escapeAttr(item.tag)}</span>
                         <span class="sr-thumb-title">${escapeAttr(item.title)}</span>
+                        ${dateHtml}
                     </span>`;
             } else {
                 btn.innerHTML = `
                     <div class="sr-thumb-media">
-                        <video muted playsinline preload="metadata" src="${escapeAttr(item.src)}"></video>
+                        <video muted playsinline preload="none" src="${escapeAttr(item.src)}"></video>
                         <span class="sr-thumb-play"></span>
                         ${warnBadge}
                     </div>
                     <span class="sr-thumb-meta">
                         <span class="sr-thumb-tag">${escapeAttr(item.tag)}</span>
                         <span class="sr-thumb-title">${escapeAttr(item.title)}</span>
+                        ${dateHtml}
                     </span>`;
             }
 
@@ -474,6 +507,7 @@
             btn.type = 'button';
             btn.className = 'sr-subtab' + (sub.id === subId ? ' is-active' : '');
             btn.textContent = `${sub.label} (${sub.items.length})`;
+            bindCursorWrap(btn);
             btn.addEventListener('click', () => {
                 subId = sub.id;
                 refresh();
@@ -507,6 +541,7 @@
             btn.dataset.id = cat.id;
             btn.setAttribute('role', 'tab');
             btn.innerHTML = `<span class="sr-tab-label">${cat.label}</span><span class="sr-tab-count">${cat.empty ? 'soon' : count}</span>`;
+            bindCursorWrap(btn);
             btn.addEventListener('click', () => {
                 if (catId === cat.id) return;
                 catId = cat.id;

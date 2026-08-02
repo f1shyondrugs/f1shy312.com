@@ -5310,6 +5310,13 @@ header.scrolled {
     line-height: 1.3;
 }
 
+.sr-now-date {
+    font-family: var(--body-font);
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: var(--secondary-color);
+}
+
 .sr-now-count {
     font-family: var(--body-font);
     font-size: 0.65rem;
@@ -5552,6 +5559,13 @@ header.scrolled {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.sr-thumb-date {
+    font-family: var(--body-font);
+    font-size: 0.6rem;
+    letter-spacing: 0.5px;
+    color: var(--tertiary-color);
 }
 
 @media (max-width: 700px) {

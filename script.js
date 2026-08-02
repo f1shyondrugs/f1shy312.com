@@ -2773,20 +2773,6 @@ function initHoverMicroInteractions() {
         });
     });
 
-    document.querySelectorAll('.skill-page-btn').forEach(btn => {
-        const idx = btn.querySelector('.btn-index');
-        if (!idx) return;
-        const original = idx.textContent.trim();
-        btn.addEventListener('mouseenter', () => {
-            idx.style.transition = 'none';
-            idx.style.transform = 'translateY(4px)';
-            idx.style.opacity = '0';
-            idx.offsetHeight;
-            idx.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-            idx.style.transform = 'translateY(0)';
-            idx.style.opacity = '1';
-        });
-    });
 }
 
 function initWordSwap() {

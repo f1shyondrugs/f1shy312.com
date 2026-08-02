@@ -8,6 +8,10 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 def index():
     return send_from_directory('.', 'index.html')
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('.', 'logo.jpg', mimetype='image/jpeg')
+
 @app.route('/projects')
 def projects():
     return send_from_directory('.', 'projects.html')
