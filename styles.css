@@ -4,11 +4,11 @@
 :root {
     --background-color: #070707;
     --text-color: #f0f0f0;
-    --accent-color: #6366f1;
-    --accent-hover: #818cf8;
-    --dot-color: #6366f1;
-    --secondary-color: #888888;
-    --tertiary-color: #555555;
+    --accent-color: #818cf8;
+    --accent-hover: #a5b4fc;
+    --dot-color: #818cf8;
+    --secondary-color: #a0a0a0;
+    --tertiary-color: #a3a3a3;
     --border-color: rgba(255, 255, 255, 0.06);
     --surface-color: #0e0e0e;
     --header-height: 72px;
@@ -523,6 +523,11 @@ nav a:hover::after {
     width: 100%;
 }
 
+:where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 4px;
+}
+
 .contact-btn {
     padding: 0.5rem 1rem;
     background-color: transparent;
@@ -719,7 +724,7 @@ nav ul li:last-child {
 }
 
 .hero-description {
-    font-size: 0.85rem;
+    font-size: 1rem;
     line-height: 1.8;
     color: var(--secondary-color);
     margin-bottom: 2rem;
@@ -2014,7 +2019,7 @@ section {
     margin: 0;
     padding-top: 1.15rem;
     font-family: var(--body-font);
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.7;
     color: var(--secondary-color);
     max-width: 38ch;
@@ -2313,11 +2318,15 @@ section {
 
 .btn-index {
     font-family: var(--body-font);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: var(--tertiary-color);
     letter-spacing: 1px;
     flex-shrink: 0;
     width: 2rem;
+    min-width: 2ch;
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
     transition: color 0.3s ease;
     padding-left: 1rem;
 }
@@ -3649,6 +3658,8 @@ section {
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
         height: 100dvh;
         top: 0;
         left: 0;
@@ -3755,6 +3766,7 @@ section {
 
     .btn-index {
         width: 1.5rem;
+        min-width: 2ch;
         padding-left: 0;
         font-size: 0.6rem;
     }
@@ -3765,7 +3777,7 @@ section {
     }
 
     .btn-content p {
-        font-size: 0.7rem;
+        font-size: 0.875rem;
     }
 
     .btn-arrow {
@@ -5820,5 +5832,42 @@ header.scrolled {
     .toolkit-use {
         opacity: 0.85;
         transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    section,
+    .hero-inner,
+    .footer-cta-block,
+    .subpage-hero .section-container {
+        padding-inline: clamp(1.25rem, 5vw, 2rem);
+        box-sizing: border-box;
+    }
+
+    .hero-top-meta {
+        gap: 1rem;
+        min-width: 0;
+    }
+
+    .hero-tag {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

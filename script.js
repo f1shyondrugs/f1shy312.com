@@ -375,6 +375,7 @@ function createSkillPageCharacters() {
 // Uses NearestFilter for crisp pixel-art textures (Minecraft style).
 function initFeaturedCubes() {
     if (typeof THREE === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     document.querySelectorAll('.featured-cube-container').forEach(container => {
         if (container.clientWidth === 0 || container.clientHeight === 0) return;
         setupCube(container);
@@ -2486,9 +2487,12 @@ function initMobileNavigation() {
     
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            document.body.classList.toggle('menu-open');
+            const isOpen = !navMenu.classList.contains('active');
+            menuToggle.classList.toggle('active', isOpen);
+            navMenu.classList.toggle('active', isOpen);
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+            document.body.classList.toggle('menu-open', isOpen);
         });
         
         // Close menu when clicking a link
@@ -2496,8 +2500,20 @@ function initMobileNavigation() {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('active');
                 navMenu.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Open navigation');
                 document.body.classList.remove('menu-open');
             });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape' || !navMenu.classList.contains('active')) return;
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Open navigation');
+            document.body.classList.remove('menu-open');
+            menuToggle.focus();
         });
     }
 }
