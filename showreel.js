@@ -9,6 +9,7 @@
     const nowTag = document.getElementById('sr-now-tag');
     const nowTitle = document.getElementById('sr-now-title');
     const nowDate = document.getElementById('sr-now-date');
+    const nowCollaborators = document.getElementById('sr-now-collaborators');
     const nowCount = document.getElementById('sr-now-count');
     const player = document.getElementById('sr-player');
     const video = player.querySelector('.vp-video');
@@ -133,6 +134,20 @@
         const [year, month, day] = value.split('-');
         return `${day}.${month}.${year}`;
     };
+
+    const activeCollaborators = (item) => {
+        if (Array.isArray(item?.collaborators) && item.collaborators.length) return item.collaborators;
+        const category = data?.categories?.find((categoryItem) => categoryItem.id === catId);
+        const subtab = category?.subtabs?.find((sub) => sub.id === subId);
+        return subtab?.collaborators || category?.collaborators || [];
+    };
+
+    const collaboratorsHtml = (item) => activeCollaborators(item).map((person) =>
+        `<a class="sr-now-collaborator" href="${escapeAttr(person.url)}" target="_blank" rel="noopener noreferrer">
+            <img src="${escapeAttr(person.avatar)}" alt="" loading="lazy" width="24" height="24">
+            <span>${escapeAttr(person.name)}</span>
+        </a>`
+    ).join('');
 
     const escapeAttr = (s) => String(s)
         .replace(/&/g, '&amp;')
@@ -291,6 +306,7 @@
                 nowDate.removeAttribute('datetime');
                 nowDate.hidden = true;
             }
+            if (nowCollaborators) nowCollaborators.innerHTML = '';
             nowCount.textContent = '';
             emptyBox.querySelector('.vp-empty-label').textContent =
                 catId === 'still' ? 'COMING SOON' : 'NOTHING HERE';
@@ -311,6 +327,7 @@
             nowDate.dateTime = item.date || '';
             nowDate.hidden = !formattedDate;
         }
+        if (nowCollaborators) nowCollaborators.innerHTML = collaboratorsHtml(item);
         nowCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
         setAspect(item.aspect || '16:9');
         setPopout(item);
@@ -474,7 +491,7 @@
             } else {
                 btn.innerHTML = `
                     <div class="sr-thumb-media">
-                        <video muted playsinline preload="none" src="${escapeAttr(item.src)}"></video>
+                        <video muted playsinline preload="metadata" src="${escapeAttr(item.src)}"></video>
                         <span class="sr-thumb-play"></span>
                         ${warnBadge}
                     </div>

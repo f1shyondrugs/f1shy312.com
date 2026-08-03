@@ -326,6 +326,14 @@
         {
           "id": "lotb",
           "label": "LOTB",
+          "collaborators": [
+            {
+              "name": "Trynocs",
+              "role": "LOTB collaborator",
+              "url": "https://www.trynocs.com",
+              "avatar": "https://avatars.githubusercontent.com/u/115831890?v=4"
+            }
+          ],
           "items": [
             {
               "id": "7663299585061784854",

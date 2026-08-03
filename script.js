@@ -728,7 +728,7 @@ function addHoverEffects() {
         '.cta, button, .interactive-hover, .footer-email-btn, .contact-btn, .featured-link, .demo-link, .project-link, .skill-btn, .vp-popout, .vp-popout-float, .vp-yt-fallback-btn, .vp-btn, .sr-tab, .sr-subtab, .sr-rail-btn, .sr-thumb'
     );
     const underlineTargets = document.querySelectorAll(
-        '.logo, nav a:not(.contact-btn), .more-projects-link, .footer-right a, .back-link, .cta-secondary, .career-copy a'
+        '.logo, nav a:not(.contact-btn), .more-projects-link, .footer-right a, .back-link, .cta-secondary, .career-copy a, .project-collaborator strong, .collaboration-link'
     );
 
     const bind = (el, mode) => {

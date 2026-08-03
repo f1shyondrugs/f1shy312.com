@@ -1243,7 +1243,7 @@ footer {
         cursor: auto !important;
     }
     
-    .show-more-btn, .project-card, .cta, a, button, .skill-tag, .tech-tag, .skill-btn {
+    .show-more-btn, .cta, a, button, .skill-tag, .tech-tag, .skill-btn {
         cursor: pointer !important;
     }
     
@@ -1512,6 +1512,10 @@ section {
     letter-spacing: 0.5px;
 }
 
+.featured-tech-stack + .project-collaborator {
+    margin-top: 1.25rem;
+}
+
 .featured-project-links {
     display: flex;
     gap: 1rem;
@@ -1656,19 +1660,20 @@ section {
 
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 30px;
 }
 
 .project-card {
     background-color: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 2rem;
+    min-width: 0;
+    padding: clamp(1rem, 2vw, 2rem);
     border-radius: 8px;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    cursor: default;
 }
 
 .project-card:hover {
@@ -1676,7 +1681,7 @@ section {
     box-shadow: 0 12px 40px rgba(99, 102, 241, 0.1);
     border-color: rgba(99, 102, 241, 0.25);
     background-color: rgba(99, 102, 241, 0.04);
-    cursor: pointer;
+    cursor: default;
 }
 
 .project-card-header {
@@ -1687,10 +1692,11 @@ section {
 }
 
 .project-card h4 {
-    font-size: 1.2rem;
+    font-size: clamp(0.9rem, 1.35vw, 1.2rem);
     margin-bottom: 0.5rem;
     color: var(--text-color);
     letter-spacing: 0.5px;
+    overflow-wrap: anywhere;
 }
 
 .project-date, .project-status {
@@ -1704,11 +1710,12 @@ section {
 }
 
 .project-card p {
-    font-size: 0.9rem;
+    font-size: clamp(0.72rem, 0.95vw, 0.9rem);
     line-height: 1.6;
     color: var(--secondary-color);
     margin-bottom: 1.5rem;
     flex-grow: 1;
+    overflow-wrap: anywhere;
 }
 
 .project-card .tech-stack {
@@ -1732,11 +1739,23 @@ section {
     }
     
     .project-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     
     .featured-project {
         gap: 30px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .project-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -1755,6 +1774,14 @@ section {
 .more-projects-link:hover {
     color: var(--accent-color);
     cursor: pointer;
+}
+
+.motion-projects-section {
+    border-top: 1px solid var(--border-color);
+}
+
+.motion-projects-link {
+    margin-top: 1.5rem;
 }
 
 /* About Section */
@@ -2347,6 +2374,14 @@ section {
     margin: 0 0 4px 0;
     letter-spacing: 0.5px;
     transition: color 0.3s ease;
+}
+
+.design-btn .btn-content h3 {
+    white-space: nowrap;
+}
+
+.hacking-btn .btn-content p {
+    white-space: nowrap;
 }
 
 .skill-page-btn:hover .btn-content h3 {
@@ -3773,7 +3808,15 @@ section {
 
     .btn-content h3 {
         font-size: clamp(0.95rem, 4vw, 1.2rem);
-        word-break: break-word;
+    }
+
+    .design-btn .btn-content h3 {
+        font-size: clamp(0.82rem, 3.2vw, 1.1rem);
+    }
+
+    .hacking-btn .btn-content p {
+        font-size: 0.7rem;
+        letter-spacing: 0;
     }
 
     .btn-content p {
@@ -3977,14 +4020,22 @@ section {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    font-size: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
-    padding-bottom: 5px; /* Adjust for visual centering of ellipsis */
+    padding: 0;
+}
+
+.show-more-chevron {
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.3s ease;
 }
 
 .show-more-btn:hover {
@@ -3995,15 +4046,18 @@ section {
 }
 
 .show-more-btn.active {
-    transform: rotate(180deg);
     background-color: var(--accent-color);
     color: white;
+}
+
+.show-more-btn.active .show-more-chevron {
+    transform: translateY(2px) rotate(225deg);
 }
 
 /* Hidden Projects Container */
 .more-projects {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 30px;
     grid-column: 1 / -1; /* Span all columns */
     height: 0;
@@ -4019,11 +4073,23 @@ section {
 
 @media (max-width: 768px) {
     .more-projects {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     
     .show-more-btn {
         margin: 10px auto;
+    }
+}
+
+@media (max-width: 1100px) {
+    .more-projects {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .more-projects {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -4036,7 +4102,7 @@ section {
         cursor: auto !important;
     }
     
-    .show-more-btn, .project-card, .cta, a, button, .skill-tag, .tech-tag, .skill-btn {
+    .show-more-btn, .cta, a, button, .skill-tag, .tech-tag, .skill-btn {
         cursor: pointer !important;
     }
     
@@ -4220,6 +4286,51 @@ section {
     color: var(--secondary-color);
     font-family: var(--body-font);
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-collaborator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 0 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.project-collaborator img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.project-collaborator span {
+    display: grid;
+    gap: 0.1rem;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.project-collaborator small {
+    color: var(--tertiary-color);
+    font-family: var(--body-font);
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+}
+
+.project-collaborator strong {
+    width: fit-content;
+    max-width: 100%;
+    font-family: var(--body-font);
+    font-size: 0.68rem;
+    font-weight: 400;
+    overflow-wrap: anywhere;
+}
+
+.project-collaborator:hover strong {
+    color: var(--accent-hover);
 }
 
 .project-links {
@@ -4494,6 +4605,97 @@ header.scrolled {
     padding-top: clamp(2.5rem, 6vw, 5rem);
     padding-bottom: clamp(3rem, 7vw, 6rem);
     border-top: 1px solid var(--border-color);
+}
+
+.collaborations-section {
+    padding-block: clamp(3rem, 7vw, 6rem);
+    border-top: 1px solid var(--border-color);
+}
+
+.collaborations-intro {
+    max-width: 50ch;
+    margin: 0 0 1.5rem;
+    color: var(--secondary-color);
+    font-family: var(--body-font);
+    font-size: 0.85rem;
+    line-height: 1.7;
+}
+
+.collaborations-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.collaboration-card {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-width: 0;
+    padding: 0.85rem;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: border-color 0.25s ease, transform 0.25s var(--ease-out-quart), background 0.25s ease;
+}
+
+.collaboration-card:hover {
+    border-color: var(--accent-color);
+    background: rgba(129, 140, 248, 0.06);
+    transform: translateY(-2px);
+}
+
+.collaboration-card img {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--surface-color);
+}
+
+.collaboration-copy {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.collaboration-role,
+.collaboration-link {
+    overflow: hidden;
+    color: var(--tertiary-color);
+    font-family: var(--body-font);
+    font-size: 0.57rem;
+    letter-spacing: 0.8px;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.collaboration-copy strong {
+    overflow: hidden;
+    font-family: var(--heading-font);
+    font-size: 0.9rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.collaboration-link {
+    width: max-content;
+    color: var(--accent-hover);
+    text-transform: none;
+}
+
+@media (max-width: 900px) {
+    .collaborations-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .collaborations-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .sr-browser {
@@ -5282,7 +5484,10 @@ header.scrolled {
 
 .sr-now {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+        "tag title date"
+        "collaborators collaborators count";
     gap: 0.75rem 1rem;
     align-items: baseline;
     max-width: 920px;
@@ -5294,6 +5499,7 @@ header.scrolled {
 }
 
 .sr-now-tag {
+    grid-area: tag;
     font-family: var(--body-font);
     font-size: 0.6rem;
     letter-spacing: 1.5px;
@@ -5302,6 +5508,7 @@ header.scrolled {
 }
 
 .sr-now-title {
+    grid-area: title;
     margin: 0;
     font-family: var(--heading-font);
     font-size: clamp(1.05rem, 1.8vw, 1.35rem);
@@ -5311,13 +5518,44 @@ header.scrolled {
 }
 
 .sr-now-date {
+    grid-area: date;
     font-family: var(--body-font);
     font-size: 0.65rem;
     letter-spacing: 1px;
     color: var(--secondary-color);
 }
 
+.sr-now-collaborators {
+    display: flex;
+    grid-area: collaborators;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.sr-now-collaborator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--secondary-color);
+    font-family: var(--body-font);
+    font-size: 0.6rem;
+    letter-spacing: 0.6px;
+    text-decoration: none;
+}
+
+.sr-now-collaborator:hover {
+    color: var(--accent-hover);
+}
+
+.sr-now-collaborator img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .sr-now-count {
+    grid-area: count;
     font-family: var(--body-font);
     font-size: 0.65rem;
     letter-spacing: 1px;
@@ -5571,10 +5809,15 @@ header.scrolled {
 @media (max-width: 700px) {
     .sr-now {
         grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "tag count"
+            "title title"
+            "date date"
+            "collaborators collaborators";
     }
 
     .sr-now-tag {
-        grid-column: 1 / -1;
+        grid-column: auto;
     }
 
     .vp-bar {
