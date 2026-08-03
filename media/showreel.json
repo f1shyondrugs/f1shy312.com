@@ -838,13 +838,6 @@
           ]
         }
       ]
-    },
-    {
-      "id": "still",
-      "label": "Logos & Layouts",
-      "desc": "Static stuff; logos, marks, and website layouts. added soon.",
-      "items": [],
-      "empty": true
     }
   ]
 }

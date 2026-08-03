@@ -525,6 +525,27 @@ let CURSOR_WRAP_SNAPPING = true;
     let wrapElement = null;
     let wrapMode = null; // 'box' | 'underline'
     let liquidPhase = 0;
+    let idleTimer = null;
+    const idleDelay = 2400;
+
+    function scheduleCursorIdle() {
+        window.clearTimeout(idleTimer);
+        idleTimer = window.setTimeout(() => {
+            if (!cursorDot) return;
+            if (wrapElement && CURSOR_WRAP_SNAPPING) {
+                scheduleCursorIdle();
+                return;
+            }
+            cursorDot.classList.add('cursor-dot--idle');
+            cursorDot.style.filter = '';
+        }, idleDelay);
+    }
+
+    function wakeCursor() {
+        if (!cursorDot) return;
+        cursorDot.classList.remove('cursor-dot--idle');
+        scheduleCursorIdle();
+    }
 
     function lerp(a, b, t) {
         return a + (b - a) * t;
@@ -582,6 +603,7 @@ let CURSOR_WRAP_SNAPPING = true;
         }
 
         cursorDot.style.transform = 'translate(0, 0)';
+        cursorDot.style.filter = '';
         cursorDot.style.left = `${l}px`;
         cursorDot.style.top = `${t}px`;
         cursorDot.style.width = `${w}px`;
@@ -604,6 +626,7 @@ let CURSOR_WRAP_SNAPPING = true;
             delete cursorDot.dataset.arrowGlyph;
         }
         cursorDot.style.transform = 'translate(0, 0)';
+        cursorDot.style.filter = '';
         cursorDot.style.left = `${rect.left}px`;
         cursorDot.style.top = `${y}px`;
         cursorDot.style.width = `${Math.max(rect.width, 8)}px`;
@@ -629,6 +652,7 @@ let CURSOR_WRAP_SNAPPING = true;
         cursorDot.style.left = `${currentX}px`;
         cursorDot.style.top = `${currentY}px`;
         cursorDot.style.transform = 'translate(-50%, -50%)';
+        cursorDot.style.filter = '';
         cursorDot.style.width = `${size}px`;
         cursorDot.style.height = `${size}px`;
         cursorDot.style.borderRadius = '50%';
@@ -677,6 +701,7 @@ let CURSOR_WRAP_SNAPPING = true;
             cursorDot.style.left = `${currentX}px`;
             cursorDot.style.top = `${currentY}px`;
             cursorDot.style.transform = `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`;
+            cursorDot.style.filter = '';
             cursorDot.style.width = '20px';
             cursorDot.style.height = '20px';
             cursorDot.style.borderRadius = br;
@@ -691,6 +716,7 @@ let CURSOR_WRAP_SNAPPING = true;
         if (cursorDot) {
             cursorDot.style.top = '-100px';
             cursorDot.style.left = '-100px';
+            scheduleCursorIdle();
             if (rafId == null) rafId = requestAnimationFrame(tick);
         }
     }
@@ -698,6 +724,7 @@ let CURSOR_WRAP_SNAPPING = true;
     function moveCustomCursor(e) {
         targetX = e.clientX;
         targetY = e.clientY;
+        wakeCursor();
     }
 
     function setWrapElement(el, mode = 'box') {
@@ -712,6 +739,7 @@ let CURSOR_WRAP_SNAPPING = true;
         }
         wrapElement = null;
         wrapMode = null;
+        wakeCursor();
     }
 
     window.initCustomCursor = initCustomCursor;

@@ -377,6 +377,12 @@ h1 {
     filter: blur(0.5px);
 }
 
+.cursor-dot.cursor-dot--idle {
+    opacity: 0 !important;
+    filter: blur(8px) !important;
+    transform: translate(-50%, -50%) scale(0.2) !important;
+}
+
 /* Wrap-around hover: blobby rectangle wraps the element */
 .cursor-dot.cursor-dot--wrapping {
     box-shadow: 0 0 28px 8px rgba(99, 102, 241, 0.2);
@@ -734,6 +740,148 @@ nav ul li:last-child {
 .hero-description .muted {
     color: var(--tertiary-color);
     font-style: italic;
+}
+
+.about-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    list-style: disc;
+    margin-top: 1.5rem;
+    padding-left: 1.1rem;
+    color: var(--accent-color);
+    font-family: var(--body-font);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    line-height: 1.4;
+}
+
+.archive-pointer-card {
+    display: none;
+}
+
+.pointer-ownership-panel {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-left: 1px solid var(--border-color);
+    background: rgba(99, 102, 241, 0.04);
+}
+
+.pointer-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.pointer-detail:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.pointer-detail span {
+    color: var(--accent-color);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.pointer-detail strong {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.lotb-ownership-panel {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.featured-section .lotb-ownership-panel {
+    margin-bottom: 1.5rem;
+}
+
+.lotb-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.lotb-detail span {
+    color: var(--accent-color);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.lotb-detail strong {
+    color: var(--text-color);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.35px;
+}
+
+.motion-showreel-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
+    border-color: rgba(99, 102, 241, 0.35);
+    background: rgba(99, 102, 241, 0.06);
+}
+
+.motion-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    color: var(--accent-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+}
+
+.motion-card-link:hover {
+    color: var(--text-color);
+    letter-spacing: 2px;
+}
+
+.pointer-featured-project {
+    grid-template-columns: 0.8fr 1.2fr;
+}
+
+.pointer-featured-project .featured-project-header {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+}
+
+.pointer-featured-project .featured-tech-stack,
+.pointer-featured-project .featured-project-links {
+    justify-content: flex-end;
+}
+
+.pointer-featured-project .project-collaborator {
+    justify-content: flex-end;
+}
+
+.pointer-featured-project .pointer-ownership-panel {
+    grid-column: 1;
+    grid-row: 1;
+    border-left: 0;
+    border-right: 1px solid var(--border-color);
+    text-align: left;
 }
 
 .hero-visual-col {
@@ -3852,6 +4000,26 @@ section {
         grid-template-columns: 1fr;
     }
 
+    .pointer-ownership-panel {
+        border-left: 0;
+        border-right: 0;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .pointer-featured-project {
+        grid-template-columns: 1fr;
+    }
+
+    .pointer-featured-project .featured-project-header,
+    .pointer-featured-project .pointer-ownership-panel {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .lotb-ownership-panel {
+        grid-template-columns: 1fr;
+    }
+
     .cta {
         padding: 0.85rem 1.75rem;
         font-size: 0.7rem;
@@ -3974,7 +4142,7 @@ section {
     }
 
     .hero-description {
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .skill-tags,
